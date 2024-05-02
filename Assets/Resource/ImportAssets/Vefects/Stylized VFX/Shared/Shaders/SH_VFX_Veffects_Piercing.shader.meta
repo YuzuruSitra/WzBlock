@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 6fa11598074a2624a9333909172fba87
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _Color_Noise_Texture: {fileID: 2800000, guid: 57e9e92fd03983b41bdbda66dc81e6b2, type: 3}
+  - _Piercing_Texture: {fileID: 2800000, guid: 3fd6b115a58e2cb4aae698542657e9fd, type: 3}
+  - _Distortion_Noise_Texture: {fileID: 2800000, guid: 57e9e92fd03983b41bdbda66dc81e6b2, type: 3}
+  - _Distortion_Mask: {fileID: 2800000, guid: fbe0d908e002ec84792dc44832c375c2, type: 3}
+  - _TextureSample1: {fileID: 2800000, guid: 57e9e92fd03983b41bdbda66dc81e6b2, type: 3}
+  - _Texture0: {fileID: 2800000, guid: 3fd6b115a58e2cb4aae698542657e9fd, type: 3}
+  - _Emissive_Noise_Texture: {fileID: 2800000, guid: 57e9e92fd03983b41bdbda66dc81e6b2, type: 3}
+  - _Texture1: {fileID: 2800000, guid: 3fd6b115a58e2cb4aae698542657e9fd, type: 3}
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4050263146662821659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7569706954308306597}
+  m_Layer: 0
+  m_Name: Offset
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7569706954308306597
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4050263146662821659}
+  m_LocalRotation: {x: 0.08651725, y: -0.26570687, z: 0.112832524, w: 0.9535112}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1090880883526969101}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 13, y: -30, z: 10}
+--- !u!1 &4830298074986788590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1090880883526969101}
+  - component: {fileID: 4916050021192200029}
+  m_Layer: 0
+  m_Name: Slash_Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1090880883526969101
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4830298074986788590}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.2341466, y: -3.5897996, z: 0.96967936}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7569706954308306597}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4916050021192200029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4830298074986788590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fc1be1037a2e7040859e5a3f75ec0ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 1.4
+  magicAttacksManager: {fileID: 0}
+  spawnOffset: {fileID: 7569706954308306597}
+  FXList_Slash:
+  - {fileID: 8765350373887584717, guid: 0d773d4c0e6948549bcd679fab15c776, type: 3}
+  - {fileID: 5776664828188564415, guid: 402cb76f537cbd0488664d6f42b1df6a, type: 3}
+  - {fileID: 6011612589751780557, guid: 7d43ffd15058dfe4ea55a9b48d86c527, type: 3}
+  - {fileID: 7490249719651392366, guid: 3294b5ce24126a448a9bb0bc24daf018, type: 3}
+  - {fileID: 6271983290402428565, guid: 833bb9b92ee1c5545ad10f178813a5f8, type: 3}
+  - {fileID: 9219226224801346606, guid: 24aac6ea84b87f444a530178fa95a739, type: 3}
+  - {fileID: 3326623571134901291, guid: 3a2f224e7d0579e48a17747a4eb06f1c, type: 3}
+  - {fileID: 4786063026737706728, guid: a655fbd437828234797ba5d6c3505ef9, type: 3}
+  - {fileID: 5419247265236760002, guid: eb2f8858399dfe8489516347d4add5c1, type: 3}
+  - {fileID: 1237212416536016172, guid: f2fe7056e94fc9d4ca83b323de7cd2dc, type: 3}
+  FXList_SlashCircle:
+  - {fileID: 401465033491715099, guid: 2ee390eefa1a8294989e1ab748ba7e8d, type: 3}
+  - {fileID: 7980182725556982835, guid: bba09dc2d83bf284e8ee15fd49781b65, type: 3}
+  - {fileID: 3848372677232997033, guid: 066183a4f8da42f4c92e30f348dc1027, type: 3}
+  - {fileID: 3034712236171442569, guid: c83c1f1ecb69fa748b4844f39138ffbf, type: 3}
+  - {fileID: 1120358628491127156, guid: fa1af6f37564f7e47b4154e124770651, type: 3}
+  - {fileID: 7639752885123374874, guid: 4ddcb4a8f3c6c6a4cae88831e36fe07c, type: 3}
+  - {fileID: 2054155523252489572, guid: d7ac2665b6184304b8f2fff46b005226, type: 3}
+  - {fileID: 2466968695602405059, guid: de446b9e0f0df1d4fb1b82a1013c3845, type: 3}
+  - {fileID: 5912743102478726200, guid: a71eecef958ef3747871e9ef7940bdf0, type: 3}
+  - {fileID: 2413247810899179781, guid: 7c900cd9347092545962b41800f837b9, type: 3}
+  FXList_Piercing:
+  - {fileID: 2748775980906258134, guid: a110dd3e17de0004c8548dda882b8e0c, type: 3}
+  - {fileID: 3902912774187533837, guid: 1df386d66e13e394baf573eb3927fcef, type: 3}
+  - {fileID: 4597925975597660890, guid: 68bd046be0d06e343a66fcfb98d4af97, type: 3}
+  - {fileID: 512424923302614939, guid: 936455bdddfdce34d95c9882eef3b8a5, type: 3}
+  - {fileID: 5113482876390019511, guid: 000abb35f03fef743ac8b9eeac02cd67, type: 3}
+  - {fileID: 6620966694190176761, guid: e279098caba690c45978bc3a92395e82, type: 3}
+  - {fileID: 6253156721638724012, guid: 0e50f76d191bf0a479bf17ef612b250a, type: 3}
+  - {fileID: 8508855284383177433, guid: 07bfa6f48beccea44b165f821bbe54c6, type: 3}
+  - {fileID: 6628276393031643956, guid: ff7e23c9033888c44b0aabf113f6f2eb, type: 3}
+  - {fileID: 3654344706992719639, guid: 429d47ea1a16c5b408ce1e61232f80e0, type: 3}

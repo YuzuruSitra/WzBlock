@@ -1,0 +1,169 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_VFX_Piercing_Sound
+  m_Shader: {fileID: 4800000, guid: 6fa11598074a2624a9333909172fba87, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Color_Noise_Texture:
+        m_Texture: {fileID: 2800000, guid: 57e9e92fd03983b41bdbda66dc81e6b2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Distortion_Mask:
+        m_Texture: {fileID: 2800000, guid: fbe0d908e002ec84792dc44832c375c2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Distortion_Noise_Texture:
+        m_Texture: {fileID: 2800000, guid: 2c5f648e215789a4599c67843b5f7e9a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Emissive_Noise_Texture:
+        m_Texture: {fileID: 2800000, guid: 57e9e92fd03983b41bdbda66dc81e6b2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Emissive_Noise_Texture1:
+        m_Texture: {fileID: 2800000, guid: 2c5f648e215789a4599c67843b5f7e9a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Mask:
+        m_Texture: {fileID: 2800000, guid: 1e0097c086800a64b90526548667a51e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Piercing_Texture:
+        m_Texture: {fileID: 2800000, guid: b471dfb48aa39944f9729f65bc78ba32, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Piercing_Texture1:
+        m_Texture: {fileID: 2800000, guid: 442d64bcb3e3cd44aaf5b108225ffa2b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Slash_Texture:
+        m_Texture: {fileID: 2800000, guid: 61327fc8f347d034a914bf43bc9d74ea, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Slash_Texture1:
+        m_Texture: {fileID: 2800000, guid: 61327fc8f347d034a914bf43bc9d74ea, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture0:
+        m_Texture: {fileID: 2800000, guid: b471dfb48aa39944f9729f65bc78ba32, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture1:
+        m_Texture: {fileID: 2800000, guid: b471dfb48aa39944f9729f65bc78ba32, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 2800000, guid: 61327fc8f347d034a914bf43bc9d74ea, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample1:
+        m_Texture: {fileID: 2800000, guid: 2c5f648e215789a4599c67843b5f7e9a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Boost_Opacity: 1.3
+    - _BumpScale: 1
+    - _Color_Boost: 1.5
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _Distortion_Intensity: 0
+    - _DstBlend: 0
+    - _EmissiveSlash_Scale: 1.8
+    - _EmissiveSlash_Speed: 0.45
+    - _Emissive_Intensity: 6
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Opacity_Boost: 1.1
+    - _Parallax: 0.02
+    - _Piercing_Noise_Intesnity: -0.09
+    - _Slash_Noise_Intensity: 0.5
+    - _Slash_Scale: 2
+    - _Slash_Speed: -0.7
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _ZWrite: 1
+    - __dirty: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorNoise_Scale: {r: 1, g: 3, b: 0, a: 0}
+    - _ColorNoise_Speed: {r: 0.6, g: 0.2, b: 0, a: 0}
+    - _Color_1: {r: 0.6, g: 0.4392157, b: 0.12156863, a: 0}
+    - _Color_2: {r: 1, g: 0.8666667, b: 0.2, a: 0}
+    - _Distortion_Noise_Scale: {r: 0.8, g: 3, b: 0, a: 0}
+    - _Distortion_Noise_Speed: {r: -0.8, g: -0.3, b: 0, a: 0}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissiveDissolve_Scale: {r: 1.8, g: 2.5, b: 0, a: 0}
+    - _EmissiveDissolve_Speed: {r: 2.5, g: 0.3, b: 0, a: 0}
+    - _Emissive_Color: {r: 1, g: 0.8392157, b: 0.2, a: 0}
+    - _Piercing_Noise_Scale: {r: 0.5, g: 3, b: 0, a: 0}
+    - _Piercing_Noise_Speed: {r: 1.5, g: 0.6, b: 0, a: 0}
+    - _Slash_Noise_Scale: {r: 0.5, g: 3, b: 0, a: 0}
+    - _Slash_Noise_Speed: {r: 1.5, g: 0.6, b: 0, a: 0}
+  m_BuildTextureStacks: []
