@@ -7,6 +7,7 @@ TagManager:
   - Paddle
   - DestroyArea
   - Ball
+  - Frame
   layers:
   - Default
   - TransparentFX

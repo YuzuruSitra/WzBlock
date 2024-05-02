@@ -16,6 +16,12 @@ public class BallMover : MonoBehaviour
     private GameStateHandler _gameStateHandler;
     private Vector3 _currentVelocity;
     private Vector3 _currentangular;
+
+    private int _hitFrameCount;
+    private const int MAX_STACK_COUNT = 5;
+    [SerializeField]
+    private Transform _BottomCenterPos;
+
     void Start()
     {
         _rigidBody = GetComponent<Rigidbody>();
@@ -33,6 +39,7 @@ public class BallMover : MonoBehaviour
             case GameStateHandler.GameState.Launch:
                 _rigidBody.velocity = Vector3.zero;
                 _rigidBody.angularVelocity = Vector3.zero;
+                _hitFrameCount = 0;
                 break;
             default:
                 _rigidBody.velocity = _currentVelocity;
@@ -50,21 +57,38 @@ public class BallMover : MonoBehaviour
         _currentVelocity = _rigidBody.velocity;
         _currentangular = _rigidBody.angularVelocity;
     }
-    private void OnCollisionEnter(Collision collision)
+
+    // 壁反射でのスタック回避
+    private void AvoidFrameStack(GameObject hitObj)
     {
-        // プレイヤーに当たったときに、跳ね返る方向を変える
-        if (collision.gameObject.CompareTag("Paddle"))
+        if (hitObj.CompareTag("Frame")) 
+            _hitFrameCount ++;
+        else 
+            _hitFrameCount = 0;
+        
+        if (_hitFrameCount < MAX_STACK_COUNT) return;
+        Vector3 direction = (_BottomCenterPos.position - transform.position).normalized;
+        float speed = _rigidBody.velocity.magnitude;
+        _rigidBody.velocity = direction * speed * Time.deltaTime;
+        _hitFrameCount = 0;
+    }
+
+    // プレイヤーに当たったときに、跳ね返る方向を変える
+    private void ChangeRefrection(GameObject hitObj)
+    {
+        if (hitObj.CompareTag("Paddle"))
         {
-            // プレイヤーの位置を取得
-            Vector3 playerPos = collision.transform.position;
-            // ボールの位置を取得
+            Vector3 playerPos = hitObj.transform.position;
             Vector3 ballPos = transform.position;
-            // プレイヤーから見たボールの方向を計算
             Vector3 direction = (ballPos - playerPos).normalized;
-            // 現在の速さを取得
             float speed = _rigidBody.velocity.magnitude;
-            // 速度を変更
             _rigidBody.velocity = direction * speed * Time.deltaTime;
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        AvoidFrameStack(collision.gameObject);
+        ChangeRefrection(collision.gameObject);
     }
 }
