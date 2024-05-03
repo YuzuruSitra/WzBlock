@@ -11,7 +11,6 @@ public class Demo_Manager : MonoBehaviour
     int currentCam;
 
 
-
     void Awake()
     {
         slashManager.SetActive(true);
