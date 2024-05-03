@@ -27,13 +27,21 @@ public class Block : MonoBehaviour
         _isActive = newActive;
     }
 
+    private void HitBall()
+    {
+        _scoreHandler.AddScore(_score);
+        gameObject.SetActive(false);
+    }
+
+    private IEnumerator BreakWallAnim()
+    {
+        yield return new WaitForSeconds(0.5f);
+        ChangeActive(false);
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ball"))
-        {
-            _scoreHandler.AddScore(_score);
-            gameObject.SetActive(false);
-            ChangeActive(false);
-        }
+            HitBall();
     }
 }
