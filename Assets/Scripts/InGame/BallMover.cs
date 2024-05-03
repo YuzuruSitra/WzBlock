@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BallMover : MonoBehaviour
@@ -37,9 +35,11 @@ public class BallMover : MonoBehaviour
                 _rigidBody.AddForce(_launchDirection.normalized * _launchSpeed * Time.deltaTime, ForceMode.Impulse);
                 break;
             case GameStateHandler.GameState.Launch:
+                _hitFrameCount = 0;
+                break;
+            case GameStateHandler.GameState.FinGame:
                 _rigidBody.velocity = Vector3.zero;
                 _rigidBody.angularVelocity = Vector3.zero;
-                _hitFrameCount = 0;
                 break;
             default:
                 _rigidBody.velocity = _currentVelocity;
