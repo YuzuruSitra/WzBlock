@@ -6,6 +6,7 @@ public class ScoreHandler
     private static ScoreHandler instance;
     public static ScoreHandler Instance => instance ?? (instance = new ScoreHandler());
     private int _currentScore;
+    public int CurrentScore => _currentScore;
     public event Action<int> ChangeScore;
     private ScoreHandler ()
     {
