@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 332731853}
   - component: {fileID: 332731852}
   m_Layer: 5
-  m_Name: Score_Text (TMP) (1)
+  m_Name: HighScore_Text (TMP) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -295,7 +295,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score : 10000'
+  m_text: ---
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3199409928624324999b9336dd1ed8f3, type: 2}
   m_sharedMaterial: {fileID: 21032597133445202, guid: 3199409928624324999b9336dd1ed8f3, type: 2}
@@ -840,7 +840,7 @@ GameObject:
   - component: {fileID: 594849961}
   - component: {fileID: 594849960}
   m_Layer: 5
-  m_Name: Score_Text (TMP) (1)
+  m_Name: TodatHighScore_Text (TMP) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -887,7 +887,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score : 10000'
+  m_text: ---
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3199409928624324999b9336dd1ed8f3, type: 2}
   m_sharedMaterial: {fileID: 21032597133445202, guid: 3199409928624324999b9336dd1ed8f3, type: 2}
@@ -2625,7 +2625,12 @@ PrefabInstance:
       propertyPath: _BottomCenterPos
       value: 
       objectReference: {fileID: 1327748469}
-    m_RemovedComponents: []
+    - target: {fileID: 8247698446503184482, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8247698446503184482, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
 --- !u!1001 &4291067530137959997
 PrefabInstance:

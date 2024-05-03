@@ -9790,13 +9790,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3800384972645712502}
+  - component: {fileID: 7637801668843624997}
   - component: {fileID: 7637801668843624996}
   - component: {fileID: 7637801668843624999}
   - component: {fileID: 7637801668843624992}
   - component: {fileID: 7637801668843624995}
   - component: {fileID: 8313945823679708795}
   m_Layer: 0
-  m_Name: PS_DarkMagic_Projectile
+  m_Name: PS_DarkMagic_Projectile_use
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9819,6 +9820,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7637801668843624997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624999882290517047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87747a1254ff6804f99e93fa4b1d450b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FX_Hit: {fileID: 0}
 --- !u!135 &7637801668843624996
 SphereCollider:
   m_ObjectHideFlags: 0
