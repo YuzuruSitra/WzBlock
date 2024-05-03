@@ -828,6 +828,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _reStartBt: {fileID: 1413721865}
+--- !u!114 &481714341 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+  m_PrefabInstance: {fileID: 2129730774387224599}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ef17a126a064369906bc14a07d1ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &594849958
 GameObject:
   m_ObjectHideFlags: 0
@@ -2643,6 +2654,10 @@ PrefabInstance:
       propertyPath: _BottomCenterPos
       value: 
       objectReference: {fileID: 1327748469}
+    - target: {fileID: 7533679646343231646, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _ballMover
+      value: 
+      objectReference: {fileID: 481714341}
     - target: {fileID: 8247698446503184482, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: m_Enabled
       value: 0

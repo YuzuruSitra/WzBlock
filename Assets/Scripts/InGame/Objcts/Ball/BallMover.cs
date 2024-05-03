@@ -19,6 +19,8 @@ public class BallMover : MonoBehaviour
     private GameStateHandler _gameStateHandler;
     private Vector3 _currentVelocity;
     private Vector3 _currentangular;
+    private float _currentSpeed;
+    public float CurrentSpeedRatio => Mathf.Clamp(_currentSpeed / _maxSpeed, 0, _maxSpeed);
 
     private int _hitFrameCount;
     private const int MAX_STACK_COUNT = 5;
@@ -47,6 +49,7 @@ public class BallMover : MonoBehaviour
             case GameStateHandler.GameState.FinGame:
                 _rigidBody.velocity = Vector3.zero;
                 _rigidBody.angularVelocity = Vector3.zero;
+                _currentSpeed = 0;
                 break;
             default:
                 _rigidBody.velocity = _currentVelocity;
@@ -59,8 +62,8 @@ public class BallMover : MonoBehaviour
     {
         if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
         Vector3 velocity = _rigidBody.velocity;
-        float clampedSpeed = Mathf.Clamp(velocity.magnitude, _minSpeed, _maxSpeed);
-        _rigidBody.velocity = velocity.normalized * clampedSpeed;
+        _currentSpeed = Mathf.Clamp(velocity.magnitude, _minSpeed, _maxSpeed);
+        _rigidBody.velocity = velocity.normalized * _currentSpeed;
         _currentVelocity = _rigidBody.velocity;
         _currentangular = _rigidBody.angularVelocity;
     }
@@ -68,7 +71,7 @@ public class BallMover : MonoBehaviour
     // 壁反射でのスタック回避
     private void AvoidFrameStack(GameObject hitObj)
     {
-        if (hitObj.CompareTag("Frame")) 
+        if (hitObj.CompareTag("Frame") || hitObj.CompareTag("Paddle")) 
             _hitFrameCount ++;
         else 
             _hitFrameCount = 0;
@@ -84,7 +87,6 @@ public class BallMover : MonoBehaviour
     private void ChangeRefrection(GameObject hitObj)
     {
         if (!hitObj.CompareTag("Paddle")) return;
-        _hitFrameCount ++;
         Vector3 playerPos = hitObj.transform.position;
         Vector3 ballPos = transform.position;
         Vector3 direction = (ballPos - playerPos).normalized;
