@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class BallMover : MonoBehaviour
 {
+    private Vector3 _launchPos;
     [Range(3, 10)]
     [SerializeField]
     private float _launchSpeed = 3f;
@@ -23,6 +24,7 @@ public class BallMover : MonoBehaviour
     void Start()
     {
         _rigidBody = GetComponent<Rigidbody>();
+        _launchPos = transform.position;
         _gameStateHandler = GameStateHandler.Instance;
         _gameStateHandler.ChangeGameState += ChangeStateBall;
     }
@@ -36,6 +38,7 @@ public class BallMover : MonoBehaviour
                 break;
             case GameStateHandler.GameState.Launch:
                 _hitFrameCount = 0;
+                transform.position = _launchPos;
                 break;
             case GameStateHandler.GameState.FinGame:
                 _rigidBody.velocity = Vector3.zero;

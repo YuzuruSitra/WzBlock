@@ -14,9 +14,4 @@ public class TitleBtHandler : MonoBehaviour
     {
         _startBt.onClick.AddListener(SceneHandler.Instance.GoMainGameScene);
     }
-
-    void Update()
-    {
-        
-    }
 }
