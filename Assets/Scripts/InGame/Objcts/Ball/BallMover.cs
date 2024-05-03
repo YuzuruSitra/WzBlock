@@ -95,10 +95,7 @@ public class BallMover : MonoBehaviour
     private void ReduceForce(GameObject hitObj)
     {
         if (!hitObj.CompareTag("Block")) return;
-        // Œ»İ‚Ì‘¬“x‚Ì”½‘Î•ûŒü‚É—Í‚ğ‰Á‚¦‚é
-        Vector3 reverseDirection = _rigidBody.velocity.normalized;
-        // —Í‚ğ‰Á‚¦‚é
-        _rigidBody.AddForce(reverseDirection * _hitReduceForce, ForceMode.Impulse);
+        _rigidBody.AddForce(_rigidBody.velocity.normalized * _hitReduceForce, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)
