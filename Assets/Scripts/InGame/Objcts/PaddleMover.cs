@@ -27,11 +27,19 @@ public class PaddleMover : MonoBehaviour
         if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
         var horizontal = Input.GetAxis("Horizontal");
         // â¬ìÆàÊÇÃêßå¿
-        float posX = transform.position.x;
-        if (posX <= _leftMaxPos && horizontal < 0) 
+        Vector3 posX = transform.position;
+        if (posX.x <= _leftMaxPos && horizontal < 0)
+        {
             horizontal = 0;
-        if (posX >= _rightMaxPos && horizontal > 0) 
+            posX.x = _leftMaxPos;
+            transform.position = posX;
+        }
+        if (posX.x >= _rightMaxPos && horizontal > 0) 
+        {
             horizontal = 0;
+            posX.x = _rightMaxPos;
+            transform.position = posX;
+        }
         transform.position += Vector3.right * horizontal * Speed * Time.deltaTime;
     }
 

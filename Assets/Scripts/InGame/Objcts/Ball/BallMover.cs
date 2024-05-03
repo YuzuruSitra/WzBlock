@@ -3,13 +3,17 @@ using UnityEngine;
 public class BallMover : MonoBehaviour
 {
     private Vector3 _launchPos;
-    [Range(3, 10)]
+    [Range(1, 10)]
     [SerializeField]
     private float _launchSpeed = 3f;
     [SerializeField]
-    private float _minSpeed = 3f;
+    private float _minSpeed = 1f;
     [SerializeField]
-    private float _maxSpeed = 10f;
+    private float _maxSpeed = 7f;
+    [SerializeField]
+    private float _hitAddForce = 100f;
+    [SerializeField]
+    private float _hitReduceForce = 20f;
     private Vector2 _launchDirection = new Vector2(1, 0.5f);
     private Rigidbody _rigidBody;
     private GameStateHandler _gameStateHandler;
@@ -79,14 +83,22 @@ public class BallMover : MonoBehaviour
     // プレイヤーに当たったときに、跳ね返る方向を変える
     private void ChangeRefrection(GameObject hitObj)
     {
-        if (hitObj.CompareTag("Paddle"))
-        {
-            Vector3 playerPos = hitObj.transform.position;
-            Vector3 ballPos = transform.position;
-            Vector3 direction = (ballPos - playerPos).normalized;
-            float speed = _rigidBody.velocity.magnitude;
-            _rigidBody.velocity = direction * speed * Time.deltaTime;
-        }
+        if (!hitObj.CompareTag("Paddle")) return;
+        _hitFrameCount ++;
+        Vector3 playerPos = hitObj.transform.position;
+        Vector3 ballPos = transform.position;
+        Vector3 direction = (ballPos - playerPos).normalized;
+        _rigidBody.AddForce(direction * _hitAddForce * Time.deltaTime, ForceMode.Impulse);
+    }
+
+    // キューブに当たったときに、減速する
+    private void ReduceForce(GameObject hitObj)
+    {
+        if (!hitObj.CompareTag("Block")) return;
+        // 現在の速度の反対方向に力を加える
+        Vector3 reverseDirection = _rigidBody.velocity.normalized;
+        // 力を加える
+        _rigidBody.AddForce(reverseDirection * _hitReduceForce, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)
