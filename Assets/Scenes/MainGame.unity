@@ -2685,8 +2685,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1335568195}
     - target: {fileID: 6623131933159735589, guid: 718b93432681142c5879c7570e54d806, type: 3}
-      propertyPath: _blockContainar
-      value: 
+      propertyPath: _insInterval
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6623131933159735591, guid: 718b93432681142c5879c7570e54d806, type: 3}
       propertyPath: m_Name

@@ -41,12 +41,10 @@ public class Block : MonoBehaviour
 
     private IEnumerator BreakWallAnim()
     {
+        OnReturnToPool?.Invoke(this);
         _hitEffect.SetActive(true);
-        ChangeLookActive(false);
         yield return _wait;
         _hitEffect.SetActive(false);
-        ChangeLookActive(true);
-        OnReturnToPool?.Invoke(this);
     }
 
     void OnCollisionEnter(Collision collision)

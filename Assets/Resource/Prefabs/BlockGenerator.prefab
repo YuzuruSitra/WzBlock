@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1487199014
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1487199015}
-  m_Layer: 0
-  m_Name: TargetBlocks
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1487199015
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487199014}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6623131933159735588}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6623131933159735591
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,8 +28,7 @@ Transform:
   m_LocalPosition: {x: -1.2218784, y: -2.9753869, z: 0.95890665}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1487199015}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -76,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9f9da7616ce644fcbdeedc47f2b7fcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _blockPositions: {fileID: 11400000, guid: 764f30350a529471397968cc0a9a69d1, type: 2}
-  _blockPrefab: {fileID: 2849479634259899338, guid: e91d55a7b2d37452f9a3c9c60feb0f11, type: 3}
-  _blockParent: {fileID: 1487199015}
-  _blockContainar: {fileID: 0}
+  _blockPool: {fileID: 0}
+  _insInterval: 5
+  _insMaxCount: 5

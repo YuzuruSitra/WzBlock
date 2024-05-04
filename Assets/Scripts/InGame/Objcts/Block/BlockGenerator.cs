@@ -1,28 +1,50 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BlockGenerator : MonoBehaviour
 {
     [SerializeField]
-    private BlockPositions _blockPositions;
-    [SerializeField]
     private BlockPool _blockPool;
     [SerializeField]
-    private Transform _blockParent;
+    private float _insInterval = 7.5f;
+    private float _currentInsTime;
+    [SerializeField]
+    private int _insMaxCount = 5;
+    private GameStateHandler _gameStateHandler;
     
     void Start()
     {
-        SetupInsBlocks();
+        _gameStateHandler = GameStateHandler.Instance;
+        _gameStateHandler.ChangeGameState += ReStartIns;
     }
 
-    void SetupInsBlocks()
+    void Update()
     {
-        for (int i = 0; i < _blockPositions.SlotInfo.Count; i++)
-        {
-            Vector3 position = _blockPositions.SlotInfo[i].Position;
-            Block block = _blockPool.GetBlock(position, _blockParent); // プールからブロックを取得
-            // ブロックがプールに戻るときのイベントを設定
-            block.OnReturnToPool += _blockPool.ReturnBlock;
-        }
+        InsCountDown();
     }
+
+    private void ReStartIns(GameStateHandler.GameState newState)
+    {
+        if (newState != GameStateHandler.GameState.Launch) return;
+        _blockPool.AllGetPool();
+    }
+
+    private void InsCountDown()
+    {
+        if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
+        if (_blockPool.AvailableBlocksCount <= 0) return;
+        _currentInsTime += Time.deltaTime;
+        if (_currentInsTime <= _insInterval) return;
+        PeriodicSpawne();
+        _currentInsTime = 0;
+    }
+
+    private void PeriodicSpawne()
+    {
+        
+        int insCount = Random.Range(1, _insMaxCount);
+        int clampedValue = Mathf.Clamp(insCount, 1, _blockPool.AvailableBlocksCount);
+        for (int i = 0; i < insCount; i++)
+            if (_blockPool.GetBlock() == null) return;
+    }
+
 }
