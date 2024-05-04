@@ -2651,6 +2651,18 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _explotionForce
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _hitReduceForce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _hitReduceSpeed
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: _BottomCenterPos
       value: 
       objectReference: {fileID: 1327748469}

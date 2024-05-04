@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2129730774368245199}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -152,11 +152,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63ef17a126a064369906bc14a07d1ae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _launchSpeed: 5
+  _launchSpeed: 3
   _minSpeed: 3
   _maxSpeed: 10
-  _hitAddForce: 100
-  _hitReduceForce: 20
+  _hitAddForce: 75
+  _hitReduceSpeed: 0.1
+  _hitReduceForce: 1
   _BottomCenterPos: {fileID: 0}
 --- !u!1001 &1984779220275057223
 PrefabInstance:
