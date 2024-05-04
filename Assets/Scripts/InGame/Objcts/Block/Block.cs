@@ -1,14 +1,13 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class Block : MonoBehaviour
 {
+    public event Action<Block> OnReturnToPool;
+
     [SerializeField]
     private int _score;
-    private int _blockID;
-    public int BlockID => _blockID;
-    private bool _isActive = false;
-    public bool IsActive => _isActive;
     private ScoreHandler _scoreHandler;
     [SerializeField]
     private GameObject _hitEffect;
@@ -26,20 +25,6 @@ public class Block : MonoBehaviour
         _ps = _hitEffect.GetComponent<ParticleSystem>();
 
         _wait = new WaitForSeconds(_ps.main.duration);
-    }
-
-    public void SetID(int newID)
-    {
-        _blockID = newID;
-    }
-
-    public void ChangeActive(bool newActive)
-    {
-        _isActive = newActive;
-        gameObject.SetActive(newActive);
-        if (!_isActive) return;
-        _col.enabled = _isActive;
-        _mesh.enabled = _isActive;
     }
 
     public void ChangeLookActive(bool newActive)
@@ -61,7 +46,7 @@ public class Block : MonoBehaviour
         yield return _wait;
         _hitEffect.SetActive(false);
         ChangeLookActive(true);
-        ChangeActive(false);
+        OnReturnToPool?.Invoke(this);
     }
 
     void OnCollisionEnter(Collision collision)

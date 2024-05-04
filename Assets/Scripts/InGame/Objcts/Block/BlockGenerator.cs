@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,13 +6,10 @@ public class BlockGenerator : MonoBehaviour
     [SerializeField]
     private BlockPositions _blockPositions;
     [SerializeField]
-    private Block _blockPrefab;
+    private BlockPool _blockPool;
     [SerializeField]
     private Transform _blockParent;
-    [SerializeField]
-    private BlockContainar _blockContainar;
     
-    // Start is called before the first frame update
     void Start()
     {
         SetupInsBlocks();
@@ -21,12 +17,12 @@ public class BlockGenerator : MonoBehaviour
 
     void SetupInsBlocks()
     {
-        Block[] blocks = new Block[_blockPositions.SlotInfo.Count];
         for (int i = 0; i < _blockPositions.SlotInfo.Count; i++)
         {
-            blocks[i] = Instantiate(_blockPrefab, _blockPositions.SlotInfo[i].Position, Quaternion.identity, _blockParent);
-            blocks[i].SetID(i);
+            Vector3 position = _blockPositions.SlotInfo[i].Position;
+            Block block = _blockPool.GetBlock(position, _blockParent); // プールからブロックを取得
+            // ブロックがプールに戻るときのイベントを設定
+            block.OnReturnToPool += _blockPool.ReturnBlock;
         }
-        _blockContainar.ChangeBlockIndex(blocks);
     }
 }
