@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using System;
 public class BallMover : MonoBehaviour
 {
     private Vector3 _launchPos;
@@ -24,11 +24,17 @@ public class BallMover : MonoBehaviour
     private Vector3 _currentAngular;
     private float _currentSpeed;
     public float CurrentSpeedRatio => Mathf.Clamp(_currentSpeed / _maxSpeed, 0, _maxSpeed);
-
+    public event Action ExplotionEvent;
     private int _hitFrameCount;
     // äÓèÄÇ∆Ç»ÇÈäpìx
     private List<float> _baseAngles = new List<float> { 0f, 90f, 180f, 270f, 360f };
-    Vector3 _randomDirection = Vector3.zero;
+    Vector3[] _explotionDirection = new Vector3[]
+    {
+        new Vector3(1, -1, 0),
+        new Vector3(1, 1, 0), 
+        new Vector3(-1, -1, 0),
+        new Vector3(-1, 1, 0)
+    };
     private const int MAX_STACK_COUNT = 5;
     private const float TILT_THRESHOLD = 10;
 
@@ -99,13 +105,12 @@ public class BallMover : MonoBehaviour
         if (_hitFrameCount < MAX_STACK_COUNT) return;
 
         // óÕÇâ¡Ç¶ÇÈ
-        _randomDirection.x = Random.Range(-1f, 1f);
-        _randomDirection.y = Random.Range(-1f, 1f);
-        _randomDirection.Normalize(); 
         _rigidBody.velocity = Vector3.zero;
         _rigidBody.angularVelocity = Vector3.zero;
-        _rigidBody.AddForce(_randomDirection * _explotionForce, ForceMode.Impulse);
+        int rnd = UnityEngine.Random.Range(0, _explotionDirection.Length);
+        _rigidBody.AddForce(_explotionDirection[rnd] * _explotionForce, ForceMode.Impulse);
         _hitFrameCount = 0;
+        ExplotionEvent?.Invoke();
     }
 
     private bool IsAngleWithinThreshold(float angle)

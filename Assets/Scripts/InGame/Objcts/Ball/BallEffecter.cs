@@ -1,19 +1,25 @@
 using UnityEngine;
+using System.Collections;
 
 public class BallEffecter : MonoBehaviour
 {
     private Rigidbody _rigidBody;
     [SerializeField]
-    private GameObject _effect;
+    private GameObject _prjEffect;
     [SerializeField]
     private GameObject[] _changeSizeEffects;
     private Vector3[] _originSizeEffects;
+    [SerializeField]
+    private GameObject _explosionEffect;
+    private WaitForSeconds _explosionEffectDurtion;
     [SerializeField]
     private BallMover _ballMover;
 
     void Start()
     {
         _rigidBody = GetComponent<Rigidbody>();
+        _explosionEffectDurtion = new WaitForSeconds(_explosionEffect.GetComponent<ParticleSystem>().main.duration);
+        _ballMover.ExplotionEvent += LaunchExplotion;
         _originSizeEffects = new Vector3[_changeSizeEffects.Length];
         for (int i = 0; i < _changeSizeEffects.Length; i++)
             _originSizeEffects[i] = _changeSizeEffects[i].transform.localScale;
@@ -35,6 +41,19 @@ public class BallEffecter : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
 
         // 新しい回転にスムーズに補間
-        _effect.transform.rotation = Quaternion.Lerp(_effect.transform.rotation, targetRotation, Time.deltaTime * 50f);
+        _prjEffect.transform.rotation = Quaternion.Lerp(_prjEffect.transform.rotation, targetRotation, Time.deltaTime * 50f);
     }
+
+    private void LaunchExplotion()
+    {
+        StartCoroutine(ExplotionAnim());
+    }
+
+    private IEnumerator ExplotionAnim()
+    {
+        _explosionEffect.SetActive(true);
+        yield return _explosionEffectDurtion;
+        _explosionEffect.SetActive(false);
+    }
+
 }
