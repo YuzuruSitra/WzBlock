@@ -39162,7 +39162,7 @@ GameObject:
   - component: {fileID: 6436662279796987236}
   - component: {fileID: 6238784219302332944}
   m_Layer: 0
-  m_Name: PS_DarkMagic_Hit_use
+  m_Name: BlockDestroy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

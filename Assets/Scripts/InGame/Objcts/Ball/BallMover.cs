@@ -12,11 +12,11 @@ public class BallMover : MonoBehaviour
     [SerializeField]
     private float _maxSpeed = 7f;
     [SerializeField]
-    private float _paddleAddForce = 100f;
+    private float _paddleAddForce = 1f;
     [SerializeField]
-    private float _hitReduceForce = 50f;
+    private float _hitReduceForce = 1f;
     [SerializeField]
-    private float _explotionForce = 175f;
+    private float _explotionForce = 1.75f;
     private Vector2 _launchDirection = new Vector2(1, 0.5f);
     private Rigidbody _rigidBody;
     private GameStateHandler _gameStateHandler;
@@ -31,8 +31,6 @@ public class BallMover : MonoBehaviour
     Vector3 _randomDirection = Vector3.zero;
     private const int MAX_STACK_COUNT = 5;
     private const float TILT_THRESHOLD = 10;
-    [SerializeField]
-    private Transform _BottomCenterPos;
 
     void Start()
     {
@@ -47,7 +45,7 @@ public class BallMover : MonoBehaviour
         switch (newState)
         {
             case GameStateHandler.GameState.InGame:
-                _rigidBody.AddForce(_launchDirection.normalized * _launchSpeed * Time.deltaTime, ForceMode.Impulse);
+                _rigidBody.AddForce(_launchDirection.normalized * _launchSpeed, ForceMode.Impulse);
                 break;
             case GameStateHandler.GameState.Launch:
                 _hitFrameCount = 0;
@@ -106,7 +104,7 @@ public class BallMover : MonoBehaviour
         _randomDirection.Normalize(); 
         _rigidBody.velocity = Vector3.zero;
         _rigidBody.angularVelocity = Vector3.zero;
-        _rigidBody.AddForce(_randomDirection * _explotionForce * Time.deltaTime, ForceMode.Impulse);
+        _rigidBody.AddForce(_randomDirection * _explotionForce, ForceMode.Impulse);
         _hitFrameCount = 0;
     }
 
@@ -126,7 +124,7 @@ public class BallMover : MonoBehaviour
         Vector3 playerPos = hitObj.transform.position;
         Vector3 ballPos = transform.position;
         Vector3 direction = (ballPos - playerPos).normalized;
-        _rigidBody.AddForce(direction * _paddleAddForce * Time.deltaTime, ForceMode.Impulse);
+        _rigidBody.AddForce(direction * _paddleAddForce, ForceMode.Impulse);
     }
 
     // キューブに当たったときに、減速する

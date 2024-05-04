@@ -828,17 +828,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _reStartBt: {fileID: 1413721865}
---- !u!114 &481714341 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-  m_PrefabInstance: {fileID: 2129730774387224599}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63ef17a126a064369906bc14a07d1ae4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &594849958
 GameObject:
   m_ObjectHideFlags: 0
@@ -1908,11 +1897,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217978351}
   m_CullTransparentMesh: 1
---- !u!4 &1327748469 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 589121239980732921, guid: a480e900b0c8d46dc8ce84f5c597122c, type: 3}
-  m_PrefabInstance: {fileID: 589121239723913938}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1335568192
 GameObject:
   m_ObjectHideFlags: 0
@@ -2618,64 +2602,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ball
       objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245188, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: m_TagString
-      value: Ball
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: Speed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: maxSpeed
-      value: 7.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: minSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _minSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _hitAddForce
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _hitAddSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _launchSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _explotionForce
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _hitReduceForce
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _hitReduceSpeed
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _BottomCenterPos
-      value: 
-      objectReference: {fileID: 1327748469}
-    - target: {fileID: 7533679646343231646, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _ballMover
-      value: 
-      objectReference: {fileID: 481714341}
-    - target: {fileID: 8247698446503184482, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8247698446503184482, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
 --- !u!1001 &4291067530137959997
 PrefabInstance:

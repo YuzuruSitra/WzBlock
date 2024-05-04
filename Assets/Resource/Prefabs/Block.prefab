@@ -32,7 +32,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.25, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5421413726557144522}
+  - {fileID: 1624794275390678782}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -112,10 +112,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _score: 100
-  _hitEffect: {fileID: 5421413726557144521}
+  _hitEffect: {fileID: 1624794275390678781}
   _col: {fileID: 9206532192890621476}
   _mesh: {fileID: 4561537781649656749}
---- !u!1001 &1328321315562131628
+--- !u!1001 &5755587084136706968
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -268,7 +268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6436662279796987237, guid: a9a130bc66ae649479ed9c256dff5997, type: 3}
       propertyPath: m_Name
-      value: PS_DarkMagic_Hit_use
+      value: BlockDestroy
       objectReference: {fileID: 0}
     - target: {fileID: 6436662279796987237, guid: a9a130bc66ae649479ed9c256dff5997, type: 3}
       propertyPath: m_IsActive
@@ -372,13 +372,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9a130bc66ae649479ed9c256dff5997, type: 3}
---- !u!1 &5421413726557144521 stripped
+--- !u!1 &1624794275390678781 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6436662279796987237, guid: a9a130bc66ae649479ed9c256dff5997, type: 3}
-  m_PrefabInstance: {fileID: 1328321315562131628}
+  m_PrefabInstance: {fileID: 5755587084136706968}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &5421413726557144522 stripped
+--- !u!4 &1624794275390678782 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6436662279796987238, guid: a9a130bc66ae649479ed9c256dff5997, type: 3}
-  m_PrefabInstance: {fileID: 1328321315562131628}
+  m_PrefabInstance: {fileID: 5755587084136706968}
   m_PrefabAsset: {fileID: 0}
