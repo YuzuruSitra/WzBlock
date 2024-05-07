@@ -25,6 +25,7 @@ public class BlockGenerator : MonoBehaviour
     private void ReStartIns(GameStateHandler.GameState newState)
     {
         if (newState != GameStateHandler.GameState.Launch) return;
+        _currentInsTime = 0;
         _blockPool.AllGetPool();
     }
 

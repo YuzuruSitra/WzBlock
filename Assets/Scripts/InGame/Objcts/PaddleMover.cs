@@ -11,12 +11,13 @@ public class PaddleMover : MonoBehaviour
     private GameObject _leftObj;
     [SerializeField]
     private GameObject _rightObj;
-    private float _leftMaxPos;
-    private float _rightMaxPos;
+    private float _leftMaxPos => _moveRangeCalculator.LeftMaxPos;
+    private float _rightMaxPos  => _moveRangeCalculator.RightMaxPos;
+    private MoveRangeCalculator _moveRangeCalculator;
 
     void Start()
     {
-        CalcMoveRange();
+        _moveRangeCalculator = new MoveRangeCalculator(gameObject, _leftObj, _rightObj);
         _launchPos = transform.position;
         _gameStateHandler = GameStateHandler.Instance;
         _gameStateHandler.ChangeGameState += ChangeStatePaddle;
@@ -47,23 +48,6 @@ public class PaddleMover : MonoBehaviour
     {
         if (newState == GameStateHandler.GameState.Launch)
             transform.position = _launchPos;
-    }
-
-    private void CalcMoveRange()
-    {
-        // このオブジェクトの幅を考慮
-        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
-        float width = meshRenderer.bounds.size.x / 2;
-
-        // 左端を計算
-        MeshRenderer meshRendererLeft = _leftObj.GetComponent<MeshRenderer>();
-        float widthLeft =  meshRendererLeft.bounds.size.x;
-        _leftMaxPos = _leftObj.transform.position.x + widthLeft / 2 + width;
-
-        // 右端を計算
-        MeshRenderer meshRendererRight = _rightObj.GetComponent<MeshRenderer>();
-        float widthRight =  meshRendererRight.bounds.size.x;
-        _rightMaxPos = _rightObj.transform.position.x - widthRight / 2 - width;
     }
 
 }
