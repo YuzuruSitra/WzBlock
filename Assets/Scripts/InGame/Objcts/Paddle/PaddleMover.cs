@@ -4,7 +4,7 @@ public class PaddleMover : MonoBehaviour
 {
     [Range(0, 100)]
     [SerializeField]
-    private float Speed = 1f;
+    private float _speed = 1f;
     private Vector3 _launchPos;
     private GameStateHandler _gameStateHandler;
     [SerializeField]
@@ -41,7 +41,7 @@ public class PaddleMover : MonoBehaviour
             posX.x = _rightMaxPos;
             transform.position = posX;
         }
-        transform.position += Vector3.right * horizontal * Speed * Time.deltaTime;
+        transform.position += Vector3.right * horizontal * _speed * Time.deltaTime;
     }
 
     private void ChangeStatePaddle(GameStateHandler.GameState newState)
