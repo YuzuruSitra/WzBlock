@@ -60,8 +60,8 @@ public class Bullet : MonoBehaviour
     void OnCollisionEnter (Collision collision)
     {
         if (collision.gameObject.CompareTag("Frame")
-            || collision.gameObject.CompareTag("Block")
-            || collision.gameObject.CompareTag("Ball"))
+            || collision.gameObject.CompareTag("Block"))
+            //|| collision.gameObject.CompareTag("Ball"))
         HitDestroy();
     }
 }

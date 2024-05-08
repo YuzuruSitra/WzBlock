@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyArea : MonoBehaviour
+public class BallStateChanger : MonoBehaviour
 {
     private GameStateHandler _gameStateHandler;
 
@@ -13,7 +11,7 @@ public class DestroyArea : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Ball"))
+        if (other.gameObject.CompareTag("DestroyArea"))
             _gameStateHandler.SetGameState(GameStateHandler.GameState.FinGame);
     }
 }

@@ -99,7 +99,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bullet: {fileID: 9047093242271327612, guid: 9a278f1b05a1542f795573a27e0975aa, type: 3}
   _rayOffSet: {x: 0.12, y: 0, z: 0}
-  _maxThreeBlock: 0
+  _maxThreeBlock: 2
+  _bulletPool: {fileID: 0}
 --- !u!114 &2967823971967334413
 MonoBehaviour:
   m_ObjectHideFlags: 0
