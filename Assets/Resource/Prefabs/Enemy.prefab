@@ -98,9 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bullet: {fileID: 9047093242271327612, guid: 9a278f1b05a1542f795573a27e0975aa, type: 3}
-  _insOffSet: {x: 0, y: -0.4, z: 0}
-  _rayOffSet: {x: 0.1, y: 0, z: 0}
-  _rayDistance: 2.5
+  _rayOffSet: {x: 0.12, y: 0, z: 0}
   _maxThreeBlock: 0
 --- !u!114 &2967823971967334413
 MonoBehaviour:
