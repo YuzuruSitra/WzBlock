@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemyShooter : MonoBehaviour
 {
+    [SerializeField]
+    private EnemySurviveManager _enemySurviveManager;
     private GameStateHandler _gameStateHandler;
     [SerializeField]
     private GameObject _bullet;
@@ -25,6 +27,7 @@ public class EnemyShooter : MonoBehaviour
 
     void Update()
     {
+        if (!_enemySurviveManager.IsActive) return;
         if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
         // î≠ñCèàóù
         if (IsBlocking()) 

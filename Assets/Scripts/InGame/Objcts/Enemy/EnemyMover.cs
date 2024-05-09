@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemyMover : MonoBehaviour
 {
+    [SerializeField]
+    private EnemySurviveManager _enemySurviveManager;
     private Vector3 _launchPos;
     private Vector3 _direction = Vector3.right;
     [Range(0, 100)]
@@ -15,17 +17,20 @@ public class EnemyMover : MonoBehaviour
     private float _leftMaxPos => _moveRangeCalculator.LeftMaxPos;
     private float _rightMaxPos  => _moveRangeCalculator.RightMaxPos;
     private GameStateHandler _gameStateHandler;
-
+    [SerializeField]
+    private float _moveWaitTime;
+    private float _currentWaitTime;
     void Start()
     {
         _launchPos = transform.position;
         _gameStateHandler = GameStateHandler.Instance;
-        _gameStateHandler.ChangeGameState += ChangeStatePaddle;
+        _gameStateHandler.ChangeGameState += ChangeStateEnemyMover;
         _moveRangeCalculator = new MoveRangeCalculator(gameObject, _leftObj, _rightObj);
     }
 
     void Update()
     {
+        if (!_enemySurviveManager.IsActive) return;
         if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
         // â¬ìÆàÊÇÃêßå¿
         Vector3 posX = transform.position;
@@ -44,9 +49,10 @@ public class EnemyMover : MonoBehaviour
         transform.position += _direction * _speed * Time.deltaTime;
     }
 
-    private void ChangeStatePaddle(GameStateHandler.GameState newState)
+    private void ChangeStateEnemyMover(GameStateHandler.GameState newState)
     {
-        if (newState == GameStateHandler.GameState.Launch)
-            transform.position = _launchPos;
+        if (newState != GameStateHandler.GameState.Launch) return;
+        transform.position = _launchPos;
+        _currentWaitTime = 0;
     }
 }
