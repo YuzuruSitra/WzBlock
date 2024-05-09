@@ -11,6 +11,7 @@ public class AbilityReceiver
     private const float COOL_TIME = 0.5f;
     private DateTime _lastConditionChange;
     public bool IsEnable => (DateTime.Now - _lastConditionChange).TotalSeconds >= COOL_TIME;
+    private GameStateHandler _gameStateHandler;
 
     public enum Condition
     {
@@ -18,7 +19,11 @@ public class AbilityReceiver
         Stan
     }
 
-    private AbilityReceiver() {}
+    private AbilityReceiver() 
+    {
+        _gameStateHandler = GameStateHandler.Instance;
+        _gameStateHandler.ChangeGameState += ChangeStateAbility;
+    }
 
     public void ChangeCondition(Condition newCondition)
     {
@@ -30,6 +35,12 @@ public class AbilityReceiver
         _lastConditionChange = DateTime.Now;
         _currentCondition = newCondition;
         ConditionChanged?.Invoke(newCondition);
+    }
+
+    private void ChangeStateAbility(GameStateHandler.GameState newState)
+    {
+        if (newState == GameStateHandler.GameState.Launch)
+            ConditionChanged?.Invoke(Condition.Default);
     }
 
 }

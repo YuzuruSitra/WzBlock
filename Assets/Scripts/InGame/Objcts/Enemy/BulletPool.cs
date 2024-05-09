@@ -51,4 +51,17 @@ public class BulletPool : MonoBehaviour
         _usedBullets.Remove(bullet);
         _availableBullets.Add(bullet);
     }
+
+    public void ReturnALLBlock()
+    {
+        if (_usedBullets.Count == 0) return;
+        for (int i = _usedBullets.Count - 1; i >= 0; i--)
+        {
+            Bullet bullet = _usedBullets[i];
+            bullet.ChangeLookActive(false);
+            _usedBullets.RemoveAt(i);
+            _availableBullets.Add(bullet);
+        }
+    }
+
 }

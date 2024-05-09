@@ -61,7 +61,7 @@ MonoBehaviour:
   _prjEffect: {fileID: 1319398647734039147}
   _col: {fileID: 6736952774740926462}
   _abilityType: 1
-  _abilityTime: 2
+  _abilityTime: 1.25
 --- !u!65 &6736952774740926462
 BoxCollider:
   m_ObjectHideFlags: 0
