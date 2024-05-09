@@ -6,10 +6,12 @@ public class Bullet : MonoBehaviour
 {
     public event Action<Bullet> OnReturnToPool;
     private bool _isActive;
-    // [SerializeField]
-    // private GameObject _hitEffect;
-    // private ParticleSystem _ps;
-    // private WaitForSeconds _wait;
+    [SerializeField]
+    private GameObject _hitEffectPrefab;
+    private GameObject _hitEffect;
+    private ParticleSystem _ps;
+    private WaitForSeconds _wait;
+    
     [SerializeField]
     private float _speed;
     [SerializeField]
@@ -17,12 +19,20 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private BoxCollider _col;
 
+    private AbilityReceiver _abilityReceiver;
+    [SerializeField]
+    private AbilityReceiver.Condition _abilityType;
+    [SerializeField]
+    private float _abilityTime;
+    private WaitForSeconds _waitAbility;
+
     void Start()
     {
-        // _scoreHandler = ScoreHandler.Instance;
-        // _ps = _hitEffect.GetComponent<ParticleSystem>();
-
-        // _wait = new WaitForSeconds(_ps.main.duration);
+        _hitEffect = Instantiate(_hitEffectPrefab);
+        _ps = _hitEffect.GetComponent<ParticleSystem>();
+        _wait = new WaitForSeconds(_ps.main.duration);
+        _waitAbility = new WaitForSeconds(_abilityTime);
+        _abilityReceiver = AbilityReceiver.Instance;
     }
 
     void Update()
@@ -38,24 +48,33 @@ public class Bullet : MonoBehaviour
         _isActive = newActive;
     }
 
-    private void HitDestroy()
-    {
-        StartCoroutine(BreakBulletAnim());
-    }
-
     private IEnumerator BreakBulletAnim()
     {
         OnReturnToPool?.Invoke(this);
-        yield return null;
-        //_hitEffect.SetActive(true);
-        //yield return _wait;
-        //_hitEffect.SetActive(false);
+        _hitEffect.transform.position = transform.position;
+        _hitEffect.SetActive(true);
+        yield return _wait;
+        _hitEffect.SetActive(false);
+    }
+
+    private IEnumerator SendAbility()
+    {
+        AbilityReceiver.Instance.ChangeCondition(_abilityType);
+        yield return _waitAbility;
+        AbilityReceiver.Instance.ChangeCondition(AbilityReceiver.Condition.Default);
+    }
+
+    private void HitPaddle()
+    {
+        if (!_abilityReceiver.IsEnable) return;
+        StartCoroutine(BreakBulletAnim());
+        StartCoroutine(SendAbility());
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("DestroyArea"))
-            HitDestroy();
+            OnReturnToPool?.Invoke(this);
     }
 
     void OnCollisionEnter (Collision collision)
@@ -63,6 +82,8 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.CompareTag("Frame")
             || collision.gameObject.CompareTag("Block")
             || collision.gameObject.CompareTag("Ball"))
-            HitDestroy();
+            StartCoroutine(BreakBulletAnim());
+        if (collision.gameObject.CompareTag("Paddle"))
+            HitPaddle();
     }
 }

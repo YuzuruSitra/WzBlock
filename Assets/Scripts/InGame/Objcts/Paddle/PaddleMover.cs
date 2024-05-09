@@ -14,6 +14,7 @@ public class PaddleMover : MonoBehaviour
     private float _leftMaxPos => _moveRangeCalculator.LeftMaxPos;
     private float _rightMaxPos  => _moveRangeCalculator.RightMaxPos;
     private MoveRangeCalculator _moveRangeCalculator;
+    private AbilityReceiver _abilityReceiver;
 
     void Start()
     {
@@ -21,10 +22,12 @@ public class PaddleMover : MonoBehaviour
         _launchPos = transform.position;
         _gameStateHandler = GameStateHandler.Instance;
         _gameStateHandler.ChangeGameState += ChangeStatePaddle;
+        _abilityReceiver = AbilityReceiver.Instance;
     }
 
     void Update()
     {
+        if (_abilityReceiver.CurrentCondition == AbilityReceiver.Condition.Stan) return;
         if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
         var horizontal = Input.GetAxis("Horizontal");
         // â¬ìÆàÊÇÃêßå¿

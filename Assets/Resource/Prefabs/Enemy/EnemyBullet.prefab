@@ -56,9 +56,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 241d15d4fe9fe4407b227ecc5e68c3c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hitEffectPrefab: {fileID: 6589385767113089740, guid: a210fafc6dd314244977869d7e697754, type: 3}
   _speed: 2
   _prjEffect: {fileID: 1319398647734039147}
   _col: {fileID: 6736952774740926462}
+  _abilityType: 1
+  _abilityTime: 2
 --- !u!65 &6736952774740926462
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -68,7 +71,7 @@ BoxCollider:
   m_GameObject: {fileID: 9047093242271327612}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 2.0230196, y: 1.336256, z: 1}
   m_Center: {x: -0.068134256, y: 0.16812801, z: 0}
@@ -98,6 +101,10 @@ PrefabInstance:
     - target: {fileID: 1319398647745027786, guid: b48ed7750c2926f4584128605fc13c80, type: 3}
       propertyPath: m_Name
       value: PS_ElectricMagic_Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 1319398647745027786, guid: b48ed7750c2926f4584128605fc13c80, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3341299287826401419, guid: b48ed7750c2926f4584128605fc13c80, type: 3}
       propertyPath: m_RootOrder
