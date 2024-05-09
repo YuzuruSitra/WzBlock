@@ -18,6 +18,7 @@ public class BallMover : MonoBehaviour
     [SerializeField]
     private float _explotionForce = 1.75f;
     private Vector2 _launchDirection = new Vector2(1, 0.5f);
+    private const float MIN_THRESHOLD = 0.001f;
     private Rigidbody _rigidBody;
     private GameStateHandler _gameStateHandler;
     private Vector3 _currentVelocity;
@@ -25,6 +26,7 @@ public class BallMover : MonoBehaviour
     private float _currentSpeed;
     public float CurrentSpeedRatio => Mathf.Clamp(_currentSpeed / _maxSpeed, 0, _maxSpeed);
     public event Action ExplotionEvent;
+    public event Action HitPaddleEvent;
     private int _hitFrameCount;
     // 基準となる角度
     private List<float> _baseAngles = new List<float> { 0f, 90f, 180f, 270f, 360f };
@@ -44,6 +46,23 @@ public class BallMover : MonoBehaviour
         _launchPos = transform.position;
         _gameStateHandler = GameStateHandler.Instance;
         _gameStateHandler.ChangeGameState += ChangeStateBall;
+    }
+
+    void Update()
+    {
+        if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
+        Vector3 velocity = _rigidBody.velocity;
+        float speed = velocity.magnitude;
+        if (speed < MIN_THRESHOLD)
+        {
+            velocity = Vector3.forward;
+            speed = _minSpeed;
+        }
+        _currentSpeed = Mathf.Clamp(speed, _minSpeed, _maxSpeed);
+        _rigidBody.velocity = (velocity / speed) * _currentSpeed;
+
+        _currentVelocity = _rigidBody.velocity;
+        _currentAngular = _rigidBody.angularVelocity;
     }
 
     private void ChangeStateBall(GameStateHandler.GameState newState)
@@ -67,16 +86,6 @@ public class BallMover : MonoBehaviour
                 _rigidBody.angularVelocity = _currentAngular;
                 break;
         }
-    }
-
-    private void Update()
-    {
-        if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
-        Vector3 velocity = _rigidBody.velocity;
-        _currentSpeed = Mathf.Clamp(velocity.magnitude, _minSpeed, _maxSpeed);
-        _rigidBody.velocity = velocity.normalized * _currentSpeed;
-        _currentVelocity = _rigidBody.velocity;
-        _currentAngular = _rigidBody.angularVelocity;
     }
 
     // 壁反射でのスタック回避
@@ -126,17 +135,18 @@ public class BallMover : MonoBehaviour
     private void ChangeRefrection(GameObject hitObj)
     {
         if (!hitObj.CompareTag("Paddle")) return;
+        HitPaddleEvent?.Invoke();
         Vector3 playerPos = hitObj.transform.position;
         Vector3 ballPos = transform.position;
         Vector3 direction = (ballPos - playerPos).normalized;
         _rigidBody.AddForce(direction * _paddleAddForce, ForceMode.Impulse);
     }
 
-    // キューブに当たったときに、減速する
+    // キューブと弾に当たったときに、減速する
     private void ReduceForce(GameObject hitObj)
     {
-        if (!hitObj.CompareTag("Block")) return;
-        _rigidBody.AddForce(-_rigidBody.velocity.normalized * _hitReduceForce, ForceMode.Impulse);
+        if (hitObj.CompareTag("Block") || hitObj.CompareTag("Bullet"))
+            _rigidBody.AddForce(-_rigidBody.velocity.normalized * _hitReduceForce, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)

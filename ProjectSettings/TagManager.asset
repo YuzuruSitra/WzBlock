@@ -9,6 +9,7 @@ TagManager:
   - Ball
   - Frame
   - Block
+  - Bullet
   layers:
   - Default
   - TransparentFX

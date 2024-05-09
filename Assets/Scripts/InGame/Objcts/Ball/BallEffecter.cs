@@ -9,8 +9,15 @@ public class BallEffecter : MonoBehaviour
     [SerializeField]
     private GameObject[] _changeSizeEffects;
     private Vector3[] _originSizeEffects;
+
+    [SerializeField]
+    private GameObject _paddleHitEffect;
+    private GameObject _hitEffect;
+    private WaitForSeconds _hitEffectDurtion;
+
     [SerializeField]
     private GameObject _explosionEffect;
+    private GameObject _expEffect;
     private WaitForSeconds _explosionEffectDurtion;
     [SerializeField]
     private BallMover _ballMover;
@@ -18,7 +25,12 @@ public class BallEffecter : MonoBehaviour
     void Start()
     {
         _rigidBody = GetComponent<Rigidbody>();
-        _explosionEffectDurtion = new WaitForSeconds(_explosionEffect.GetComponent<ParticleSystem>().main.duration);
+        _hitEffect = Instantiate(_paddleHitEffect);
+        _hitEffectDurtion = new WaitForSeconds(_hitEffect.GetComponent<ParticleSystem>().main.duration);
+        _ballMover.HitPaddleEvent += LaunchHitEffect;
+
+        _expEffect = Instantiate(_explosionEffect);
+        _explosionEffectDurtion = new WaitForSeconds(_expEffect.GetComponent<ParticleSystem>().main.duration);
         _ballMover.ExplotionEvent += LaunchExplotion;
         _originSizeEffects = new Vector3[_changeSizeEffects.Length];
         for (int i = 0; i < _changeSizeEffects.Length; i++)
@@ -44,6 +56,19 @@ public class BallEffecter : MonoBehaviour
         _prjEffect.transform.rotation = Quaternion.Lerp(_prjEffect.transform.rotation, targetRotation, Time.deltaTime * 50f);
     }
 
+    private void LaunchHitEffect()
+    {
+        StartCoroutine(HitPaddleAnim());
+    }
+
+    private IEnumerator HitPaddleAnim()
+    {
+        _hitEffect.transform.position = transform.position;
+        _hitEffect.SetActive(true);
+        yield return _hitEffectDurtion;
+        _hitEffect.SetActive(false);
+    }
+
     private void LaunchExplotion()
     {
         StartCoroutine(ExplotionAnim());
@@ -51,9 +76,10 @@ public class BallEffecter : MonoBehaviour
 
     private IEnumerator ExplotionAnim()
     {
-        _explosionEffect.SetActive(true);
+        _expEffect.transform.position = transform.position;
+        _expEffect.SetActive(true);
         yield return _explosionEffectDurtion;
-        _explosionEffect.SetActive(false);
+        _expEffect.SetActive(false);
     }
 
 }
