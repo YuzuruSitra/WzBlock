@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PanelSwicher : MonoBehaviour
@@ -15,10 +13,12 @@ public class PanelSwicher : MonoBehaviour
     void Start()
     {
         GameStateHandler.Instance.ChangeGameState += ChangePanel;
+        _currentPanel = _launchPanel;
     }
 
     private void ChangePanel(GameStateHandler.GameState newState)
     {
+        
         if (_currentPanel != null) _currentPanel.SetActive(false);
         switch (newState)
         {

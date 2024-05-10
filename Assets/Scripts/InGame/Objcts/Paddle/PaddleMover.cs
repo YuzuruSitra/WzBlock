@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PaddleMover : MonoBehaviour
 {
+    public bool UsePad;
     [Range(0, 100)]
     [SerializeField]
     private float _speed = 1f;
@@ -32,7 +33,7 @@ public class PaddleMover : MonoBehaviour
         if (_abilityReceiver.CurrentCondition == AbilityReceiver.Condition.Stan) return;
         if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
         var horizontal = Input.GetAxis("Horizontal");
-        horizontal = _dragHandlerPad.GetRelativePosition;
+        if (UsePad) horizontal = _dragHandlerPad.GetRelativePosition;
         // â¬ìÆàÊÇÃêßå¿
         Vector3 posX = transform.position;
         if (posX.x <= _leftMaxPos && horizontal < 0)

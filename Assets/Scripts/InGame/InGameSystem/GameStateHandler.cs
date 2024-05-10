@@ -12,11 +12,14 @@ public class GameStateHandler
         FinGame,
         Settings
     }
-    private GameState _currentState = GameState.Launch;
+    private GameState _currentState;
     public GameState CurrentState => _currentState;
     public event Action<GameState> ChangeGameState;
 
-    private GameStateHandler(){}
+    private GameStateHandler()
+    {
+        SetGameState(GameState.Launch);
+    }
 
     public void SetGameState(GameState newState)
     {
