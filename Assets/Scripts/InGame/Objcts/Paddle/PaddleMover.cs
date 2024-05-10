@@ -15,6 +15,8 @@ public class PaddleMover : MonoBehaviour
     private float _rightMaxPos  => _moveRangeCalculator.RightMaxPos;
     private MoveRangeCalculator _moveRangeCalculator;
     private AbilityReceiver _abilityReceiver;
+    [SerializeField]
+    private DragHandlerPad _dragHandlerPad;
 
     void Start()
     {
@@ -30,6 +32,7 @@ public class PaddleMover : MonoBehaviour
         if (_abilityReceiver.CurrentCondition == AbilityReceiver.Condition.Stan) return;
         if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
         var horizontal = Input.GetAxis("Horizontal");
+        horizontal = _dragHandlerPad.GetRelativePosition;
         // â¬ìÆàÊÇÃêßå¿
         Vector3 posX = transform.position;
         if (posX.x <= _leftMaxPos && horizontal < 0)
