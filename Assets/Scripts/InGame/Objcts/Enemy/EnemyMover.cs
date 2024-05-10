@@ -19,7 +19,6 @@ public class EnemyMover : MonoBehaviour
     private GameStateHandler _gameStateHandler;
     [SerializeField]
     private float _moveWaitTime;
-    private float _currentWaitTime;
     void Start()
     {
         _launchPos = transform.position;
@@ -53,6 +52,5 @@ public class EnemyMover : MonoBehaviour
     {
         if (newState != GameStateHandler.GameState.Launch) return;
         transform.position = _launchPos;
-        _currentWaitTime = 0;
     }
 }

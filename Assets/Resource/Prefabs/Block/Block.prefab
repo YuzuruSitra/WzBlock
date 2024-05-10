@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f782eb7d969e74b1690f52bb20a6b1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _score: 100
+  _score: 10
   _hitEffect: {fileID: 8668628219860071088}
   _col: {fileID: 9206532192890621476}
   _mesh: {fileID: 4561537781649656749}

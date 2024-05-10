@@ -4,6 +4,8 @@ using System;
 
 public class BallMover : MonoBehaviour
 {
+    private int _hitCount;
+    public int HitCount => _hitCount;
     private Vector3 _launchPos;
     [Range(1, 10)]
     [SerializeField]
@@ -74,6 +76,7 @@ public class BallMover : MonoBehaviour
                 _rigidBody.AddForce(_launchDirection.normalized * _launchSpeed, ForceMode.Impulse);
                 break;
             case GameStateHandler.GameState.Launch:
+                _hitCount = 0;
                 _hitFrameCount = 0;
                 transform.position = _launchPos;
                 break;
@@ -132,7 +135,7 @@ public class BallMover : MonoBehaviour
     }
 
 
-    // プレイヤーに当たったときに、跳ね返る方向を変える
+    // パドルに当たったときに、跳ね返る方向を変える
     private void ChangeRefrection(GameObject hitObj)
     {
         if (!hitObj.CompareTag("Paddle")) return;
@@ -150,10 +153,17 @@ public class BallMover : MonoBehaviour
             _rigidBody.AddForce(-_rigidBody.velocity.normalized * _hitReduceForce, ForceMode.Impulse);
     }
 
+    private void CalcHitCount(GameObject hitObj)
+    {
+        if (hitObj.CompareTag("Paddle")) _hitCount = 0;
+        if (hitObj.CompareTag("Block")) _hitCount++;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         AvoidFrameStack(collision.gameObject);
         ChangeRefrection(collision.gameObject);
         ReduceForce(collision.gameObject);
+        CalcHitCount(collision.gameObject);
     }
 }

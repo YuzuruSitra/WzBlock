@@ -3,6 +3,8 @@ using UnityEngine;
 public class BlockGenerator : MonoBehaviour
 {
     [SerializeField]
+    private Transform _ball;
+    [SerializeField]
     private BlockPool _blockPool;
     [SerializeField]
     private float _insInterval = 7.5f;
@@ -33,18 +35,18 @@ public class BlockGenerator : MonoBehaviour
     {
         if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
         if (_blockPool.AvailableBlocksCount <= 0) return;
-        _currentInsTime += Time.deltaTime;
+        if (_ball.position.y >= transform.position.y) return;
+        _currentInsTime += Time.deltaTime * _blockPool.AvailableBlocksCount;
         if (_currentInsTime <= _insInterval) return;
         PeriodicSpawne();
         _currentInsTime = 0;
     }
 
     private void PeriodicSpawne()
-    {
-        
-        int insCount = Random.Range(1, _insMaxCount);
-        int clampedValue = Mathf.Clamp(insCount, 1, _blockPool.AvailableBlocksCount);
-        for (int i = 0; i < insCount; i++)
+    {      
+        int insCount = Random.Range(3, _insMaxCount);
+        int clampedValue = Mathf.Clamp(insCount, 3, _blockPool.AvailableBlocksCount);
+        for (int i = 0; i < clampedValue; i++)
             if (_blockPool.GetBlock() == null) return;
     }
 

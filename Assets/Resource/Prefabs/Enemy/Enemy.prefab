@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b2cae15c9ac7f848b47a10f3cdb710e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _score: 100
   _generateInterVal: 3
   _activateWaitT: 1.25
   _mesh: {fileID: 4534633945157250134}

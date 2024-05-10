@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class EnemySurviveManager : MonoBehaviour
 {
+    private ScoreHandler _scoreHandler;
+    [SerializeField]
+    private int _score;
     private GameStateHandler _gameStateHandler;
     [SerializeField]
     private float _generateInterVal;
@@ -28,10 +31,12 @@ public class EnemySurviveManager : MonoBehaviour
     private GameObject _breakEffect;
     private ParticleSystem _psBreak;
     private WaitForSeconds _waitBreak;
-    private Coroutine _currentCoroutine;
+    private Coroutine _insCoroutine;
+    private Coroutine _destCoroutine;
 
     void Start()
     {
+        _scoreHandler = ScoreHandler.Instance;
         _insEffect = Instantiate(_insEffectPrefab);
         _psIns = _insEffect.GetComponent<ParticleSystem>();
         _waitIns = new WaitForSeconds(_psIns.main.duration / 3.0f);
@@ -57,7 +62,8 @@ public class EnemySurviveManager : MonoBehaviour
 
         _currentInsTime += Time.deltaTime;
         if (_currentInsTime <= _generateInterVal) return;
-        _currentCoroutine = StartCoroutine(GenerateEnemy());
+        ResetCoroutine(_destCoroutine);
+        _insCoroutine = StartCoroutine(GenerateEnemy());
     }
 
     private IEnumerator GenerateEnemy()
@@ -68,15 +74,18 @@ public class EnemySurviveManager : MonoBehaviour
         _insEffect.SetActive(false);
         ChangeLook(true);
         _currentInsTime = 0;
+        _insCoroutine = null;
     }
 
     private IEnumerator DestroyEnemy()
     {
+        _scoreHandler.AddScore(_score);
         ChangeLook(false);
         _breakEffect.SetActive(true);
         _breakEffect.transform.position = transform.position;
         yield return _waitBreak;
         _breakEffect.SetActive(false);
+        _destCoroutine = null;
     }
 
     private void ChangeLook(bool state)
@@ -91,13 +100,22 @@ public class EnemySurviveManager : MonoBehaviour
         ChangeLook(false);
         _currentInsTime = 0;
         _currentWaitT = 0;
-        if (_currentCoroutine != null) StopCoroutine(_currentCoroutine);
+        ResetCoroutine(_insCoroutine);
+        ResetCoroutine(_destCoroutine);
+    }
+
+    private void ResetCoroutine(Coroutine coroutine)
+    {
+        if (coroutine == null) return;
+        StopCoroutine(coroutine);
     }
 
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ball"))
-            _currentCoroutine = StartCoroutine(DestroyEnemy());
+        if (!collision.gameObject.CompareTag("Ball")) return;
+        if (!IsActive) return;
+        ResetCoroutine(_insCoroutine);
+        _destCoroutine = StartCoroutine(DestroyEnemy());
     }
 }

@@ -1000,6 +1000,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 589121239310237850, guid: a480e900b0c8d46dc8ce84f5c597122c, type: 3}
   m_PrefabInstance: {fileID: 589121239723913938}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &672120978 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2129730774368245184, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+  m_PrefabInstance: {fileID: 4729510587903471763}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2806,7 +2811,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6623131933159735588, guid: 718b93432681142c5879c7570e54d806, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6623131933159735588, guid: 718b93432681142c5879c7570e54d806, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2841,13 +2846,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6623131933159735589, guid: 718b93432681142c5879c7570e54d806, type: 3}
+      propertyPath: _ball
+      value: 
+      objectReference: {fileID: 672120978}
+    - target: {fileID: 6623131933159735589, guid: 718b93432681142c5879c7570e54d806, type: 3}
       propertyPath: _blockPool
       value: 
       objectReference: {fileID: 1335568195}
-    - target: {fileID: 6623131933159735589, guid: 718b93432681142c5879c7570e54d806, type: 3}
-      propertyPath: _insInterval
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 6623131933159735591, guid: 718b93432681142c5879c7570e54d806, type: 3}
       propertyPath: m_Name
       value: BlockGenerator

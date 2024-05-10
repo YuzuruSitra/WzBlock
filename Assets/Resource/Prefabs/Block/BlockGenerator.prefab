@@ -13,7 +13,7 @@ GameObject:
   m_Layer: 0
   m_Name: BlockGenerator
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9f9da7616ce644fcbdeedc47f2b7fcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ball: {fileID: 0}
   _blockPool: {fileID: 0}
-  _insInterval: 5
+  _insInterval: 25
   _insMaxCount: 5
