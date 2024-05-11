@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class PaddleMover : MonoBehaviour
 {
-    [Range(0, 100)]
-    [SerializeField]
-    private float _speed = 1f;
     private Vector3 _launchPos;
     private GameStateHandler _gameStateHandler;
     [SerializeField]
