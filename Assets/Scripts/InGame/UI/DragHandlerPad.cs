@@ -5,12 +5,14 @@ using System.Collections;
 public class DragHandlerPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     private GameStateHandler _gameStateHandler;
+    [SerializeField]
+    private RectTransform _parentRect; // 制限範囲の親オブジェクト
+    [SerializeField]
     private RectTransform _uiElement; // 追従させるUI要素
     private Vector2 _offset; // オフセット
     private bool _isDragging = false; // ドラッグ中かどうかのフラグ
     private float _initialY; // 固定するY座標
     private Vector2 _centerPos;
-    private RectTransform _parentRect; // 制限範囲の親オブジェクト
     [Header("戻る時間")]
     [SerializeField]
     private float _smoothTime = 0.3f; // スムーズに戻すための時間
@@ -21,8 +23,6 @@ public class DragHandlerPad : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     {
         _gameStateHandler = GameStateHandler.Instance;
         _gameStateHandler.ChangeGameState += ChangeStatePad;
-        _uiElement = GetComponent<RectTransform>();
-        _parentRect = transform.parent.GetComponent<RectTransform>();
         _initialY = _uiElement.anchoredPosition.y; // Y軸の初期値
         Rect parentBounds = _parentRect.rect;
         float centerX = (parentBounds.xMin + parentBounds.xMax) / 2f;
@@ -64,7 +64,7 @@ public class DragHandlerPad : MonoBehaviour, IPointerDownHandler, IPointerUpHand
                 Vector2 newPosition = localPoint - _offset;
                 newPosition.y = _initialY; // Y軸は固定
 
-                float halfWidth = _uiElement.rect.width / 2f + 20.0f; // UI要素の半分の幅
+                float halfWidth = _uiElement.rect.width / 2f - 30; // UI要素の半分の幅
                 Rect parentBounds = _parentRect.rect;
 
                 newPosition.x = Mathf.Clamp(
@@ -110,7 +110,7 @@ public class DragHandlerPad : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     private float CalcRelativePosition()
     {
-        float halfWidth = _uiElement.rect.width / 2f + 20.0f; // UI要素の半分の幅
+        float halfWidth = _uiElement.rect.width / 2f - 30; // UI要素の半分の幅
         Rect parentBounds = _parentRect.rect;
 
         float totalWidth = parentBounds.width - halfWidth * 2;
