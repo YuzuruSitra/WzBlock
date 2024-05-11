@@ -14,6 +14,8 @@ public class PanelSwicher : MonoBehaviour
     {
         GameStateHandler.Instance.ChangeGameState += ChangePanel;
         _currentPanel = _launchPanel;
+        _inGamePanel.SetActive(false);
+        _finPanel.SetActive(false);
     }
 
     private void ChangePanel(GameStateHandler.GameState newState)

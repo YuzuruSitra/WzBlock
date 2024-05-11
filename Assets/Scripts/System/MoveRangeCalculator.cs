@@ -6,6 +6,8 @@ public class MoveRangeCalculator
     public float LeftMaxPos => _leftMaxPos;
     private float _rightMaxPos;
     public float RightMaxPos => _rightMaxPos;
+    private float _centerPosX;
+    public float CenterPosX => _centerPosX;
 
     public MoveRangeCalculator(GameObject targetObj, GameObject leftObj, GameObject rightObj)
     {
@@ -17,6 +19,9 @@ public class MoveRangeCalculator
         // このオブジェクトの幅を考慮
         MeshRenderer meshRenderer = targetObj.GetComponent<MeshRenderer>();
         float width = meshRenderer.bounds.size.x / 2;
+
+        // 中心座標を計算
+        _centerPosX = (leftObj.transform.position.x + rightObj.transform.position.x) / 2.0f;
 
         // 左端を計算
         MeshRenderer meshRendererLeft = leftObj.GetComponent<MeshRenderer>();
