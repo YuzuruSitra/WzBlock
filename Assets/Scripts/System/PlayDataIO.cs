@@ -22,7 +22,7 @@ public class PlayDataIO
         settings.CompressionMode = CompressionMode.Gzip;
 
         _writer = QuickSaveWriter.Create("SaveData", settings);
-        if (FileAccess.Exists("SaveData"))
+        if (!QuickSaveBase.RootExists("SaveDatae"))
         {
             SaveMaxScore(0);
             SaveTodayScore(0);
@@ -57,6 +57,12 @@ public class PlayDataIO
         
         if (data != dateData) return 0;
         return _reader.Read<int>("MaxTodayScore");
+    }
+
+    // Delete
+    public void DeleteData()
+    {
+        QuickSaveWriter.DeleteRoot("SaveData");
     }
 
 }
