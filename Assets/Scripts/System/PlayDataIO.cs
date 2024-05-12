@@ -11,7 +11,8 @@ public class PlayDataIO
     public PlayDataIO()
     {
         // データの保存先をApplication.persistentDataPathに変更
-        QuickSaveGlobalSettings.StorageLocation = Application.dataPath;
+        UnityEngine.iOS.Device.SetNoBackupFlag(Application.persistentDataPath);
+        QuickSaveGlobalSettings.StorageLocation = Application.persistentDataPath;
         // QuickSaveSettingsのインスタンスを作成
         QuickSaveSettings settings = new QuickSaveSettings();
         // 暗号化の方法
@@ -22,7 +23,7 @@ public class PlayDataIO
         settings.CompressionMode = CompressionMode.Gzip;
 
         _writer = QuickSaveWriter.Create("SaveData", settings);
-        if (!QuickSaveBase.RootExists("SaveDatae"))
+        if (!QuickSaveBase.RootExists("SaveData"))
         {
             SaveMaxScore(0);
             SaveTodayScore(0);
