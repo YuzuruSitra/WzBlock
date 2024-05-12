@@ -20,6 +20,10 @@ public class ScoreUIChanger : MonoBehaviour
     private TMP_Text _addScoreText;
     private Animator _addScoreAnim;
 
+    [SerializeField]
+    private TMP_Text _comboText;
+    private BallMover _ballMover;
+
     void Start()
     {
         _scoreHandler = ScoreHandler.Instance;
@@ -29,6 +33,8 @@ public class ScoreUIChanger : MonoBehaviour
         _countUpWait = new WaitForSeconds(_countUpWaitTime);
         _addScoreAnim = _addScoreText.GetComponent<Animator>();
         _scoreHandler.AddScoreEvent += AddScoreAnim;
+        _ballMover = GameObject.FindWithTag("Ball").GetComponent<BallMover>();
+        _ballMover.ChangeHitCount += ChangeComboText;
     }
 
     private void ChangeScoreUI(int newValue)
@@ -47,7 +53,7 @@ public class ScoreUIChanger : MonoBehaviour
         int updateScore = currentValue;
         while (updateScore < newValue)
         {
-            updateScore++;
+            updateScore += 2;
             _scoreText.text = "Score : " + updateScore;
             yield return _countUpWait;
         }
@@ -59,6 +65,17 @@ public class ScoreUIChanger : MonoBehaviour
         _addScoreText.text = "+" + newValue;
         _addScoreAnim.Rebind();
         _addScoreAnim.Play("AddScoreAnim");
+    }
+
+    private void ChangeComboText(int newValue)
+    {
+        if (newValue == 0)
+        {
+            _comboText.enabled = false;
+            return;
+        }
+        if (!_comboText.enabled) _comboText.enabled = true;
+        _comboText.text = "Combo " + newValue;
     }
 
     private void ChangeStateScoreUI(GameStateHandler.GameState newState)

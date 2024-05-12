@@ -6,6 +6,7 @@ public class BallMover : MonoBehaviour
 {
     private int _hitCount;
     public int HitCount => _hitCount;
+    public event Action<int> ChangeHitCount;
     private Vector3 _launchPos;
     [Range(1, 10)]
     [SerializeField]
@@ -77,6 +78,7 @@ public class BallMover : MonoBehaviour
                 break;
             case GameStateHandler.GameState.Launch:
                 _hitCount = 0;
+                ChangeHitCount?.Invoke(_hitCount);
                 _hitFrameCount = 0;
                 transform.position = _launchPos;
                 break;
@@ -157,6 +159,7 @@ public class BallMover : MonoBehaviour
     {
         if (hitObj.CompareTag("Paddle")) _hitCount = 0;
         if (hitObj.CompareTag("Block")) _hitCount++;
+        ChangeHitCount?.Invoke(_hitCount);
     }
 
     private void OnCollisionEnter(Collision collision)
