@@ -5,6 +5,7 @@ using System.Collections;
 public class DragHandlerPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     private GameStateHandler _gameStateHandler;
+    private AbilityReceiver _abilityReceiver;
     [SerializeField]
     private RectTransform _parentRect; // 制限範囲の親オブジェクト
     [SerializeField]
@@ -27,6 +28,7 @@ public class DragHandlerPad : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         Rect parentBounds = _parentRect.rect;
         float centerX = (parentBounds.xMin + parentBounds.xMax) / 2f;
         _centerPos = new Vector2(centerX, _initialY);
+        _abilityReceiver = AbilityReceiver.Instance;
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -61,6 +63,11 @@ public class DragHandlerPad : MonoBehaviour, IPointerDownHandler, IPointerUpHand
                 out Vector2 localPoint
             ))
             {
+                if (_abilityReceiver.CurrentCondition == AbilityReceiver.Condition.Stan)
+                {
+                    _offset = localPoint;
+                    return;
+                }
                 Vector2 newPosition = localPoint - _offset;
                 newPosition.y = _initialY; // Y軸は固定
 

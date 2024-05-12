@@ -56,20 +56,25 @@ public class BallMover : MonoBehaviour
         _gameStateHandler.ChangeGameState += ChangeStateBall;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
+    
         Vector3 velocity = _rigidBody.velocity;
         float speed = velocity.magnitude;
-        if (speed < MIN_THRESHOLD)
-        {
-            velocity = Vector3.forward;
-            speed = _minSpeed;
-        }
-        _currentSpeed = Mathf.Clamp(speed, _minSpeed, _maxSpeed);
-        _rigidBody.velocity = (velocity / speed) * _currentSpeed;
+        // 速度がほぼ0の場合、前の速度ベクトルを参照して方向を保持し、最小速度で前方に移動する
+        if (Mathf.Approximately(speed, 0f))
+            velocity = _currentVelocity.normalized * _minSpeed;
+        else
+            if (speed < MIN_THRESHOLD)
+                velocity = transform.forward * _minSpeed;
 
-        _currentVelocity = _rigidBody.velocity;
+        float setSpeed = Mathf.Clamp(speed, _minSpeed, _maxSpeed);
+        _currentSpeed = setSpeed;
+        // 速度を正規化して制限された速度に設定する
+        velocity = velocity.normalized * setSpeed;
+        _rigidBody.velocity = velocity;
+        _currentVelocity = velocity;
         _currentAngular = _rigidBody.angularVelocity;
     }
 
@@ -89,6 +94,7 @@ public class BallMover : MonoBehaviour
             case GameStateHandler.GameState.FinGame:
                 _rigidBody.velocity = Vector3.zero;
                 _rigidBody.angularVelocity = Vector3.zero;
+                _currentVelocity = Vector3.zero;
                 _currentSpeed = 0;
                 break;
             default:
@@ -163,6 +169,7 @@ public class BallMover : MonoBehaviour
     {
         if (hitObj.CompareTag("Paddle")) _hitCount = 0;
         if (hitObj.CompareTag("Block")) _hitCount++;
+        if (hitObj.CompareTag("Enemy")) _hitCount++;
         ChangeHitCount?.Invoke(_hitCount);
     }
 

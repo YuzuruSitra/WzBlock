@@ -49,7 +49,7 @@ public class EnemySurviveManager : MonoBehaviour
         _gameStateHandler.ChangeGameState += ChangeStateEnemySurvive;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
 

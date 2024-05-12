@@ -45,7 +45,9 @@ public class BallEffecter : MonoBehaviour
 
         // リジッドボディの速度を取得
         Vector3 velocity = _rigidBody.velocity;
-
+        if (velocity.magnitude <= 0)
+            for (int i = 0; i < _changeSizeEffects.Length; i++)
+            _changeSizeEffects[i].transform.localScale = Vector3.zero;
         // XY平面上での進行方向から角度を計算
         float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
 
