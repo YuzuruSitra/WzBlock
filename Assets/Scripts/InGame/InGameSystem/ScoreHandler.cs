@@ -8,6 +8,7 @@ public class ScoreHandler
     public static ScoreHandler Instance => instance ?? (instance = new ScoreHandler());
     private int _currentScore;
     public int CurrentScore => _currentScore;
+    public event Action<int> AddScoreEvent;
     public event Action<int> ChangeScore;
     private BallMover _ballMover;
     private ScoreHandler ()
@@ -18,7 +19,9 @@ public class ScoreHandler
 
     public void AddScore(int addValue)
     {
-        _currentScore += addValue * _ballMover.HitCount;
+        int addScore = addValue * _ballMover.HitCount;
+        _currentScore += addScore;
+        AddScoreEvent?.Invoke(addScore);
         ChangeScore?.Invoke(_currentScore);
     }
 

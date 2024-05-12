@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
 
@@ -9,19 +10,55 @@ public class ScoreUIChanger : MonoBehaviour
     private TMP_Text _resultText;
     private ScoreHandler _scoreHandler;
     private GameStateHandler _gameStateHandler;
+    private Coroutine _changeScoreCoroutine = null;
+    private int _currentSetScore;
+    [SerializeField]
+    private float _countUpWaitTime;
+    private WaitForSeconds _countUpWait;
 
-    
+    [SerializeField]
+    private TMP_Text _addScoreText;
+    private Animator _addScoreAnim;
+
     void Start()
     {
         _scoreHandler = ScoreHandler.Instance;
         _scoreHandler.ChangeScore += ChangeScoreUI;
         _gameStateHandler = GameStateHandler.Instance;
         _gameStateHandler.ChangeGameState += ChangeStateScoreUI;
+        _countUpWait = new WaitForSeconds(_countUpWaitTime);
+        _addScoreAnim = _addScoreText.GetComponent<Animator>();
+        _scoreHandler.AddScoreEvent += AddScoreAnim;
     }
 
     private void ChangeScoreUI(int newValue)
     {
-        _scoreText.text = "Score : " + newValue;
+        if (_changeScoreCoroutine != null)
+        {
+            StopCoroutine(_changeScoreCoroutine);
+            _scoreText.text = "Score : " + _currentSetScore;
+        }
+        _changeScoreCoroutine = StartCoroutine(UpdateScoreAnimation(_currentSetScore, newValue));
+        _currentSetScore = newValue;
+    }
+
+    private IEnumerator UpdateScoreAnimation(int currentValue, int newValue)
+    {
+        int updateScore = currentValue;
+        while (updateScore < newValue)
+        {
+            updateScore++;
+            _scoreText.text = "Score : " + updateScore;
+            yield return _countUpWait;
+        }
+        _changeScoreCoroutine = null;
+    }
+
+    private void AddScoreAnim(int newValue)
+    {
+        _addScoreText.text = "+" + newValue;
+        _addScoreAnim.Rebind();
+        _addScoreAnim.Play("AddScoreAnim");
     }
 
     private void ChangeStateScoreUI(GameStateHandler.GameState newState)
