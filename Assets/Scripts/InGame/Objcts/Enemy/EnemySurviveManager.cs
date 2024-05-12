@@ -62,7 +62,7 @@ public class EnemySurviveManager : MonoBehaviour
 
         _currentInsTime += Time.deltaTime;
         if (_currentInsTime <= _generateInterVal) return;
-        ResetCoroutine(_destCoroutine);
+        ResetCoroutine(ref _destCoroutine);
         _insCoroutine = StartCoroutine(GenerateEnemy());
     }
 
@@ -100,14 +100,15 @@ public class EnemySurviveManager : MonoBehaviour
         ChangeLook(false);
         _currentInsTime = 0;
         _currentWaitT = 0;
-        ResetCoroutine(_insCoroutine);
-        ResetCoroutine(_destCoroutine);
+        ResetCoroutine(ref _insCoroutine);
+        ResetCoroutine(ref _destCoroutine);
     }
 
-    private void ResetCoroutine(Coroutine coroutine)
+    private void ResetCoroutine(ref Coroutine coroutine)
     {
         if (coroutine == null) return;
         StopCoroutine(coroutine);
+        coroutine = null;
     }
 
 
@@ -115,7 +116,7 @@ public class EnemySurviveManager : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Ball")) return;
         if (!IsActive) return;
-        ResetCoroutine(_insCoroutine);
+        ResetCoroutine(ref _insCoroutine);
         _destCoroutine = StartCoroutine(DestroyEnemy());
     }
 }

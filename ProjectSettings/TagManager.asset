@@ -10,6 +10,7 @@ TagManager:
   - Frame
   - Block
   - Bullet
+  - Enemy
   layers:
   - Default
   - TransparentFX

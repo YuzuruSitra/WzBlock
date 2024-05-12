@@ -16,6 +16,8 @@ public class BallMover : MonoBehaviour
     [SerializeField]
     private float _maxSpeed = 7f;
     [SerializeField]
+    private float _shakeSpeedLimit = 4f;
+    [SerializeField]
     private float _paddleAddForce = 1f;
     [SerializeField]
     private float _hitReduceForce = 1f;
@@ -32,6 +34,8 @@ public class BallMover : MonoBehaviour
     public event Action ExplotionEvent;
     public event Action HitPaddleEvent;
     private int _hitFrameCount;
+    [SerializeField]
+    private ShakeByDOTween _shakeByDOTween;
     // äÓèÄÇ∆Ç»ÇÈäpìx
     private List<float> _baseAngles = new List<float> { 0f, 90f, 180f, 270f, 360f };
     Vector3[] _explotionDirection = new Vector3[]
@@ -162,11 +166,27 @@ public class BallMover : MonoBehaviour
         ChangeHitCount?.Invoke(_hitCount);
     }
 
+    private void ShakeCamera(GameObject hitObj)
+    {
+        if (hitObj.CompareTag("Block"))
+        {
+            Vector3 velocity = _rigidBody.velocity;
+            float speed = velocity.magnitude;
+            if (speed < _shakeSpeedLimit) return;
+            _shakeByDOTween.StartShake(1.0f);
+        }
+        if (hitObj.CompareTag("Enemy"))
+        {
+            _shakeByDOTween.StartShake(2.0f);
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         AvoidFrameStack(collision.gameObject);
         ChangeRefrection(collision.gameObject);
         ReduceForce(collision.gameObject);
         CalcHitCount(collision.gameObject);
+        ShakeCamera(collision.gameObject);
     }
 }
