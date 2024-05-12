@@ -11,11 +11,10 @@ public class EnemyShooter : MonoBehaviour
     [SerializeField]
     private Vector3 _rayOffSet;
     [SerializeField]
-    private int _maxThreeBlock = 0;
+    private float _maxThreeTime = 5.0f;
+    private float _threeBlockTime;
     [SerializeField]
     private BulletPool _bulletPool;
-    private int _threeBlockCount;
-    private int _rayHitCount = 0;
     private const int MAX_BULLET_COUNT = 1;
     private int _bulletCount;
     
@@ -32,22 +31,22 @@ public class EnemyShooter : MonoBehaviour
         // î≠ñCèàóù
         if (IsBlocking()) 
         {   
-            _threeBlockCount ++;
             _bulletCount = 0;
+            return;
         }
-        if (_threeBlockCount <= _maxThreeBlock) return;
+        _threeBlockTime += Time.deltaTime;
+        if (_threeBlockTime <= _maxThreeTime) return;
         if (MAX_BULLET_COUNT <= _bulletCount) return;
         _bulletPool.GetBullet(transform.position + _insOffSet);
         _bulletCount ++;
-        _threeBlockCount = 0;
+        _threeBlockTime = 0;
         
     }
 
     private void ChangeStateShooter(GameStateHandler.GameState newState)
     {
         if (newState != GameStateHandler.GameState.Launch) return;
-        _threeBlockCount = -1;
-        _rayHitCount = 0;
+        _threeBlockTime = 0;
         _bulletCount = 0;
         _bulletPool.ReturnALLBlock();
     }
@@ -62,11 +61,6 @@ public class EnemyShooter : MonoBehaviour
             
         if (Physics.Raycast(transform.position - _rayOffSet, Vector3.down, out RaycastHit hit2, Mathf.Infinity, 1 << LayerMask.NameToLayer("Block")))
                 hit = true;
-        if (hit) 
-            _rayHitCount ++;
-        else 
-            _rayHitCount = 0;
-        if (_rayHitCount > 1) return false;
         return hit;
     }
 
