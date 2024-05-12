@@ -8,6 +8,16 @@ public class ScoreUIChanger : MonoBehaviour
     private TMP_Text _scoreText;
     [SerializeField]
     private TMP_Text _resultText;
+    [SerializeField]
+    private TMP_Text _todayMaxScoreText, _todaySeemText;
+    [SerializeField]
+    private TMP_Text _maxScoreText, _maxSeemText;
+    [SerializeField]
+    private Color _defaultColor;
+    [SerializeField]
+    private Color _emphasizedPink;
+    [SerializeField]
+    private Color _emphasizedBlue;
     private ScoreHandler _scoreHandler;
     private GameStateHandler _gameStateHandler;
     private Coroutine _changeScoreCoroutine = null;
@@ -93,7 +103,37 @@ public class ScoreUIChanger : MonoBehaviour
 
     private void ChangeResultScore()
     {
+        // テキストの変更
         _resultText.text = "Score : " + _scoreHandler.CurrentScore;
+        
+        if (_scoreHandler.TodayMaxScore == 0) _todayMaxScoreText.text = "---";
+        else _todayMaxScoreText.text = "" + _scoreHandler.TodayMaxScore;
+
+        if (_scoreHandler.MaxScore == 0) _maxScoreText.text = "---";
+        else _maxScoreText.text = "" + _scoreHandler.MaxScore;
+        // テキストの色変更
+        if (_scoreHandler.TodayMaxScore == _scoreHandler.CurrentScore)
+        {
+            _todayMaxScoreText.color = _emphasizedPink;
+            _todaySeemText.color = _emphasizedBlue;
+        }
+        else
+        {
+            _todayMaxScoreText.color = _defaultColor;
+            _todaySeemText.color = _defaultColor;
+        }
+
+        if (_scoreHandler.MaxScore == _scoreHandler.CurrentScore)
+        {
+            _maxScoreText.color = _emphasizedPink;
+            _maxSeemText.color = _emphasizedBlue;
+        }
+        else
+        {
+            _maxScoreText.color = _defaultColor;
+            _maxSeemText.color = _defaultColor;
+        }
     }
+
 
 }

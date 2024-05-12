@@ -11,9 +11,17 @@ public class ScoreHandler
     public event Action<int> AddScoreEvent;
     public event Action<int> ChangeScore;
     private BallMover _ballMover;
+    private int _maxScore;
+    public int MaxScore => _maxScore;
+    private int _todayMaxScore;
+    public int TodayMaxScore => _todayMaxScore;
+    private PlayDataIO _playDataIO;
+
     private ScoreHandler ()
     {
-        GameStateHandler.Instance.ChangeGameState += ResetScore;
+        _playDataIO = new PlayDataIO();
+        LoadScores();
+        GameStateHandler.Instance.ChangeGameState += ScoreStateFunction;
         _ballMover = GameObject.FindWithTag("Ball").GetComponent<BallMover>();
     }
 
@@ -25,10 +33,39 @@ public class ScoreHandler
         ChangeScore?.Invoke(_currentScore);
     }
 
-    private void ResetScore(GameStateHandler.GameState newState)
+    private void ScoreStateFunction(GameStateHandler.GameState newState)
     {
+        switch (newState)
+        {
+            case GameStateHandler.GameState.Launch:
+                _currentScore = 0;
+                break;
+            case GameStateHandler.GameState.FinGame:
+                UpdateMaxScores();
+                break;
+        }
         if (newState != GameStateHandler.GameState.Launch) return;
         _currentScore = 0;
+    }
+
+    private void UpdateMaxScores()
+    {
+        if (_maxScore < _currentScore)
+        {
+            _playDataIO.SaveMaxScore(_currentScore);
+            _maxScore = _currentScore;
+        }
+        if (_todayMaxScore < _currentScore)
+        {
+            _playDataIO.SaveTodayScore(_currentScore);
+            _todayMaxScore = _currentScore;
+        }
+    }
+
+    private void LoadScores()
+    {
+        _maxScore = _playDataIO.LoadMaxScore();
+        _todayMaxScore = _playDataIO.LoadMaxTodayScore(DateTime.Now.Date);
     }
 
 }

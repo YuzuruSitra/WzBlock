@@ -112,12 +112,12 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 120
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &-3858802578732036723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,12 +167,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63ef17a126a064369906bc14a07d1ae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _launchSpeed: 3
+  _launchSpeed: 4
   _minSpeed: 3
-  _maxSpeed: 10
-  _paddleAddForce: 2.5
+  _maxSpeed: 9
+  _shakeSpeedLimit: 5.5
+  _paddleAddForce: 3
   _hitReduceForce: 2
   _explotionForce: 6
+  _shakeByDOTween: {fileID: 0}
 --- !u!1001 &8986797890284545219
 PrefabInstance:
   m_ObjectHideFlags: 0
