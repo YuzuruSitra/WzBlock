@@ -34,6 +34,7 @@ public class BlockGenerator : MonoBehaviour
     private void InsCountDown()
     {
         if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
+        if (_gameStateHandler.CurrentState == GameStateHandler.GameState.Settings) return;
         if (_blockPool.AvailableBlocksCount <= 0) return;
         if (_ball.position.y >= transform.position.y) return;
         _currentInsTime += Time.deltaTime * _blockPool.AvailableBlocksCount;

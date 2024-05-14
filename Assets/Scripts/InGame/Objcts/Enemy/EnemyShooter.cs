@@ -28,6 +28,7 @@ public class EnemyShooter : MonoBehaviour
     {
         if (!_enemySurviveManager.IsActive) return;
         if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
+        if (_gameStateHandler.CurrentState == GameStateHandler.GameState.Settings) return;
         // ”­–Cˆ—
         if (IsBlocking()) 
         {   

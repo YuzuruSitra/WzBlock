@@ -8,34 +8,38 @@ public class PaddleMover : MonoBehaviour
     private GameObject _leftObj;
     [SerializeField]
     private GameObject _rightObj;
-    private float _leftMaxPos => _moveRangeCalculator.LeftMaxPos;
-    private float _rightMaxPos  => _moveRangeCalculator.RightMaxPos;
-    private float _centerPosX => _moveRangeCalculator.CenterPosX;
-    private float _padding;
-    private Vector3 _setPos;
+    private float _leftMaxPos;
+    private float _rightMaxPos;
     private MoveRangeCalculator _moveRangeCalculator;
     private AbilityReceiver _abilityReceiver;
-    [SerializeField]
-    private DragHandlerPad _dragHandlerPad;
 
     void Start()
     {
         _moveRangeCalculator = new MoveRangeCalculator(gameObject, _leftObj, _rightObj);
-        _padding = (_rightMaxPos - _leftMaxPos) / 2.0f;
+        _leftMaxPos = _moveRangeCalculator.LeftMaxPos;
+        _rightMaxPos  = _moveRangeCalculator.RightMaxPos;
 
         _launchPos = transform.position;
         _gameStateHandler = GameStateHandler.Instance;
         _gameStateHandler.ChangeGameState += ChangeStatePaddle;
         _abilityReceiver = AbilityReceiver.Instance;
-        _setPos = transform.position;
     }
 
-    void Update()
+    public void MoveReceive(Vector3 movement)
     {
         if (_abilityReceiver.CurrentCondition == AbilityReceiver.Condition.Stan) return;
         if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
-        _setPos.x = _centerPosX + _padding * _dragHandlerPad.GetRelativePosition;
-        transform.position = _setPos;
+        // êVÇµÇ¢à íuÇåvéZ
+        Vector3 newPosition = transform.position + movement;
+
+        // à⁄ìÆÇÃêßå¿Çê›íË
+        if (newPosition.x <= _leftMaxPos)
+            newPosition.x = _leftMaxPos;
+        if (newPosition.x >= _rightMaxPos)
+            newPosition.x = _rightMaxPos;
+
+        // à⁄ìÆÇÃèàóù
+        transform.position = newPosition;
     }
 
     private void ChangeStatePaddle(GameStateHandler.GameState newState)

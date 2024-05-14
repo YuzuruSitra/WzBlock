@@ -47,7 +47,7 @@ public class BallMover : MonoBehaviour
     };
     private const int MAX_STACK_COUNT = 5;
     private const float TILT_THRESHOLD = 10;
-
+    private bool _isFirstPush;
     void Start()
     {
         _rigidBody = GetComponent<Rigidbody>();
@@ -83,9 +83,17 @@ public class BallMover : MonoBehaviour
         switch (newState)
         {
             case GameStateHandler.GameState.InGame:
-                _rigidBody.AddForce(_launchDirection.normalized * _launchSpeed, ForceMode.Impulse);
+                if (!_isFirstPush)
+                {
+                    _rigidBody.AddForce(_launchDirection.normalized * _launchSpeed, ForceMode.Impulse);
+                    _isFirstPush = true;
+                    return;
+                }
+                _rigidBody.velocity = _currentVelocity;
+                _rigidBody.angularVelocity = _currentAngular;
                 break;
             case GameStateHandler.GameState.Launch:
+                _isFirstPush = false;
                 _hitCount = 0;
                 ChangeHitCount?.Invoke(_hitCount);
                 _hitFrameCount = 0;
@@ -97,9 +105,9 @@ public class BallMover : MonoBehaviour
                 _currentVelocity = Vector3.zero;
                 _currentSpeed = 0;
                 break;
-            default:
-                _rigidBody.velocity = _currentVelocity;
-                _rigidBody.angularVelocity = _currentAngular;
+            case GameStateHandler.GameState.Settings:
+                _rigidBody.velocity = Vector3.zero;
+                _rigidBody.angularVelocity = Vector3.zero;
                 break;
         }
     }

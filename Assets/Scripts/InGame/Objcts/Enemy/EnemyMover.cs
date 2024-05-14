@@ -31,6 +31,7 @@ public class EnemyMover : MonoBehaviour
     {
         if (!_enemySurviveManager.IsActive) return;
         if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
+        if (_gameStateHandler.CurrentState == GameStateHandler.GameState.Settings) return;
         // ‰Â“®ˆæ‚Ì§ŒÀ
         Vector3 posX = transform.position;
         if (posX.x <= _leftMaxPos)

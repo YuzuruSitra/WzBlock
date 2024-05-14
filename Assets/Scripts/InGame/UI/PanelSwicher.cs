@@ -8,24 +8,29 @@ public class PanelSwicher : MonoBehaviour
     private GameObject _inGamePanel;
     [SerializeField]
     private GameObject _finPanel;
+    [SerializeField]
+    private GameObject _HeaderPanel;
+    [SerializeField]
+    private GameObject _settingsPanel;
     private GameObject _currentPanel;
-
+    private bool _isSetting;
     void Start()
     {
         GameStateHandler.Instance.ChangeGameState += ChangePanel;
         _currentPanel = _launchPanel;
         _inGamePanel.SetActive(false);
         _finPanel.SetActive(false);
+        _isSetting = false;
     }
 
     private void ChangePanel(GameStateHandler.GameState newState)
     {
-        
         if (_currentPanel != null) _currentPanel.SetActive(false);
         switch (newState)
         {
             case GameStateHandler.GameState.Launch:
                 _launchPanel.SetActive(true);
+                _HeaderPanel.SetActive(true);
                 _currentPanel = _launchPanel;
                 break;
             case GameStateHandler.GameState.InGame:
@@ -34,8 +39,14 @@ public class PanelSwicher : MonoBehaviour
                 break;
             case GameStateHandler.GameState.FinGame:
                 _finPanel.SetActive(true);
+                _HeaderPanel.SetActive(false);
                 _currentPanel = _finPanel;
+                break;
+            case GameStateHandler.GameState.Settings:
+                _settingsPanel.SetActive(true);            
+                _currentPanel = _settingsPanel;
                 break;
         }
     }
+
 }

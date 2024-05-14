@@ -12,6 +12,8 @@ public class GameStateHandler
         FinGame,
         Settings
     }
+    private GameState _currentInGameState;
+    public GameState CurrentInGameState => _currentInGameState;
     private GameState _currentState;
     public GameState CurrentState => _currentState;
     public event Action<GameState> ChangeGameState;
@@ -25,5 +27,8 @@ public class GameStateHandler
     {
         _currentState = newState;
         ChangeGameState?.Invoke(_currentState);
+        
+        if (newState == GameState.Settings) return;
+        _currentInGameState = newState;
     }
 }
