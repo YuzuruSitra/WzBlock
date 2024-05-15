@@ -98,13 +98,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2462859371627067058}
     m_Modifications:
+    - target: {fileID: 1040114863526976008, guid: b48ed7750c2926f4584128605fc13c80, type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1319398647745027786, guid: b48ed7750c2926f4584128605fc13c80, type: 3}
       propertyPath: m_Name
       value: PS_ElectricMagic_Projectile
       objectReference: {fileID: 0}
     - target: {fileID: 1319398647745027786, guid: b48ed7750c2926f4584128605fc13c80, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1541562168690171923, guid: b48ed7750c2926f4584128605fc13c80, type: 3}
+      propertyPath: looping
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3341299287826401419, guid: b48ed7750c2926f4584128605fc13c80, type: 3}
       propertyPath: m_RootOrder

@@ -25,9 +25,11 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private float _abilityTime;
     private WaitForSeconds _waitAbility;
+    private GameStateHandler _gameStateHandler;
 
     void Start()
     {
+        _gameStateHandler = GameStateHandler.Instance;
         _hitEffect = Instantiate(_hitEffectPrefab);
         _ps = _hitEffect.GetComponent<ParticleSystem>();
         _wait = new WaitForSeconds(_ps.main.duration);
@@ -38,6 +40,7 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         if (!_isActive) return;
+        if (_gameStateHandler.CurrentState == GameStateHandler.GameState.Settings) return;
         transform.position += Vector3.down * _speed * Time.deltaTime;
     }
 
