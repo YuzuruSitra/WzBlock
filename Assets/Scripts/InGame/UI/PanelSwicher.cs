@@ -13,14 +13,13 @@ public class PanelSwicher : MonoBehaviour
     [SerializeField]
     private GameObject _settingsPanel;
     private GameObject _currentPanel;
-    private bool _isSetting;
+
     void Start()
     {
         GameStateHandler.Instance.ChangeGameState += ChangePanel;
         _currentPanel = _launchPanel;
         _inGamePanel.SetActive(false);
         _finPanel.SetActive(false);
-        _isSetting = false;
     }
 
     private void ChangePanel(GameStateHandler.GameState newState)

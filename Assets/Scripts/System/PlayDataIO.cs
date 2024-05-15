@@ -28,6 +28,7 @@ public class PlayDataIO
         if (!QuickSaveBase.RootExists("SaveData"))
         {
             SaveSensitivity(5);
+            SaveVolume(0.5f);
             SaveMaxScore(0);
             SaveTodayScore(0);
         }
@@ -38,6 +39,12 @@ public class PlayDataIO
     public void SaveSensitivity(int value)
     {
         _writer.Write("Sensitivity", value);
+        _writer.Commit();
+    }
+
+    public void SaveVolume(float volume)
+    {
+        _writer.Write("Volume", volume);
         _writer.Commit();
     }
 
@@ -59,6 +66,10 @@ public class PlayDataIO
     public int LoadSensitivity()
     {
         return _reader.Read<int>("Sensitivity");
+    }
+    public float LoadVolume()
+    {
+        return _reader.Read<float>("Volume");
     }
     public int LoadMaxScore()
     {
