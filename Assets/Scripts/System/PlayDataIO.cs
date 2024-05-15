@@ -1,10 +1,12 @@
 using UnityEngine;
 using CI.QuickSave;
-using CI.QuickSave.Core.Storage;
 using System; 
 
 public class PlayDataIO
 {
+    // ƒVƒ“ƒOƒ‹ƒgƒ“
+    private static PlayDataIO instance;
+    public static PlayDataIO Instance => instance ?? (instance = new PlayDataIO());
     private QuickSaveWriter _writer;
     private QuickSaveReader _reader;
 
@@ -25,6 +27,7 @@ public class PlayDataIO
         _writer = QuickSaveWriter.Create("SaveData", settings);
         if (!QuickSaveBase.RootExists("SaveData"))
         {
+            SaveSensitivity(5);
             SaveMaxScore(0);
             SaveTodayScore(0);
         }
@@ -32,6 +35,12 @@ public class PlayDataIO
     }
 
     // Save
+    public void SaveSensitivity(int value)
+    {
+        _writer.Write("Sensitivity", value);
+        _writer.Commit();
+    }
+
     public void SaveMaxScore(int value)
     {
         _writer.Write("MaxScore", value);
@@ -47,6 +56,10 @@ public class PlayDataIO
     }
 
     // Load
+    public int LoadSensitivity()
+    {
+        return _reader.Read<int>("Sensitivity");
+    }
     public int LoadMaxScore()
     {
         return _reader.Read<int>("MaxScore");

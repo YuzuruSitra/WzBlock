@@ -4,10 +4,9 @@ using UnityEngine.EventSystems;
 public class SwipeToMovePaddle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     public PaddleMover _paddleMover; // 動かす対象の3Dオブジェクト
-    [SerializeField]
-    private int _sensitivity = 5;  // 移動速度
-    private float[] _speedFactor = { -0.2f, -0.15f, -0.1f, -0.05f , 0 , 0.05f, 0.1f, 0.15f, 0.2f };
-    private const float MOVE_SPEED_BASE = 0.25f;
+    private SensiHandler _sensiHandler = SensiHandler.Instance;
+    private float[] _speedFactor = { -0.16f, -0.12f, -0.08f, -0.04f , 0 , 0.04f, 0.08f, 0.12f, 0.16f };
+    private const float MOVE_SPEED_BASE = 0.2f;
     private Vector2 _startTouchPosition;
     private Vector2 _currentTouchPosition;
     private Vector2 _touchDelta;
@@ -44,12 +43,7 @@ public class SwipeToMovePaddle : MonoBehaviour, IPointerDownHandler, IPointerUpH
     private void MoveObject(Vector3 vector)
     {    
         // スワイプの移動量に基づいてオブジェクトをX軸方向に動かす
-        Vector3 movement = vector * (MOVE_SPEED_BASE + _speedFactor[_sensitivity - 1]) * Time.deltaTime;
+        Vector3 movement = vector * (MOVE_SPEED_BASE + _speedFactor[_sensiHandler.Sensitivity - 1]) * Time.deltaTime;
         _paddleMover.MoveReceive(movement);
-    }
-
-    public void ChangeSpeedFactor(int newSensi)
-    {
-        _sensitivity = newSensi;
     }
 }

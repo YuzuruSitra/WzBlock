@@ -19,7 +19,7 @@ public class ScoreHandler
 
     private ScoreHandler ()
     {
-        _playDataIO = new PlayDataIO();
+        _playDataIO = PlayDataIO.Instance;
         LoadScores();
         GameStateHandler.Instance.ChangeGameState += ScoreStateFunction;
         _ballMover = GameObject.FindWithTag("Ball").GetComponent<BallMover>();
