@@ -2,6 +2,7 @@ using UnityEngine;
 using CI.QuickSave;
 using System; 
 
+
 public class PlayDataIO
 {
     // ƒVƒ“ƒOƒ‹ƒgƒ“
@@ -9,6 +10,7 @@ public class PlayDataIO
     public static PlayDataIO Instance => instance ?? (instance = new PlayDataIO());
     private QuickSaveWriter _writer;
     private QuickSaveReader _reader;
+
 
     public PlayDataIO()
     {
@@ -27,13 +29,15 @@ public class PlayDataIO
         _writer = QuickSaveWriter.Create("SaveData", settings);
         if (!QuickSaveBase.RootExists("SaveData"))
         {
-            SavePlayerName("NoName");
-            SavePlayerLevel(1);
-            SavePlayerExp(0);
-            SaveSensitivity(5);
-            SaveVolume(0.5f);
-            SaveMaxScore(0);
-            SaveTodayScore(0);
+            PureAssetLoader pureAssetLoader = new PureAssetLoader();
+            InitializingValues initializingValues = pureAssetLoader.LoadScriptableObject<InitializingValues>("InitializingValues");
+            SavePlayerName(initializingValues.PlayerName);
+            SavePlayerLevel(initializingValues.Level);
+            SavePlayerExp(initializingValues.Exp);
+            SaveSensitivity(initializingValues.Sensitivity);
+            SaveVolume(initializingValues.Volume);
+            SaveMaxScore(initializingValues.MaxScore);
+            SaveTodayScore(initializingValues.TodayMaxScore);
         }
         _reader = QuickSaveReader.Create("SaveData", settings);
     }

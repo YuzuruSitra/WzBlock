@@ -7,7 +7,6 @@ public class BlockPool : MonoBehaviour
     private Transform _blockParent;
     [SerializeField]
     private Block _blockPrefab; // プールするプレハブ
-    [SerializeField]
     private BlockPositions _blockPositions;
 
     private List<Block> _availableBlocks; // プールされているブロック
@@ -16,9 +15,10 @@ public class BlockPool : MonoBehaviour
 
     private void Awake()
     {
+        PureAssetLoader pureAssetLoader = new PureAssetLoader();
+        _blockPositions = pureAssetLoader.LoadScriptableObject<BlockPositions>("BlockPositions");
         _availableBlocks = new List<Block>();
         _usedBlocks = new List<Block>();
-
         // 初期プールの作成
         for (int i = 0; i < _blockPositions.SlotInfo.Count; i++)
         {
