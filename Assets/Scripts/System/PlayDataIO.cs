@@ -27,6 +27,9 @@ public class PlayDataIO
         _writer = QuickSaveWriter.Create("SaveData", settings);
         if (!QuickSaveBase.RootExists("SaveData"))
         {
+            SavePlayerName("NoName");
+            SavePlayerLevel(1);
+            SavePlayerExp(0);
             SaveSensitivity(5);
             SaveVolume(0.5f);
             SaveMaxScore(0);
@@ -36,6 +39,24 @@ public class PlayDataIO
     }
 
     // Save
+    public void SavePlayerName(string name)
+    {
+        _writer.Write("Name", name);
+        _writer.Commit();
+    }
+
+    public void SavePlayerLevel(int level)
+    {
+        _writer.Write("Level", level);
+        _writer.Commit();
+    }
+
+    public void SavePlayerExp(int exp)
+    {
+        _writer.Write("Exp", exp);
+        _writer.Commit();
+    }
+
     public void SaveSensitivity(int value)
     {
         _writer.Write("Sensitivity", value);
@@ -63,6 +84,19 @@ public class PlayDataIO
     }
 
     // Load
+    public string LoadPlayerName()
+    {
+        return _reader.Read<string>("Name");
+    }
+    public int LoadPlayerLevel()
+    {
+        return _reader.Read<int>("Level");
+    }
+    public int LoadPlayerExp()
+    {
+        return _reader.Read<int>("Exp");
+    }
+
     public int LoadSensitivity()
     {
         return _reader.Read<int>("Sensitivity");

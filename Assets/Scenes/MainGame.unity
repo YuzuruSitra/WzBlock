@@ -2626,6 +2626,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3539665605922732097}
     m_Modifications:
+    - target: {fileID: 3232551303194434789, guid: f6dc70411e2c24f2dae28e68833f18c3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3232551303194434789, guid: f6dc70411e2c24f2dae28e68833f18c3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3232551303194434789, guid: f6dc70411e2c24f2dae28e68833f18c3, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3232551303267424517, guid: f6dc70411e2c24f2dae28e68833f18c3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3232551303267424517, guid: f6dc70411e2c24f2dae28e68833f18c3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3232551303267424517, guid: f6dc70411e2c24f2dae28e68833f18c3, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3232551303272347073, guid: f6dc70411e2c24f2dae28e68833f18c3, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2713,6 +2737,18 @@ PrefabInstance:
     - target: {fileID: 3232551303272347078, guid: f6dc70411e2c24f2dae28e68833f18c3, type: 3}
       propertyPath: m_Name
       value: SettingPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3232551303272347078, guid: f6dc70411e2c24f2dae28e68833f18c3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3232551303542996292, guid: f6dc70411e2c24f2dae28e68833f18c3, type: 3}
+      propertyPath: m_text
+      value: Home
+      objectReference: {fileID: 0}
+    - target: {fileID: 3232551304387485013, guid: f6dc70411e2c24f2dae28e68833f18c3, type: 3}
+      propertyPath: m_Name
+      value: Exit_Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6dc70411e2c24f2dae28e68833f18c3, type: 3}

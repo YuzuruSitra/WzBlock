@@ -16,10 +16,11 @@ public class ScoreHandler
     private int _todayMaxScore;
     public int TodayMaxScore => _todayMaxScore;
     private PlayDataIO _playDataIO;
-
+    private PlayerInfoHandler _playerInfoHandler;
     private ScoreHandler ()
     {
         _playDataIO = PlayDataIO.Instance;
+        _playerInfoHandler = PlayerInfoHandler.Instance;
         LoadScores();
         GameStateHandler.Instance.ChangeGameState += ScoreStateFunction;
         _ballMover = GameObject.FindWithTag("Ball").GetComponent<BallMover>();
@@ -42,6 +43,7 @@ public class ScoreHandler
                 break;
             case GameStateHandler.GameState.FinGame:
                 UpdateMaxScores();
+                _playerInfoHandler.CalcLevel(_currentScore);
                 break;
         }
         if (newState != GameStateHandler.GameState.Launch) return;
