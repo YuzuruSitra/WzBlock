@@ -12,6 +12,10 @@ public class InGameBtHandler : MonoBehaviour
     private Button _headerSettingBt;
     [SerializeField]
     private Button _settingResumeBt;
+    [SerializeField]
+    private Button _settingHomeBt;
+    [SerializeField]
+    private SettingPanelHandler _settingPanelHandler;
 
     void Start()
     {
@@ -20,6 +24,8 @@ public class InGameBtHandler : MonoBehaviour
         _StartBt.onClick.AddListener(StartGame);
         _headerSettingBt.onClick.AddListener(SetSettingState);
         _settingResumeBt.onClick.AddListener(SetCurrentInGameState);
+        _settingResumeBt.onClick.AddListener(_settingPanelHandler.CloseFixedAction);
+        _settingHomeBt.onClick.AddListener(SceneHandler.Instance.GoTitleScene);
     }
 
     private void SetLaunchState()

@@ -8,8 +8,10 @@ public class PlayerInfoHandler
     private PlayDataIO _playDataIO;
     private string _playerName;
     public string PlayerName => _playerName;
+    public event Action<string> ChangeName;
     private int _playerLevel;
     public int PlayerLevel => _playerLevel;
+    public event Action<int> ChangeLevel;
     private const int MAX_LEVEL = 500;
     private int _playerCurrentExp;
     private const int EXP_FACTOR = 1000;
@@ -25,7 +27,9 @@ public class PlayerInfoHandler
 
     public void ChangePlayerName(string newName)
     {
+        if (newName == "") newName = "NoName";
         _playerName = newName;
+        ChangeName?.Invoke(_playerName);
         _playDataIO.SavePlayerName(newName);
     }
 
@@ -43,9 +47,9 @@ public class PlayerInfoHandler
 
         if (currentExp != _playerCurrentExp)
             _playDataIO.SavePlayerExp(_playerCurrentExp);
-        if (currentLevel != _playerLevel)
-            _playDataIO.SavePlayerLevel(_playerLevel);
-
+        if (currentLevel == _playerLevel) return;
+        ChangeLevel?.Invoke(_playerLevel);
+        _playDataIO.SavePlayerLevel(_playerLevel);
     }
 
 }
