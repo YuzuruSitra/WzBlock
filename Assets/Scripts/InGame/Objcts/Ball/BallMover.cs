@@ -23,6 +23,8 @@ public class BallMover : MonoBehaviour
     private float _hitReduceForce = 1f;
     [SerializeField]
     private float _explotionForce = 1.75f;
+    [SerializeField]
+    private float _shakePower = 1.0f;
     private Vector2 _launchDirection = new Vector2(1, 0.5f);
     private const float MIN_THRESHOLD = 0.001f;
     private Rigidbody _rigidBody;
@@ -188,11 +190,7 @@ public class BallMover : MonoBehaviour
             Vector3 velocity = _rigidBody.velocity;
             float speed = velocity.magnitude;
             if (speed < _shakeSpeedLimit) return;
-            _shakeByDOTween.StartShake(1.0f);
-        }
-        if (hitObj.CompareTag("Enemy"))
-        {
-            _shakeByDOTween.StartShake(2.0f);
+            _shakeByDOTween.StartShake(_shakePower);
         }
     }
 

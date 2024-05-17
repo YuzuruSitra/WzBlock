@@ -34,6 +34,11 @@ public class EnemySurviveManager : MonoBehaviour
     private Coroutine _insCoroutine;
     private Coroutine _destCoroutine;
 
+    [SerializeField]
+    private ShakeByDOTween _shakeByDOTween;
+    [SerializeField]
+    private float _shakePower = 2.0f;
+
     void Start()
     {
         _scoreHandler = ScoreHandler.Instance;
@@ -111,12 +116,12 @@ public class EnemySurviveManager : MonoBehaviour
         coroutine = null;
     }
 
-
     void OnCollisionEnter(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Ball")) return;
         if (!IsActive) return;
         ResetCoroutine(ref _insCoroutine);
         _destCoroutine = StartCoroutine(DestroyEnemy());
+        _shakeByDOTween.StartShake(_shakePower);
     }
 }

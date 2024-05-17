@@ -32,7 +32,7 @@ public class Block : MonoBehaviour
         _col.enabled = newActive;
         _mesh.enabled = newActive;
     }
-
+    
     private void HitBall()
     {
         _scoreHandler.AddScore(_score);

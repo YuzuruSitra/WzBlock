@@ -2227,6 +2227,10 @@ PrefabInstance:
       propertyPath: _bulletPool
       value: 
       objectReference: {fileID: 1554321716}
+    - target: {fileID: 2061129690210480299, guid: df790dee7a32e4af5ab2484a72a08bd9, type: 3}
+      propertyPath: _shakeByDOTween
+      value: 
+      objectReference: {fileID: 656367191}
     - target: {fileID: 2733330914311998851, guid: df790dee7a32e4af5ab2484a72a08bd9, type: 3}
       propertyPath: m_Name
       value: Enemy
