@@ -32,7 +32,7 @@ public class PlayDataIO
             PureAssetLoader pureAssetLoader = new PureAssetLoader();
             InitializingValues initializingValues = pureAssetLoader.LoadScriptableObject<InitializingValues>("InitializingValues");
             SavePlayerName(initializingValues.PlayerName);
-            SavePlayerLevel(initializingValues.Level);
+            SavePlayerRank(initializingValues.Rank);
             SavePlayerExp(initializingValues.Exp);
             SaveSensitivity(initializingValues.Sensitivity);
             SaveVolume(initializingValues.Volume);
@@ -49,9 +49,9 @@ public class PlayDataIO
         _writer.Commit();
     }
 
-    public void SavePlayerLevel(int level)
+    public void SavePlayerRank(int level)
     {
-        _writer.Write("Level", level);
+        _writer.Write("Rank", level);
         _writer.Commit();
     }
 
@@ -92,9 +92,9 @@ public class PlayDataIO
     {
         return _reader.Read<string>("Name");
     }
-    public int LoadPlayerLevel()
+    public int LoadPlayerRank()
     {
-        return _reader.Read<int>("Level");
+        return _reader.Read<int>("Rank");
     }
     public int LoadPlayerExp()
     {

@@ -8,8 +8,8 @@ public class InitializingValues : ScriptableObject
     private string _playerName;
     public string PlayerName => _playerName;
     [SerializeField]
-    private int _level;
-    public int Level => _level;
+    private int _rank;
+    public int Rank => _rank;
     [SerializeField]
     private int _exp;
     public int Exp => _exp;

@@ -14,7 +14,7 @@ public class HeaderPanelHandler : MonoBehaviour
         _playerInfoHandler.ChangeName += ChangeNameText;
         _playerInfoHandler.ChangeLevel += ChangeLevelText;
         _nameText.text = _playerInfoHandler.PlayerName;
-        _levelText.text = _playerInfoHandler.PlayerLevel.ToString();
+        _levelText.text = _playerInfoHandler.PlayerRank.ToString();
     }
 
     private void ChangeNameText(string name)

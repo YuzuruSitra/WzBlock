@@ -31,7 +31,7 @@ public class SettingPanelHandler : MonoBehaviour
         _sensiSlider.value = _sensiHandler.Sensitivity;
         _volumeSlider.value = _saundHandler.CurrentVolume;
         _playerNameField.text = _playerInfoHandler.PlayerName;
-        _playerLevelText.text = _playerInfoHandler.PlayerLevel.ToString();
+        _playerLevelText.text = _playerInfoHandler.PlayerRank.ToString();
     }
 
     private void ChangeSensiSlider(float value)
