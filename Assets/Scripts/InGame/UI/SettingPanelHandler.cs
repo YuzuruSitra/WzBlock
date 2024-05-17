@@ -24,7 +24,8 @@ public class SettingPanelHandler : MonoBehaviour
         // リスナー登録
         _sensiSlider.onValueChanged.AddListener(ChangeSensiSlider);
         _volumeSlider.onValueChanged.AddListener(ChangeVolumeSlider);
-        _playerInfoHandler.ChangeLevel += ChangeLevelText;
+        _playerNameField.onEndEdit.AddListener(ChangePlayerNameField);
+        _playerInfoHandler.ChangeRank += ChangeLevelText;
         // 初期値のセット
         ChangeSensiSlider(_sensiHandler.Sensitivity);
         ChangeVolumeSlider(_saundHandler.CurrentVolume);
@@ -45,6 +46,12 @@ public class SettingPanelHandler : MonoBehaviour
         int volume = (int)value;
         _volumeValueText.text = volume.ToString();
         _saundHandler.SetNewVolume(volume / 10.0f);
+    }
+
+    private void ChangePlayerNameField(string newName)
+    {
+        if (newName != "") return;
+        _playerNameField.text = PlayerInfoHandler.INITIAL_NAME;
     }
 
     private void ChangeLevelText(int level)

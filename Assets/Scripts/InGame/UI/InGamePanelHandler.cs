@@ -20,6 +20,7 @@ public class InGamePanelHandler : MonoBehaviour
     [SerializeField]
     private TMP_Text _comboText;
     private BallMover _ballMover;
+    private GameStateHandler _gameStateHandler;
 
     void Start()
     {
@@ -30,6 +31,8 @@ public class InGamePanelHandler : MonoBehaviour
         _scoreHandler.AddScoreEvent += AddScoreAnim;
         _ballMover = GameObject.FindWithTag("Ball").GetComponent<BallMover>();
         _ballMover.ChangeHitCount += ChangeComboText;
+        _gameStateHandler = GameStateHandler.Instance;
+        _gameStateHandler.ChangeGameState += ChangeStateScoreUI;
     }
 
     private void ChangeScoreUI(int newValue)
@@ -76,6 +79,12 @@ public class InGamePanelHandler : MonoBehaviour
     private void ChangeStateScoreUI(GameStateHandler.GameState newState)
     {
         if (newState != GameStateHandler.GameState.Launch) return;
+        if (_changeScoreCoroutine != null)
+        {
+            StopCoroutine(_changeScoreCoroutine);
+            _changeScoreCoroutine = null;
+        }
+        _currentSetScore = 0;
         _scoreText.text = "Score : 0";
     }
 
