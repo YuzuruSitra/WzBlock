@@ -94,7 +94,7 @@ public class FinPanelHandler : MonoBehaviour
     {
         if (_gameStateHandler.CurrentState != GameStateHandler.GameState.FinGame) yield return null;
 
-        int getExp = _playerInfoHandler.PlayerHaveExp - _playerInfoHandler.CurrentExp;
+        int getExp = _playerInfoHandler.CurrentGetExp;
         _getExpText.text = "+" + getExp;
         int targetExp = _playerInfoHandler.PlayerHaveExp;
         int currentExp = _playerInfoHandler.CurrentExp;
@@ -103,7 +103,7 @@ public class FinPanelHandler : MonoBehaviour
         _rankText.text = currentRank.ToString();
         _rankSlider.maxValue = needExp;
 
-        int steps = getExp / 5;
+        int steps = getExp / 2;
         if (steps == 0) steps = 1;
         float waitTime = _animationDuration / steps;
         _countUpWait = new WaitForSeconds(waitTime);
@@ -111,13 +111,13 @@ public class FinPanelHandler : MonoBehaviour
         while (currentExp < targetExp)
         {
             // スライダーの値を徐々に増加
-            currentExp += 5;
+            currentExp += 2;
             _rankSlider.value = currentExp;
 
             // 必要経験値を超えた場合
             if (currentExp >= needExp)
             {
-                currentExp -= needExp; // 現在の経験値をリセット
+                currentExp -= needExp;
                 currentRank++;
                 needExp = _playerInfoHandler.PlayerNeedExp(currentRank);
                 _rankSlider.maxValue = needExp;

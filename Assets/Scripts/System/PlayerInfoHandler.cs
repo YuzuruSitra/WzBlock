@@ -13,6 +13,8 @@ public class PlayerInfoHandler
     public int PlayerRank => _playerRank;
     private int _currentExp;
     public int CurrentExp => _currentExp;
+    private int _currentGetExp;
+    public int CurrentGetExp => _currentGetExp;
     private int _currentRank;
     public int CurrentRank => _currentRank;
     public event Action<int> ChangeRank;
@@ -42,6 +44,7 @@ public class PlayerInfoHandler
     public void CalcLevel(int getExp)
     {
         _currentExp = _playerHaveExp;
+        _currentGetExp = getExp;
         _currentRank = _playerRank;
         _playerHaveExp += getExp;
         int needExp = PlayerNeedExp(_playerRank);

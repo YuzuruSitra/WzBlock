@@ -9,9 +9,18 @@ public class TitleBtHandler : MonoBehaviour
     private Button _settingsBt;
     [SerializeField]
     private Button _FinishBt;
+    [SerializeField]
+    private Button _settingResumeBt;
 
+    [SerializeField]
+    private TitlePanelHandler _titlePanelHandler;
+    [SerializeField]
+    private SettingPanelHandler _settingPanelHandler;
     void Start()
     {
         _startBt.onClick.AddListener(SceneHandler.Instance.GoMainGameScene);
+        _settingsBt.onClick.AddListener(_titlePanelHandler.ChangeSettingPanel);
+        _settingResumeBt.onClick.AddListener(_titlePanelHandler.ChangeSettingPanel);
+        _settingResumeBt.onClick.AddListener(_settingPanelHandler.CloseFixedAction);
     }
 }
