@@ -5,8 +5,8 @@ public class SwipeToMovePaddle : MonoBehaviour, IPointerDownHandler, IPointerUpH
 {
     public PaddleMover _paddleMover; // 動かす対象の3Dオブジェクト
     private SensiHandler _sensiHandler;
-    private float[] _speedFactor = { -0.2f, -0.16f, -0.12f, -0.08f, -0.04f , 0 , 0.04f, 0.08f, 0.12f, 0.16f, 0.2f };
-    private const float MOVE_SPEED_BASE = 0.2f;
+    private float[] _speedFactor = { -0.2f, -0.16f, -0.12f, -0.08f, 0.04f , 0 , 0.04f, 0.08f, 0.12f, 0.16f, 0.2f };
+    private const float MOVE_SPEED_BASE = 0.21f;
     private Vector2 _startTouchPosition;
     private Vector2 _currentTouchPosition;
     private Vector2 _touchDelta;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: InitializingValues
   m_EditorClassIdentifier: 
   _playerName: NoName
-  _level: 1
+  _rank: 1
   _exp: 0
   _sensitivity: 5
   _volume: 0.5
