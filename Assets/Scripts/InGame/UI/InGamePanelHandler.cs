@@ -35,6 +35,14 @@ public class InGamePanelHandler : MonoBehaviour
         _gameStateHandler.ChangeGameState += ChangeStateScoreUI;
     }
 
+    void OnDestroy()
+    {
+        _scoreHandler.ChangeScore -= ChangeScoreUI;
+        _scoreHandler.AddScoreEvent -= AddScoreAnim;
+        _ballMover.ChangeHitCount -= ChangeComboText;
+        _gameStateHandler.ChangeGameState -= ChangeStateScoreUI;
+    }
+
     private void ChangeScoreUI(int newValue)
     {
         if (_changeScoreCoroutine != null)
@@ -83,6 +91,7 @@ public class InGamePanelHandler : MonoBehaviour
         {
             StopCoroutine(_changeScoreCoroutine);
             _changeScoreCoroutine = null;
+            _addScoreAnim.Rebind();
         }
         _currentSetScore = 0;
         _scoreText.text = "Score : 0";

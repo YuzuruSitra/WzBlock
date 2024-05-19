@@ -27,10 +27,17 @@ public class SettingPanelHandler : MonoBehaviour
         _playerNameField.onEndEdit.AddListener(ChangePlayerNameField);
         _playerInfoHandler.ChangeRank += ChangeLevelText;
         // 初期値のセット
+        InitializingDataSet();
+        PlayDataIO.Instance.DeleteDataEvent += InitializingDataSet;
+    }
+
+    private void InitializingDataSet()
+    {
         ChangeSensiSlider(_sensiHandler.Sensitivity);
-        ChangeVolumeSlider(_saundHandler.CurrentVolume);
+        float initialSetValue = _saundHandler.CurrentVolume * 10.0f;
+        _volumeValueText.text = initialSetValue.ToString();
         _sensiSlider.value = _sensiHandler.Sensitivity;
-        _volumeSlider.value = _saundHandler.CurrentVolume;
+        _volumeSlider.value = initialSetValue;
         _playerNameField.text = _playerInfoHandler.PlayerName;
         _playerLevelText.text = _playerInfoHandler.PlayerRank.ToString();
     }
@@ -43,9 +50,8 @@ public class SettingPanelHandler : MonoBehaviour
 
     private void ChangeVolumeSlider(float value)
     {
-        int volume = (int)value;
-        _volumeValueText.text = volume.ToString();
-        _saundHandler.SetNewVolume(volume / 10.0f);
+        _volumeValueText.text = value.ToString();
+        _saundHandler.SetNewVolume(value / 10.0f);
     }
 
     private void ChangePlayerNameField(string newName)

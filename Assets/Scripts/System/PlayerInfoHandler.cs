@@ -28,9 +28,8 @@ public class PlayerInfoHandler
     private PlayerInfoHandler()
     {
         _playDataIO = PlayDataIO.Instance;
-        _playerName = _playDataIO.LoadPlayerName();
-        _playerRank = _playDataIO.LoadPlayerRank();
-        _playerHaveExp = _playDataIO.LoadPlayerExp();
+        _playDataIO.DeleteDataEvent += LoadDatas;
+        LoadDatas();
     }
 
     public void ChangePlayerName(string newName)
@@ -68,6 +67,13 @@ public class PlayerInfoHandler
     public int PlayerNeedExp(int rank)
     {
         return rank * EXP_FACTOR;
+    }
+
+    public void LoadDatas()
+    {
+        _playerName = _playDataIO.LoadPlayerName();
+        _playerRank = _playDataIO.LoadPlayerRank();
+        _playerHaveExp = _playDataIO.LoadPlayerExp();
     }
 
 }

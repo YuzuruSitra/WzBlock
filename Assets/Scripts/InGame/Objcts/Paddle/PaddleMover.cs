@@ -25,6 +25,11 @@ public class PaddleMover : MonoBehaviour
         _abilityReceiver = AbilityReceiver.Instance;
     }
 
+    void OnDestroy()
+    {
+        _gameStateHandler.ChangeGameState -= ChangeStatePaddle;
+    }
+
     public void MoveReceive(Vector3 movement)
     {
         if (_abilityReceiver.CurrentCondition == AbilityReceiver.Condition.Stan) return;

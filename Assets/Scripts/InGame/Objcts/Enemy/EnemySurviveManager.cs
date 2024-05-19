@@ -71,6 +71,11 @@ public class EnemySurviveManager : MonoBehaviour
         _insCoroutine = StartCoroutine(GenerateEnemy());
     }
 
+    void OnDestroy()
+    {
+        _gameStateHandler.ChangeGameState -= ChangeStateEnemySurvive;
+    }
+
     private IEnumerator GenerateEnemy()
     {
         _insEffect.SetActive(true);

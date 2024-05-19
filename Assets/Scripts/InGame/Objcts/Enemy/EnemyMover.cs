@@ -49,6 +49,11 @@ public class EnemyMover : MonoBehaviour
         transform.position += _direction * _speed * Time.deltaTime;
     }
 
+    void OnDestroy()
+    {
+        _gameStateHandler.ChangeGameState -= ChangeStateEnemyMover;
+    }
+
     private void ChangeStateEnemyMover(GameStateHandler.GameState newState)
     {
         if (newState != GameStateHandler.GameState.Launch) return;

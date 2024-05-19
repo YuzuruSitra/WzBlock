@@ -80,6 +80,11 @@ public class BallMover : MonoBehaviour
         _currentAngular = _rigidBody.angularVelocity;
     }
 
+    void OnDestroy()
+    {
+        _gameStateHandler.ChangeGameState -= ChangeStateBall;
+    }
+
     private void ChangeStateBall(GameStateHandler.GameState newState)
     {
         switch (newState)

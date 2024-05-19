@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 // SE‚ÆBGM‚ÌÄ¶’âŽ~
 public class SaundHandler : MonoBehaviour
@@ -10,7 +11,7 @@ public class SaundHandler : MonoBehaviour
     private AudioSource _seAudioSource;
     private float _currentVolume;
     public float CurrentVolume => _currentVolume;
-    void Start()
+    void Awake()
     {
         GameObject soundManager = CheckOtherSoundManager();
         bool checkResult = soundManager != null && soundManager != gameObject;
@@ -19,7 +20,8 @@ public class SaundHandler : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         _playDataIO = PlayDataIO.Instance;
-        _currentVolume = _playDataIO.LoadVolume();
+        _playDataIO.DeleteDataEvent += LoadData;
+        LoadData();
         SetNewVolume(_currentVolume);
     }
 
@@ -53,12 +55,18 @@ public class SaundHandler : MonoBehaviour
     public void SetNewVolume(float newVolume)
     {
         _currentVolume = newVolume;
-        _bgmAudioSource.volume = newVolume;
-        _seAudioSource.volume = newVolume;
+        _bgmAudioSource.volume = _currentVolume;
+        _seAudioSource.volume = _currentVolume;
     }
 
     public void FixedVolume()
     {
         _playDataIO.SaveVolume(_currentVolume);
     }
+
+    private void LoadData()
+    {
+        _currentVolume = _playDataIO.LoadVolume();
+    }
+
 }

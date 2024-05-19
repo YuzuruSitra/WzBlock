@@ -2479,7 +2479,6 @@ MonoBehaviour:
   _emphasizedPink: {r: 1, g: 0.64705884, b: 0.90588236, a: 1}
   _emphasizedBlue: {r: 0.5686275, g: 1, b: 0.92156863, a: 1}
   _rankSlider: {fileID: 1527923896}
-  _animationSpeed: 0.01
   _animationDuration: 2
   _expText: {fileID: 6088166}
   _rankText: {fileID: 158179244}

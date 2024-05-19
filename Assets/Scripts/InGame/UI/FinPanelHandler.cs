@@ -24,8 +24,6 @@ public class FinPanelHandler : MonoBehaviour
     [SerializeField]
     private Slider _rankSlider;
     [SerializeField]
-    float _animationSpeed = 0.1f;
-    [SerializeField]
     private float _animationDuration = 3f;
     private WaitForSeconds _countUpWait;
     [SerializeField]
@@ -43,6 +41,12 @@ public class FinPanelHandler : MonoBehaviour
         // ÉäÉXÉiÅ[ìoò^
         _playerInfoHandler.CalculatedEvent += LaunchRankUpAnim;
         _gameStateHandler.ChangeGameState += ChangeStateScoreUI;
+    }
+
+    void OnDestroy()
+    {
+        _playerInfoHandler.CalculatedEvent -= LaunchRankUpAnim;
+        _gameStateHandler.ChangeGameState -= ChangeStateScoreUI;
     }
 
     private void ChangeStateScoreUI(GameStateHandler.GameState newState)

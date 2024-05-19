@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class ScoreHandler
@@ -17,11 +18,13 @@ public class ScoreHandler
     public int TodayMaxScore => _todayMaxScore;
     private PlayDataIO _playDataIO;
     private PlayerInfoHandler _playerInfoHandler;
+
     private ScoreHandler ()
     {
         _playDataIO = PlayDataIO.Instance;
-        _playerInfoHandler = PlayerInfoHandler.Instance;
+        _playDataIO.DeleteDataEvent += LoadScores;
         LoadScores();
+        _playerInfoHandler = PlayerInfoHandler.Instance;
         GameStateHandler.Instance.ChangeGameState += ScoreStateFunction;
         _ballMover = GameObject.FindWithTag("Ball").GetComponent<BallMover>();
     }

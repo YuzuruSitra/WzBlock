@@ -44,6 +44,11 @@ public class EnemyShooter : MonoBehaviour
         
     }
 
+    void OnDestroy()
+    {
+        _gameStateHandler.ChangeGameState -= ChangeStateShooter;
+    }
+
     private void ChangeStateShooter(GameStateHandler.GameState newState)
     {
         if (newState != GameStateHandler.GameState.Launch) return;

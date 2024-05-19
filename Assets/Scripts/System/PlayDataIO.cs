@@ -11,6 +11,7 @@ public class PlayDataIO
     private QuickSaveWriter _writer;
     private QuickSaveReader _reader;
 
+    public event Action DeleteDataEvent;
 
     public PlayDataIO()
     {
@@ -27,18 +28,7 @@ public class PlayDataIO
         settings.CompressionMode = CompressionMode.Gzip;
 
         _writer = QuickSaveWriter.Create("SaveData", settings);
-        if (!QuickSaveBase.RootExists("SaveData"))
-        {
-            PureAssetLoader pureAssetLoader = new PureAssetLoader();
-            InitializingValues initializingValues = pureAssetLoader.LoadScriptableObject<InitializingValues>("InitializingValues");
-            SavePlayerName(initializingValues.PlayerName);
-            SavePlayerRank(initializingValues.Rank);
-            SavePlayerExp(initializingValues.Exp);
-            SaveSensitivity(initializingValues.Sensitivity);
-            SaveVolume(initializingValues.Volume);
-            SaveMaxScore(initializingValues.MaxScore);
-            SaveTodayScore(initializingValues.TodayMaxScore);
-        }
+        if (!QuickSaveBase.RootExists("SaveData")) InitializingData();
         _reader = QuickSaveReader.Create("SaveData", settings);
     }
 
@@ -126,6 +116,21 @@ public class PlayDataIO
     public void DeleteData()
     {
         QuickSaveWriter.DeleteRoot("SaveData");
+        InitializingData();
+        DeleteDataEvent?.Invoke();
+    }
+
+    private void InitializingData()
+    {
+        PureAssetLoader pureAssetLoader = new PureAssetLoader();
+        InitializingValues initializingValues = pureAssetLoader.LoadScriptableObject<InitializingValues>("InitializingValues");
+        SavePlayerName(initializingValues.PlayerName);
+        SavePlayerRank(initializingValues.Rank);
+        SavePlayerExp(initializingValues.Exp);
+        SaveSensitivity(initializingValues.Sensitivity);
+        SaveVolume(initializingValues.Volume);
+        SaveMaxScore(initializingValues.MaxScore);
+        SaveTodayScore(initializingValues.TodayMaxScore);
     }
 
 }

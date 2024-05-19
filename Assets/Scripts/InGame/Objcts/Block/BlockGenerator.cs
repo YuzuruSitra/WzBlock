@@ -24,6 +24,11 @@ public class BlockGenerator : MonoBehaviour
         InsCountDown();
     }
 
+    void OnDestroy()
+    {
+        _gameStateHandler.ChangeGameState -= ReStartIns;
+    }
+
     private void ReStartIns(GameStateHandler.GameState newState)
     {
         if (newState != GameStateHandler.GameState.Launch) return;

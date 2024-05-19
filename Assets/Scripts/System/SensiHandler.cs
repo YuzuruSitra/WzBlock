@@ -11,7 +11,8 @@ public class SensiHandler
     private SensiHandler()
     {
         _playDataIO = PlayDataIO.Instance;
-        _sensitivity = _playDataIO.LoadSensitivity();
+        _playDataIO.DeleteDataEvent += LoadData;
+        LoadData();
     }
 
     public void ChangeSensitivity(int value)
@@ -19,4 +20,10 @@ public class SensiHandler
         _sensitivity = value;
         _playDataIO.SaveSensitivity(value);
     }
+
+    private void LoadData()
+    {
+        _sensitivity = _playDataIO.LoadSensitivity();
+    }
+
 }
