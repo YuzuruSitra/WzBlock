@@ -539,7 +539,7 @@ MonoBehaviour:
   _volumeSlider: {fileID: 3232551304030771089}
   _sensiValueText: {fileID: 8151131713868718099}
   _volumeValueText: {fileID: 8151131713548272463}
-  _playerLevelText: {fileID: 8151131712933470673}
+  _playerRankText: {fileID: 8151131712933470673}
   _playerNameField: {fileID: 8151131712456189846}
 --- !u!1 &3232551303448676140
 GameObject:
@@ -2074,7 +2074,7 @@ GameObject:
   - component: {fileID: 8151131712933470686}
   - component: {fileID: 8151131712933470673}
   m_Layer: 0
-  m_Name: Level_Text (TMP)
+  m_Name: Rank_Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2557,7 +2557,7 @@ GameObject:
   - component: {fileID: 8151131713592913462}
   - component: {fileID: 8151131713592913449}
   m_Layer: 0
-  m_Name: Level_image
+  m_Name: Rank_image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

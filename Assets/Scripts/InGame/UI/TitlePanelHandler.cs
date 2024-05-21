@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -15,6 +13,26 @@ public class TitlePanelHandler : MonoBehaviour
     private TMP_Text _confirmationText;
     private const string FAZE_1 = "Really ?";
     private const string FAZE_2 = "Deleted .";
+
+    [SerializeField]
+    private TMP_Text _userNameText;
+    [SerializeField]
+    private TMP_Text _userRankText;
+    private PlayerInfoHandler _playerInfoHandler;
+    void Start()
+    {
+        _playerInfoHandler = PlayerInfoHandler.Instance;
+        _userNameText.text = _playerInfoHandler.PlayerName;
+        _userRankText.text = _playerInfoHandler.PlayerRank.ToString();
+        _playerInfoHandler.ChangeName += ChangeNameText;
+        _playerInfoHandler.ChangeRank += ChangeRankText;
+    }
+
+    void OnDestroy()
+    {
+        _playerInfoHandler.ChangeName -= ChangeNameText;
+        _playerInfoHandler.ChangeRank -= ChangeRankText;
+    }
 
     public void ChangeSettingPanel()
     {
@@ -46,4 +64,13 @@ public class TitlePanelHandler : MonoBehaviour
         _confirmationText.text = FAZE_2;
     }
 
+    private void ChangeNameText(string name)
+    {
+        _userNameText.text = name;
+    }
+
+    private void ChangeRankText(int rank)
+    {
+        _userRankText.text = rank.ToString();
+    }
 }

@@ -49,7 +49,11 @@ public class PlayerInfoHandler
         int needExp = PlayerNeedExp(_playerRank);
         while (_playerHaveExp >= needExp)
         {
-            if (_playerRank >= MAX_LEVEL) return;
+            if (_playerRank >= MAX_LEVEL)
+            {
+                _playerHaveExp = needExp;
+                break;
+            }
             _playerHaveExp -= needExp;
             _playerRank++;
             needExp = PlayerNeedExp(_playerRank);
@@ -59,7 +63,7 @@ public class PlayerInfoHandler
         // ÉZÅ[Éuèàóù
         if (_currentExp != _playerHaveExp)
             _playDataIO.SavePlayerExp(_playerHaveExp);
-        if (_currentRank != _playerRank) return;
+        if (_currentRank == _playerRank) return;
         ChangeRank?.Invoke(_playerRank);
         _playDataIO.SavePlayerRank(_playerRank);
     }
@@ -72,7 +76,9 @@ public class PlayerInfoHandler
     public void LoadDatas()
     {
         _playerName = _playDataIO.LoadPlayerName();
+        ChangeName?.Invoke(_playerName);
         _playerRank = _playDataIO.LoadPlayerRank();
+        ChangeRank?.Invoke(_playerRank);
         _playerHaveExp = _playDataIO.LoadPlayerExp();
     }
 

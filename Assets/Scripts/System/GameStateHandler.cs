@@ -1,3 +1,4 @@
+using UnityEngine;
 using System;
 
 public class GameStateHandler
@@ -20,6 +21,7 @@ public class GameStateHandler
 
     private GameStateHandler()
     {
+        Application.targetFrameRate = 60;
         SetGameState(GameState.Launch);
     }
 

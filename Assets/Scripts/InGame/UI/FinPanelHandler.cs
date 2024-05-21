@@ -25,6 +25,7 @@ public class FinPanelHandler : MonoBehaviour
     private Slider _rankSlider;
     [SerializeField]
     private float _animationDuration = 3f;
+    private Coroutine _rankUpCoroutine;
     private WaitForSeconds _countUpWait;
     [SerializeField]
     private TMP_Text _expText;
@@ -91,31 +92,34 @@ public class FinPanelHandler : MonoBehaviour
 
     private void LaunchRankUpAnim()
     {
-        StartCoroutine(RankUpAnim());
+        if (_rankUpCoroutine != null ) StopCoroutine(_rankUpCoroutine);
+        _rankUpCoroutine = StartCoroutine(RankUpAnim());
     }
 
     private IEnumerator RankUpAnim()
     {
-        if (_gameStateHandler.CurrentState != GameStateHandler.GameState.FinGame) yield return null;
-
+        // パネルが開くまで待機
+        while (_gameStateHandler.CurrentState != GameStateHandler.GameState.FinGame) yield return null;
+        
         int getExp = _playerInfoHandler.CurrentGetExp;
         _getExpText.text = "+" + getExp;
-        int targetExp = _playerInfoHandler.PlayerHaveExp;
         int currentExp = _playerInfoHandler.CurrentExp;
         int currentRank = _playerInfoHandler.CurrentRank;
         int needExp = _playerInfoHandler.PlayerNeedExp(currentRank);
         _rankText.text = currentRank.ToString();
         _rankSlider.maxValue = needExp;
+        _rankSlider.value = currentExp;
 
-        int steps = getExp / 2;
-        if (steps == 0) steps = 1;
+        // 待機時間の計算
+        int steps = Mathf.CeilToInt(getExp / 2.0f);
         float waitTime = _animationDuration / steps;
         _countUpWait = new WaitForSeconds(waitTime);
-
-        while (currentExp < targetExp)
-        {
-            // スライダーの値を徐々に増加
-            currentExp += 2;
+        while (getExp > 0)
+        {            
+            // スライダーの値を2ずつ増加
+            int increase = Mathf.Min(2, getExp);
+            currentExp += increase;
+            getExp -= increase;
             _rankSlider.value = currentExp;
 
             // 必要経験値を超えた場合
@@ -126,8 +130,7 @@ public class FinPanelHandler : MonoBehaviour
                 needExp = _playerInfoHandler.PlayerNeedExp(currentRank);
                 _rankSlider.maxValue = needExp;
                 _rankText.text = currentRank.ToString();
-                targetExp = _playerInfoHandler.PlayerHaveExp;
-                _rankSlider.value = 0;
+                _rankSlider.value = currentExp;
             }
 
             _expText.text = "Exp: " + currentExp + "/" + needExp;
@@ -135,6 +138,8 @@ public class FinPanelHandler : MonoBehaviour
             // アニメーションスピードに応じて待機
             yield return _countUpWait;
         }
-    }
 
+        // コルーチンの参照をクリア
+        _rankUpCoroutine = null;
+    }
 }

@@ -7,7 +7,7 @@ public class SettingPanelHandler : MonoBehaviour
     [SerializeField]
     private Slider _sensiSlider, _volumeSlider;
     [SerializeField]
-    private TMP_Text _sensiValueText, _volumeValueText, _playerLevelText;
+    private TMP_Text _sensiValueText, _volumeValueText, _playerRankText;
     [SerializeField]
     private TMP_InputField _playerNameField;
 
@@ -25,10 +25,16 @@ public class SettingPanelHandler : MonoBehaviour
         _sensiSlider.onValueChanged.AddListener(ChangeSensiSlider);
         _volumeSlider.onValueChanged.AddListener(ChangeVolumeSlider);
         _playerNameField.onEndEdit.AddListener(ChangePlayerNameField);
-        _playerInfoHandler.ChangeRank += ChangeLevelText;
+        _playerInfoHandler.ChangeRank += ChangeRankText;
+        PlayDataIO.Instance.DeleteDataEvent += InitializingDataSet;
         // 初期値のセット
         InitializingDataSet();
-        PlayDataIO.Instance.DeleteDataEvent += InitializingDataSet;
+    }
+
+    void OnDestroy()
+    {
+        _playerInfoHandler.ChangeRank -= ChangeRankText;
+        PlayDataIO.Instance.DeleteDataEvent -= InitializingDataSet;
     }
 
     private void InitializingDataSet()
@@ -39,7 +45,7 @@ public class SettingPanelHandler : MonoBehaviour
         _sensiSlider.value = _sensiHandler.Sensitivity;
         _volumeSlider.value = initialSetValue;
         _playerNameField.text = _playerInfoHandler.PlayerName;
-        _playerLevelText.text = _playerInfoHandler.PlayerRank.ToString();
+        _playerRankText.text = _playerInfoHandler.PlayerRank.ToString();
     }
 
     private void ChangeSensiSlider(float value)
@@ -60,9 +66,9 @@ public class SettingPanelHandler : MonoBehaviour
         _playerNameField.text = PlayerInfoHandler.INITIAL_NAME;
     }
 
-    private void ChangeLevelText(int level)
+    private void ChangeRankText(int level)
     {
-        _playerLevelText.text = level.ToString();
+        _playerRankText.text = level.ToString();
     }
 
     public void CloseFixedAction()

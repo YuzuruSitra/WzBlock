@@ -12,7 +12,7 @@ public class HeaderPanelHandler : MonoBehaviour
     {
         _playerInfoHandler = PlayerInfoHandler.Instance;
         _playerInfoHandler.ChangeName += ChangeNameText;
-        _playerInfoHandler.ChangeRank += ChangeLevelText;
+        _playerInfoHandler.ChangeRank += ChangeRankText;
         _nameText.text = _playerInfoHandler.PlayerName;
         _levelText.text = _playerInfoHandler.PlayerRank.ToString();
     }
@@ -22,7 +22,7 @@ public class HeaderPanelHandler : MonoBehaviour
         _nameText.text = name;
     }
 
-    private void ChangeLevelText(int level)
+    private void ChangeRankText(int level)
     {
         _levelText.text = level.ToString();
     }
