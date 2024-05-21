@@ -1496,7 +1496,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1000
-  m_WholeNumbers: 1
+  m_WholeNumbers: 0
   m_Value: 500
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2479,7 +2479,7 @@ MonoBehaviour:
   _emphasizedPink: {r: 1, g: 0.64705884, b: 0.90588236, a: 1}
   _emphasizedBlue: {r: 0.5686275, g: 1, b: 0.92156863, a: 1}
   _rankSlider: {fileID: 1527923896}
-  _animationDuration: 1.5
+  _animationDuration: 5
   _expText: {fileID: 6088166}
   _rankText: {fileID: 158179244}
   _getExpText: {fileID: 1833372913}

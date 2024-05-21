@@ -26,6 +26,7 @@ public class FinPanelHandler : MonoBehaviour
     [SerializeField]
     private float _animationDuration = 3f;
     private Coroutine _rankUpCoroutine;
+    private const float WAIT_TIME = 0.1f;
     private WaitForSeconds _countUpWait;
     [SerializeField]
     private TMP_Text _expText;
@@ -39,6 +40,7 @@ public class FinPanelHandler : MonoBehaviour
         _scoreHandler = ScoreHandler.Instance;
         _gameStateHandler = GameStateHandler.Instance;
         _playerInfoHandler = PlayerInfoHandler.Instance;
+        _countUpWait = new WaitForSeconds(WAIT_TIME);
         // リスナー登録
         _playerInfoHandler.CalculatedEvent += LaunchRankUpAnim;
         _gameStateHandler.ChangeGameState += ChangeStateScoreUI;
@@ -100,28 +102,22 @@ public class FinPanelHandler : MonoBehaviour
     {
         // パネルが開くまで待機
         while (_gameStateHandler.CurrentState != GameStateHandler.GameState.FinGame) yield return null;
-        
-        int getExp = _playerInfoHandler.CurrentGetExp;
+        float getExp = _playerInfoHandler.CurrentGetExp;
         _getExpText.text = "+" + getExp;
-        int currentExp = _playerInfoHandler.CurrentExp;
+        float currentExp = _playerInfoHandler.CurrentExp;
         int currentRank = _playerInfoHandler.CurrentRank;
         int needExp = _playerInfoHandler.PlayerNeedExp(currentRank);
         _rankText.text = currentRank.ToString();
         _rankSlider.maxValue = needExp;
         _rankSlider.value = currentExp;
 
-        // 待機時間の計算
-        int steps = Mathf.CeilToInt(getExp / 2.0f);
-        float waitTime = _animationDuration / steps;
-        _countUpWait = new WaitForSeconds(waitTime);
+        // _animationDurationの時間で終わるように増加量を計算
+        float increase = getExp / _animationDuration * WAIT_TIME;
         while (getExp > 0)
         {            
-            // スライダーの値を2ずつ増加
-            int increase = Mathf.Min(2, getExp);
             currentExp += increase;
             getExp -= increase;
             _rankSlider.value = currentExp;
-
             // 必要経験値を超えた場合
             if (currentExp >= needExp)
             {
@@ -132,10 +128,7 @@ public class FinPanelHandler : MonoBehaviour
                 _rankText.text = currentRank.ToString();
                 _rankSlider.value = currentExp;
             }
-
-            _expText.text = "Exp: " + currentExp + "/" + needExp;
-
-            // アニメーションスピードに応じて待機
+            _expText.text = "Exp: " + Mathf.CeilToInt(currentExp) + "/" + needExp;
             yield return _countUpWait;
         }
 
