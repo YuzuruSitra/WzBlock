@@ -1,85 +1,83 @@
-using System;
-
-public class PlayerInfoHandler
+namespace System
 {
-    // シングルトン
-    private static PlayerInfoHandler instance;
-    public static PlayerInfoHandler Instance => instance ?? (instance = new PlayerInfoHandler());
-    private PlayDataIO _playDataIO;
-    private string _playerName;
-    public string PlayerName => _playerName;
-    public event Action<string> ChangeName;
-    private int _playerRank;
-    public int PlayerRank => _playerRank;
-    private int _currentExp;
-    public int CurrentExp => _currentExp;
-    private int _currentGetExp;
-    public int CurrentGetExp => _currentGetExp;
-    private int _currentRank;
-    public int CurrentRank => _currentRank;
-    public event Action<int> ChangeRank;
-    public event Action CalculatedEvent;
-    private const int MAX_LEVEL = 500;
-    private int _playerHaveExp;
-    public int PlayerHaveExp => _playerHaveExp;
-    private const int EXP_FACTOR = 1000;
-    public const string INITIAL_NAME = "NoName";
-
-    private PlayerInfoHandler()
+    public class PlayerInfoHandler
     {
-        _playDataIO = PlayDataIO.Instance;
-        _playDataIO.DeleteDataEvent += LoadDatas;
-        LoadDatas();
-    }
+        private static PlayerInfoHandler _instance;
+        public static PlayerInfoHandler Instance => _instance ??= new PlayerInfoHandler();
+        private readonly PlayDataIO _playDataIO;
+        public string PlayerName { get; private set; }
 
-    public void ChangePlayerName(string newName)
-    {
-        if (newName == "") newName = INITIAL_NAME;
-        _playerName = newName;
-        ChangeName?.Invoke(_playerName);
-        _playDataIO.SavePlayerName(newName);
-    }
+        public event Action<string> ChangeName;
+        public int PlayerRank { get; private set; }
 
-    public void CalcLevel(int getExp)
-    {
-        _currentExp = _playerHaveExp;
-        _currentGetExp = getExp;
-        _currentRank = _playerRank;
-        _playerHaveExp += getExp;
-        int needExp = PlayerNeedExp(_playerRank);
-        while (_playerHaveExp >= needExp)
+        public int CurrentExp { get; private set; }
+
+        public int CurrentGetExp { get; private set; }
+
+        public int CurrentRank { get; private set; }
+
+        public event Action<int> ChangeRank;
+        public event Action CalculatedEvent;
+        private const int MaxLevel = 500;
+        private int _playerHaveExp;
+        private const int ExpFactor = 1000;
+        public const string InitialName = "NoName";
+
+        private PlayerInfoHandler()
         {
-            if (_playerRank >= MAX_LEVEL)
-            {
-                _playerHaveExp = needExp;
-                break;
-            }
-            _playerHaveExp -= needExp;
-            _playerRank++;
-            needExp = PlayerNeedExp(_playerRank);
+            _playDataIO = PlayDataIO.Instance;
+            _playDataIO.DeleteDataEvent += LoadData;
+            LoadData();
         }
 
-        CalculatedEvent?.Invoke();
-        // セーブ処理
-        if (_currentExp != _playerHaveExp)
-            _playDataIO.SavePlayerExp(_playerHaveExp);
-        if (_currentRank == _playerRank) return;
-        ChangeRank?.Invoke(_playerRank);
-        _playDataIO.SavePlayerRank(_playerRank);
-    }
+        public void ChangePlayerName(string newName)
+        {
+            if (newName == "") newName = InitialName;
+            PlayerName = newName;
+            ChangeName?.Invoke(PlayerName);
+            _playDataIO.SavePlayerName(newName);
+        }
 
-    public int PlayerNeedExp(int rank)
-    {
-        return rank * EXP_FACTOR;
-    }
+        public void CalcLevel(int getExp)
+        {
+            CurrentExp = _playerHaveExp;
+            CurrentGetExp = getExp;
+            CurrentRank = PlayerRank;
+            _playerHaveExp += getExp;
+            int needExp = PlayerNeedExp(PlayerRank);
+            while (_playerHaveExp >= needExp)
+            {
+                if (PlayerRank >= MaxLevel)
+                {
+                    _playerHaveExp = needExp;
+                    break;
+                }
+                _playerHaveExp -= needExp;
+                PlayerRank++;
+                needExp = PlayerNeedExp(PlayerRank);
+            }
 
-    public void LoadDatas()
-    {
-        _playerName = _playDataIO.LoadPlayerName();
-        ChangeName?.Invoke(_playerName);
-        _playerRank = _playDataIO.LoadPlayerRank();
-        ChangeRank?.Invoke(_playerRank);
-        _playerHaveExp = _playDataIO.LoadPlayerExp();
-    }
+            CalculatedEvent?.Invoke();
+            if (CurrentExp != _playerHaveExp)
+                _playDataIO.SavePlayerExp(_playerHaveExp);
+            if (CurrentRank == PlayerRank) return;
+            ChangeRank?.Invoke(PlayerRank);
+            _playDataIO.SavePlayerRank(PlayerRank);
+        }
 
+        public int PlayerNeedExp(int rank)
+        {
+            return rank * ExpFactor;
+        }
+
+        private void LoadData()
+        {
+            PlayerName = _playDataIO.LoadPlayerName();
+            ChangeName?.Invoke(PlayerName);
+            PlayerRank = _playDataIO.LoadPlayerRank();
+            ChangeRank?.Invoke(PlayerRank);
+            _playerHaveExp = _playDataIO.LoadPlayerExp();
+        }
+
+    }
 }

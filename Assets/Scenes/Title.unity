@@ -132,7 +132,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4377265472593668144, guid: cb5e20ba7d8d5452899367706af03d87, type: 3}
       propertyPath: m_Name
-      value: SaundHandler
+      value: SoundHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 4377265472593668144, guid: cb5e20ba7d8d5452899367706af03d87, type: 3}
+      propertyPath: m_TagString
+      value: SoundHandler
       objectReference: {fileID: 0}
     - target: {fileID: 6475825663555084639, guid: cb5e20ba7d8d5452899367706af03d87, type: 3}
       propertyPath: m_RootOrder
@@ -457,7 +461,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startBt: {fileID: 5388222473561354277}
   _settingsBt: {fileID: 649504263}
-  _QuitBt: {fileID: 465627481}
+  _quitBt: {fileID: 465627481}
   _settingResumeBt: {fileID: 741967834}
   _settingDeleteBt: {fileID: 1681968861}
   _confirmYesBt: {fileID: 1802318816}

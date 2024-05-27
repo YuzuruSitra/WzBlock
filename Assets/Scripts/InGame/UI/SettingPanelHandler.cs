@@ -1,81 +1,85 @@
+using System;
+using System.Globalization;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-public class SettingPanelHandler : MonoBehaviour
+namespace InGame.UI
 {
-    [SerializeField]
-    private Slider _sensiSlider, _volumeSlider;
-    [SerializeField]
-    private TMP_Text _sensiValueText, _volumeValueText, _playerRankText;
-    [SerializeField]
-    private TMP_InputField _playerNameField;
-
-    private SensiHandler _sensiHandler;
-    private SaundHandler _saundHandler;
-    private PlayerInfoHandler _playerInfoHandler;
-
-    void Start()
+    public class SettingPanelHandler : MonoBehaviour
     {
-        _sensiHandler = SensiHandler.Instance;
-        _saundHandler = GameObject.FindWithTag("SaundHandler").GetComponent<SaundHandler>();
-        _playerInfoHandler = PlayerInfoHandler.Instance;
-        
-        // リスナー登録
-        _sensiSlider.onValueChanged.AddListener(ChangeSensiSlider);
-        _volumeSlider.onValueChanged.AddListener(ChangeVolumeSlider);
-        _playerNameField.onEndEdit.AddListener(ChangePlayerNameField);
-        _playerInfoHandler.ChangeRank += ChangeRankText;
-        PlayDataIO.Instance.DeleteDataEvent += InitializingDataSet;
-        // 初期値のセット
-        InitializingDataSet();
-    }
+        [SerializeField]
+        private Slider _sensiSlider, _volumeSlider;
+        [SerializeField]
+        private TMP_Text _sensiValueText, _volumeValueText, _playerRankText;
+        [SerializeField]
+        private TMP_InputField _playerNameField;
 
-    void OnDestroy()
-    {
-        _playerInfoHandler.ChangeRank -= ChangeRankText;
-        PlayDataIO.Instance.DeleteDataEvent -= InitializingDataSet;
-    }
+        private SensiHandler _sensiHandler;
+        private SoundHandler _soundHandler;
+        private PlayerInfoHandler _playerInfoHandler;
 
-    private void InitializingDataSet()
-    {
-        ChangeSensiSlider(_sensiHandler.Sensitivity);
-        float initialSetValue = _saundHandler.CurrentVolume * 10.0f;
-        _volumeValueText.text = initialSetValue.ToString();
-        _sensiSlider.value = _sensiHandler.Sensitivity;
-        _volumeSlider.value = initialSetValue;
-        _playerNameField.text = _playerInfoHandler.PlayerName;
-        _playerRankText.text = _playerInfoHandler.PlayerRank.ToString();
-    }
+        private void Start()
+        {
+            _sensiHandler = SensiHandler.Instance;
+            _soundHandler = GameObject.FindWithTag("SoundHandler").GetComponent<SoundHandler>();
+            _playerInfoHandler = PlayerInfoHandler.Instance;
+            
+            _sensiSlider.onValueChanged.AddListener(ChangeSensiSlider);
+            _volumeSlider.onValueChanged.AddListener(ChangeVolumeSlider);
+            _playerNameField.onEndEdit.AddListener(ChangePlayerNameField);
+            _playerInfoHandler.ChangeRank += ChangeRankText;
+            PlayDataIO.Instance.DeleteDataEvent += InitializingDataSet;
 
-    private void ChangeSensiSlider(float value)
-    {
-        int sensi = (int)value;
-        _sensiValueText.text = sensi.ToString();
-    }
+            InitializingDataSet();
+        }
 
-    private void ChangeVolumeSlider(float value)
-    {
-        _volumeValueText.text = value.ToString();
-        _saundHandler.SetNewVolume(value / 10.0f);
-    }
+        private void OnDestroy()
+        {
+            _playerInfoHandler.ChangeRank -= ChangeRankText;
+            PlayDataIO.Instance.DeleteDataEvent -= InitializingDataSet;
+        }
 
-    private void ChangePlayerNameField(string newName)
-    {
-        if (newName != "") return;
-        _playerNameField.text = PlayerInfoHandler.INITIAL_NAME;
-    }
+        private void InitializingDataSet()
+        {
+            ChangeSensiSlider(_sensiHandler.Sensitivity);
+            var initialSetValue = _soundHandler.CurrentVolume * 10.0f;
+            _volumeValueText.text = initialSetValue.ToString();
+            _sensiSlider.value = _sensiHandler.Sensitivity;
+            _volumeSlider.value = initialSetValue;
+            _playerNameField.text = _playerInfoHandler.PlayerName;
+            _playerRankText.text = _playerInfoHandler.PlayerRank.ToString();
+        }
 
-    private void ChangeRankText(int level)
-    {
-        _playerRankText.text = level.ToString();
-    }
+        private void ChangeSensiSlider(float value)
+        {
+            var sensi = (int)value;
+            _sensiValueText.text = sensi.ToString();
+        }
 
-    public void CloseFixedAction()
-    {
-        _sensiHandler.ChangeSensitivity((int)_sensiSlider.value);
-        _saundHandler.FixedVolume();
-        _playerInfoHandler.ChangePlayerName(_playerNameField.text);
-    }
+        private void ChangeVolumeSlider(float value)
+        {
+            _volumeValueText.text = value.ToString(CultureInfo.CurrentCulture);
+            _soundHandler.SetNewVolume(value / 10.0f);
+        }
 
+        private void ChangePlayerNameField(string newName)
+        {
+            if (newName != "") return;
+            _playerNameField.text = PlayerInfoHandler.InitialName;
+        }
+
+        private void ChangeRankText(int level)
+        {
+            _playerRankText.text = level.ToString();
+        }
+
+        public void CloseFixedAction()
+        {
+            _sensiHandler.ChangeSensitivity((int)_sensiSlider.value);
+            _soundHandler.FixedVolume();
+            _playerInfoHandler.ChangePlayerName(_playerNameField.text);
+        }
+
+    }
 }

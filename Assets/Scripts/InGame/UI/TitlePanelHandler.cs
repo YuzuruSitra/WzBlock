@@ -1,77 +1,81 @@
-using UnityEngine;
+using System;
 using TMPro;
+using UnityEngine;
 
-public class TitlePanelHandler : MonoBehaviour
+namespace InGame.UI
 {
-    [SerializeField]
-    private GameObject _settingsPanel;
-    [SerializeField]
-    private GameObject _confirmationPanel;
-    [SerializeField]
-    private GameObject _confirmationBts;
-    [SerializeField]
-    private TMP_Text _confirmationText;
-    private const string FAZE_1 = "Really ?";
-    private const string FAZE_2 = "Deleted .";
-
-    [SerializeField]
-    private TMP_Text _userNameText;
-    [SerializeField]
-    private TMP_Text _userRankText;
-    private PlayerInfoHandler _playerInfoHandler;
-    
-    void Start()
+    public class TitlePanelHandler : MonoBehaviour
     {
-        _playerInfoHandler = PlayerInfoHandler.Instance;
-        _userNameText.text = _playerInfoHandler.PlayerName;
-        _userRankText.text = _playerInfoHandler.PlayerRank.ToString();
-        _playerInfoHandler.ChangeName += ChangeNameText;
-        _playerInfoHandler.ChangeRank += ChangeRankText;
-    }
+        [SerializeField]
+        private GameObject _settingsPanel;
+        [SerializeField]
+        private GameObject _confirmationPanel;
+        [SerializeField]
+        private GameObject _confirmationBts;
+        [SerializeField]
+        private TMP_Text _confirmationText;
+        private const string Faze1 = "Really ?";
+        private const string Faze2 = "Deleted .";
 
-    void OnDestroy()
-    {
-        _playerInfoHandler.ChangeName -= ChangeNameText;
-        _playerInfoHandler.ChangeRank -= ChangeRankText;
-    }
+        [SerializeField]
+        private TMP_Text _userNameText;
+        [SerializeField]
+        private TMP_Text _userRankText;
+        private PlayerInfoHandler _playerInfoHandler;
 
-    public void ChangeSettingPanel()
-    {
-        bool isActive = _settingsPanel.activeInHierarchy;
-        if (isActive)
+        private void Start()
+        {
+            _playerInfoHandler = PlayerInfoHandler.Instance;
+            _userNameText.text = _playerInfoHandler.PlayerName;
+            _userRankText.text = _playerInfoHandler.PlayerRank.ToString();
+            _playerInfoHandler.ChangeName += ChangeNameText;
+            _playerInfoHandler.ChangeRank += ChangeRankText;
+        }
+
+        private void OnDestroy()
+        {
+            _playerInfoHandler.ChangeName -= ChangeNameText;
+            _playerInfoHandler.ChangeRank -= ChangeRankText;
+        }
+
+        public void ChangeSettingPanel()
+        {
+            var isActive = _settingsPanel.activeInHierarchy;
+            if (isActive)
+            {
+                _confirmationPanel.SetActive(false);
+                _confirmationBts.SetActive(false);
+            }
+            _settingsPanel.SetActive(!isActive);
+        }
+
+        public void OpenConfirmationPanel()
+        {
+            _confirmationPanel.SetActive(true);
+            if (!_confirmationBts.activeSelf)
+                _confirmationBts.SetActive(true);
+            _confirmationText.text = Faze1;
+        }
+
+        public void CloseConfirmationPanel()
         {
             _confirmationPanel.SetActive(false);
-            _confirmationBts.SetActive(false);
         }
-        _settingsPanel.SetActive(!isActive);
-    }
 
-    public void OpenContirmationPanel()
-    {
-        _confirmationPanel.SetActive(true);
-        if (!_confirmationBts.activeSelf)
-            _confirmationBts.SetActive(true);
-        _confirmationText.text = FAZE_1;
-    }
+        public void DeletedData()
+        {
+            _confirmationBts.SetActive(false);
+            _confirmationText.text = Faze2;
+        }
 
-    public void CloseContirmationPanel()
-    {
-        _confirmationPanel.SetActive(false);
-    }
+        private void ChangeNameText(string valueName)
+        {
+            _userNameText.text = valueName;
+        }
 
-    public void DeletedData()
-    {
-        _confirmationBts.SetActive(false);
-        _confirmationText.text = FAZE_2;
-    }
-
-    private void ChangeNameText(string name)
-    {
-        _userNameText.text = name;
-    }
-
-    private void ChangeRankText(int rank)
-    {
-        _userRankText.text = rank.ToString();
+        private void ChangeRankText(int rank)
+        {
+            _userRankText.text = rank.ToString();
+        }
     }
 }

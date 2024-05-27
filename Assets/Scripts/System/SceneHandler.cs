@@ -1,20 +1,23 @@
 using UnityEngine.SceneManagement;
 
-public class SceneHandler
+namespace System
 {
-    // ƒVƒ“ƒOƒ‹ƒgƒ“
-    private static SceneHandler instance;
-    public static SceneHandler Instance => instance ?? (instance = new SceneHandler());
-
-    private SceneHandler(){}
-
-    public void GoTitleScene()
+    public class SceneHandler
     {
-        SceneManager.LoadScene("Title");
-    }
+        
+        private static SceneHandler _instance;
+        public static SceneHandler Instance => _instance ??= new SceneHandler();
 
-    public void GoMainGameScene()
-    {
-        SceneManager.LoadScene("MainGame");
+        private SceneHandler(){}
+
+        public void GoTitleScene()
+        {
+            SceneManager.LoadScene("Title");
+        }
+
+        public void GoMainGameScene()
+        {
+            SceneManager.LoadScene("MainGame");
+        }
     }
 }

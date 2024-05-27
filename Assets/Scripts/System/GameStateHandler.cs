@@ -1,36 +1,38 @@
 using UnityEngine;
-using System;
 
-public class GameStateHandler
+namespace System
 {
-    // ƒVƒ“ƒOƒ‹ƒgƒ“
-    private static GameStateHandler instance;
-    public static GameStateHandler Instance => instance ?? (instance = new GameStateHandler());
-    public enum GameState
+    public class GameStateHandler
     {
-        Launch,
-        InGame,
-        FinGame,
-        Settings
-    }
-    private GameState _currentInGameState;
-    public GameState CurrentInGameState => _currentInGameState;
-    private GameState _currentState;
-    public GameState CurrentState => _currentState;
-    public event Action<GameState> ChangeGameState;
+        private static GameStateHandler _instance;
+        public static GameStateHandler Instance => _instance ??= new GameStateHandler();
+        public enum GameState
+        {
+            Launch,
+            InGame,
+            FinGame,
+            Settings
+        }
 
-    private GameStateHandler()
-    {
-        Application.targetFrameRate = 60;
-        SetGameState(GameState.Launch);
-    }
+        public GameState CurrentInGameState { get; private set; }
 
-    public void SetGameState(GameState newState)
-    {
-        _currentState = newState;
-        ChangeGameState?.Invoke(_currentState);
+        public GameState CurrentState { get; private set; }
+
+        public event Action<GameState> ChangeGameState;
+
+        private GameStateHandler()
+        {
+            Application.targetFrameRate = 60;
+            SetGameState(GameState.Launch);
+        }
+
+        public void SetGameState(GameState newState)
+        {
+            CurrentState = newState;
+            ChangeGameState?.Invoke(CurrentState);
         
-        if (newState == GameState.Settings) return;
-        _currentInGameState = newState;
+            if (newState == GameState.Settings) return;
+            CurrentInGameState = newState;
+        }
     }
 }

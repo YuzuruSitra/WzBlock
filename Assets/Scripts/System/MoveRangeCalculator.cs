@@ -1,36 +1,34 @@
 using UnityEngine;
 
-public class MoveRangeCalculator
+namespace System
 {
-    private float _leftMaxPos;
-    public float LeftMaxPos => _leftMaxPos;
-    private float _rightMaxPos;
-    public float RightMaxPos => _rightMaxPos;
-    private float _centerPosX;
-    public float CenterPosX => _centerPosX;
-
-    public MoveRangeCalculator(GameObject targetObj, GameObject leftObj, GameObject rightObj)
+    public class MoveRangeCalculator
     {
-        CalcMoveRange(targetObj, leftObj, rightObj);
-    }
+        public float LeftMaxPos { get; private set; }
 
-    private void CalcMoveRange(GameObject targetObj, GameObject leftObj, GameObject rightObj)
-    {
-        // このオブジェクトの幅を考慮
-        MeshRenderer meshRenderer = targetObj.GetComponent<MeshRenderer>();
-        float width = meshRenderer.bounds.size.x / 2;
+        public float RightMaxPos { get; private set; }
 
-        // 中心座標を計算
-        _centerPosX = (leftObj.transform.position.x + rightObj.transform.position.x) / 2.0f;
+        private float _centerPosX;
 
-        // 左端を計算
-        MeshRenderer meshRendererLeft = leftObj.GetComponent<MeshRenderer>();
-        float widthLeft =  meshRendererLeft.bounds.size.x;
-        _leftMaxPos = leftObj.transform.position.x + widthLeft / 2 + width;
+        public MoveRangeCalculator(GameObject targetObj, GameObject leftObj, GameObject rightObj)
+        {
+            CalcMoveRange(targetObj, leftObj, rightObj);
+        }
 
-        // 右端を計算
-        MeshRenderer meshRendererRight = rightObj.GetComponent<MeshRenderer>();
-        float widthRight =  meshRendererRight.bounds.size.x;
-        _rightMaxPos = rightObj.transform.position.x - widthRight / 2 - width;
+        private void CalcMoveRange(GameObject targetObj, GameObject leftObj, GameObject rightObj)
+        {
+            var meshRenderer = targetObj.GetComponent<MeshRenderer>();
+            var width = meshRenderer.bounds.size.x / 2;
+            
+            _centerPosX = (leftObj.transform.position.x + rightObj.transform.position.x) / 2.0f;
+            
+            var meshRendererLeft = leftObj.GetComponent<MeshRenderer>();
+            var widthLeft =  meshRendererLeft.bounds.size.x;
+            LeftMaxPos = leftObj.transform.position.x + widthLeft / 2 + width;
+            
+            var meshRendererRight = rightObj.GetComponent<MeshRenderer>();
+            var widthRight =  meshRendererRight.bounds.size.x;
+            RightMaxPos = rightObj.transform.position.x - widthRight / 2 - width;
+        }
     }
 }

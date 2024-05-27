@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6475825663555084639}
   - component: {fileID: 3038784385902544273}
   m_Layer: 0
-  m_Name: SaundHandler
+  m_Name: SoundHandler
   m_TagString: SaundHandler
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

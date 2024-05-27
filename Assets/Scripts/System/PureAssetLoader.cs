@@ -2,24 +2,17 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class PureAssetLoader
+namespace System
 {
-    public T LoadScriptableObject<T>(string address) where T : ScriptableObject
+    public class PureAssetLoader
     {
-        // 非同期操作の開始
-        AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(address);
-        // 操作の完了まで待機（同期的にブロック）
-        handle.WaitForCompletion();
-
-        // 操作が成功したかをチェック
-        if (handle.Status == AsyncOperationStatus.Succeeded)
+        public T LoadScriptableObject<T>(string address) where T : ScriptableObject
         {
-            // 成功した場合は結果を返す
-            return handle.Result;
-        }
-        else
-        {
-            // 失敗した場合はエラーログを出力し、nullを返す
+            var handle = Addressables.LoadAssetAsync<T>(address);
+            handle.WaitForCompletion();
+            
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+                return handle.Result;
             Debug.LogError($"Failed to load {typeof(T).Name} from address {address}.");
             return null;
         }

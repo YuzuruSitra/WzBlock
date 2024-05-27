@@ -1,54 +1,59 @@
+using System;
+using InGame.Obj.Paddle;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SwipeToMovePaddle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
+namespace InGame.UI
 {
-    public PaddleMover _paddleMover; // “®‚©‚·‘ÎÛ‚Ì3DƒIƒuƒWƒFƒNƒg
-    private SensiHandler _sensiHandler;
-    private float[] _speedFactor = { -0.2f, -0.16f, -0.12f, -0.08f, 0.04f , 0 , 0.04f, 0.08f, 0.12f, 0.16f, 0.2f };
-    private const float MOVE_SPEED_BASE = 0.21f;
-    private Vector2 _startTouchPosition;
-    private Vector2 _currentTouchPosition;
-    private Vector2 _touchDelta;
-
-    void Start()
+    public class SwipeToMovePaddle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
-        _sensiHandler = SensiHandler.Instance;
-    }
+        public PaddleMover _paddleMover; // å‹•ã‹ã™å¯¾è±¡ã®3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+        private SensiHandler _sensiHandler;
+        private readonly float[] _speedFactor = { -0.2f, -0.16f, -0.12f, -0.08f, 0.04f , 0 , 0.04f, 0.08f, 0.12f, 0.16f, 0.2f };
+        private const float MoveSpeedBase = 0.21f;
+        private Vector2 _startTouchPosition;
+        private Vector2 _currentTouchPosition;
+        private Vector2 _touchDelta;
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        // ƒ^ƒbƒ`‚ªn‚Ü‚Á‚½ˆÊ’u‚ğ‹L˜^
-        _startTouchPosition = eventData.position;
-    }
+        private void Start()
+        {
+            _sensiHandler = SensiHandler.Instance;
+        }
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        // ƒ^ƒbƒ`‚ª—£‚ê‚½‚Ìˆ—
-        // •K—v‚È‚ç‚±‚±‚Éˆ—‚ğ’Ç‰Á
-    }
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            // ã‚¿ãƒƒãƒãŒå§‹ã¾ã£ãŸä½ç½®ã‚’è¨˜éŒ²
+            _startTouchPosition = eventData.position;
+        }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        // Œ»İ‚Ìƒ^ƒbƒ`ˆÊ’u‚ğXV
-        _currentTouchPosition = eventData.position;
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            // ã‚¿ãƒƒãƒãŒé›¢ã‚ŒãŸæ™‚ã®å‡¦ç†
+            // å¿…è¦ãªã‚‰ã“ã“ã«å‡¦ç†ã‚’è¿½åŠ 
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            // ç¾åœ¨ã®ã‚¿ãƒƒãƒä½ç½®ã‚’æ›´æ–°
+            _currentTouchPosition = eventData.position;
         
-        // ƒ^ƒbƒ`‚ÌˆÚ“®—Ê‚ğŒvZ
-        _touchDelta = _currentTouchPosition - _startTouchPosition;
+            // ã‚¿ãƒƒãƒã®ç§»å‹•é‡ã‚’è¨ˆç®—
+            _touchDelta = _currentTouchPosition - _startTouchPosition;
         
-        // X•ûŒü‚Ìƒ^ƒbƒ`‚ÌˆÚ“®—Ê‚É‰‚¶‚Ä3DƒIƒuƒWƒFƒNƒg‚ğ“®‚©‚·
-        Vector3 movementVector = Vector3.zero;
-        movementVector.x = _touchDelta.x;
-        MoveObject(movementVector);
+            // Xæ–¹å‘ã®ã‚¿ãƒƒãƒã®ç§»å‹•é‡ã«å¿œã˜ã¦3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å‹•ã‹ã™
+            var movementVector = Vector3.zero;
+            movementVector.x = _touchDelta.x;
+            MoveObject(movementVector);
         
-        // ƒXƒ^[ƒgˆÊ’u‚ğŒ»İ‚ÌˆÊ’u‚ÉXV
-        _startTouchPosition = _currentTouchPosition;
-    }
+            // ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®ã‚’ç¾åœ¨ã®ä½ç½®ã«æ›´æ–°
+            _startTouchPosition = _currentTouchPosition;
+        }
 
-    private void MoveObject(Vector3 vector)
-    {    
-        // ƒXƒƒCƒv‚ÌˆÚ“®—Ê‚ÉŠî‚Ã‚¢‚ÄƒIƒuƒWƒFƒNƒg‚ğX²•ûŒü‚É“®‚©‚·
-        Vector3 movement = vector * (MOVE_SPEED_BASE + _speedFactor[_sensiHandler.Sensitivity]) * Time.deltaTime;
-        _paddleMover.MoveReceive(movement);
+        private void MoveObject(Vector3 vector)
+        {    
+            // ã‚¹ãƒ¯ã‚¤ãƒ—ã®ç§»å‹•é‡ã«åŸºã¥ã„ã¦ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’Xè»¸æ–¹å‘ã«å‹•ã‹ã™
+            var movement = vector * (MoveSpeedBase + _speedFactor[_sensiHandler.Sensitivity]) * Time.deltaTime;
+            _paddleMover.MoveReceive(movement);
+        }
     }
 }

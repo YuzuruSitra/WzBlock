@@ -1,67 +1,67 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletPool : MonoBehaviour
+namespace InGame.Obj.Enemy
 {
-    [SerializeField]
-    private Transform _bulletParent;
-    [SerializeField]
-    private Bullet _bulletPrefab;
-    private const int LAUNCH_POOL_COUNT = 10;
-    private List<Bullet> _availableBullets = new List<Bullet>();
-    private List<Bullet> _usedBullets = new List<Bullet>();
-
-    private void Awake()
+    public class BulletPool : MonoBehaviour
     {
-        // ‰Šúƒv[ƒ‹‚Ìì¬
-        for (int i = 0; i < LAUNCH_POOL_COUNT; i++)
+        [SerializeField]
+        private Transform _bulletParent;
+        [SerializeField]
+        private Bullet _bulletPrefab;
+        private const int LaunchPoolCount = 10;
+        private readonly List<Bullet> _availableBullets = new List<Bullet>();
+        private readonly List<Bullet> _usedBullets = new List<Bullet>();
+
+        private void Awake()
         {
-            Bullet bullet = Instantiate(_bulletPrefab);
-            bullet.transform.SetParent(_bulletParent);
-            bullet.OnReturnToPool += ReturnBlock;
-            _availableBullets.Add(bullet);
+            // åˆæœŸãƒ—ãƒ¼ãƒ«ã®ä½œæˆ
+            for (var i = 0; i < LaunchPoolCount; i++)
+            {
+                var bullet = Instantiate(_bulletPrefab, _bulletParent, true);
+                bullet.OnReturnToPool += ReturnBlock;
+                _availableBullets.Add(bullet);
+            }
         }
-    }
 
-    public Bullet GetBullet(Vector3 pos)
-    {
-        Bullet bullet;
-        // ƒv[ƒ‹‚©‚çæ“¾
-        if (_availableBullets.Count <= 0)
+        public Bullet GetBullet(Vector3 pos)
         {
-            Bullet insBullet = Instantiate(_bulletPrefab);
-            insBullet.transform.position = pos;
-            insBullet.transform.SetParent(_bulletParent);
-            insBullet.OnReturnToPool += ReturnBlock;
-            insBullet.ChangeLookActive(true);
-            _usedBullets.Add(insBullet);
-            return insBullet;
+            // ãƒ—ãƒ¼ãƒ«ã‹ã‚‰å–å¾—
+            if (_availableBullets.Count <= 0)
+            {
+                var insBullet = Instantiate(_bulletPrefab, _bulletParent, true);
+                insBullet.transform.position = pos;
+                insBullet.OnReturnToPool += ReturnBlock;
+                insBullet.ChangeLookActive(true);
+                _usedBullets.Add(insBullet);
+                return insBullet;
+            }
+            var bullet = _availableBullets[0];
+            bullet.transform.position = pos;
+            _availableBullets.RemoveAt(0);
+            bullet.ChangeLookActive(true);
+            _usedBullets.Add(bullet);
+            return bullet;
         }
-        bullet = _availableBullets[0];
-        bullet.transform.position = pos;
-        _availableBullets.RemoveAt(0);
-        bullet.ChangeLookActive(true);
-        _usedBullets.Add(bullet);
-        return bullet;
-    }
 
-    public void ReturnBlock(Bullet bullet)
-    {
-        bullet.ChangeLookActive(false);
-        _usedBullets.Remove(bullet);
-        _availableBullets.Add(bullet);
-    }
-
-    public void ReturnALLBlock()
-    {
-        if (_usedBullets.Count == 0) return;
-        for (int i = _usedBullets.Count - 1; i >= 0; i--)
+        private void ReturnBlock(Bullet bullet)
         {
-            Bullet bullet = _usedBullets[i];
             bullet.ChangeLookActive(false);
-            _usedBullets.RemoveAt(i);
+            _usedBullets.Remove(bullet);
             _availableBullets.Add(bullet);
         }
-    }
 
+        public void ReturnAllBlock()
+        {
+            if (_usedBullets.Count == 0) return;
+            for (var i = _usedBullets.Count - 1; i >= 0; i--)
+            {
+                var bullet = _usedBullets[i];
+                bullet.ChangeLookActive(false);
+                _usedBullets.RemoveAt(i);
+                _availableBullets.Add(bullet);
+            }
+        }
+
+    }
 }

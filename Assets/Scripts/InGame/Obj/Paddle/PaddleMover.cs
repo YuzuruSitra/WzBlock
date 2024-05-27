@@ -1,56 +1,57 @@
+using System;
 using UnityEngine;
 
-public class PaddleMover : MonoBehaviour
+namespace InGame.Obj.Paddle
 {
-    private Vector3 _launchPos;
-    private GameStateHandler _gameStateHandler;
-    [SerializeField]
-    private GameObject _leftObj;
-    [SerializeField]
-    private GameObject _rightObj;
-    private float _leftMaxPos;
-    private float _rightMaxPos;
-    private MoveRangeCalculator _moveRangeCalculator;
-    private AbilityReceiver _abilityReceiver;
-
-    void Start()
+    public class PaddleMover : MonoBehaviour
     {
-        _moveRangeCalculator = new MoveRangeCalculator(gameObject, _leftObj, _rightObj);
-        _leftMaxPos = _moveRangeCalculator.LeftMaxPos;
-        _rightMaxPos  = _moveRangeCalculator.RightMaxPos;
+        private Vector3 _launchPos;
+        private GameStateHandler _gameStateHandler;
+        [SerializeField]
+        private GameObject _leftObj;
+        [SerializeField]
+        private GameObject _rightObj;
+        private float _leftMaxPos;
+        private float _rightMaxPos;
+        private MoveRangeCalculator _moveRangeCalculator;
+        private AbilityReceiver _abilityReceiver;
 
-        _launchPos = transform.position;
-        _gameStateHandler = GameStateHandler.Instance;
-        _gameStateHandler.ChangeGameState += ChangeStatePaddle;
-        _abilityReceiver = AbilityReceiver.Instance;
+        private void Start()
+        {
+            _moveRangeCalculator = new MoveRangeCalculator(gameObject, _leftObj, _rightObj);
+            _leftMaxPos = _moveRangeCalculator.LeftMaxPos;
+            _rightMaxPos  = _moveRangeCalculator.RightMaxPos;
+
+            _launchPos = transform.position;
+            _gameStateHandler = GameStateHandler.Instance;
+            _gameStateHandler.ChangeGameState += ChangeStatePaddle;
+            _abilityReceiver = AbilityReceiver.Instance;
+        }
+
+        private void OnDestroy()
+        {
+            _gameStateHandler.ChangeGameState -= ChangeStatePaddle;
+        }
+
+        public void MoveReceive(Vector3 movement)
+        {
+            if (_abilityReceiver.CurrentCondition == AbilityReceiver.Condition.Stan) return;
+            if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
+            var newPosition = transform.position + movement;
+            
+            if (newPosition.x <= _leftMaxPos)
+                newPosition.x = _leftMaxPos;
+            if (newPosition.x >= _rightMaxPos)
+                newPosition.x = _rightMaxPos;
+            
+            transform.position = newPosition;
+        }
+
+        private void ChangeStatePaddle(GameStateHandler.GameState newState)
+        {
+            if (newState == GameStateHandler.GameState.Launch)
+                transform.position = _launchPos;
+        }
+
     }
-
-    void OnDestroy()
-    {
-        _gameStateHandler.ChangeGameState -= ChangeStatePaddle;
-    }
-
-    public void MoveReceive(Vector3 movement)
-    {
-        if (_abilityReceiver.CurrentCondition == AbilityReceiver.Condition.Stan) return;
-        if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
-        // êVÇµÇ¢à íuÇåvéZ
-        Vector3 newPosition = transform.position + movement;
-
-        // à⁄ìÆÇÃêßå¿Çê›íË
-        if (newPosition.x <= _leftMaxPos)
-            newPosition.x = _leftMaxPos;
-        if (newPosition.x >= _rightMaxPos)
-            newPosition.x = _rightMaxPos;
-
-        // à⁄ìÆÇÃèàóù
-        transform.position = newPosition;
-    }
-
-    private void ChangeStatePaddle(GameStateHandler.GameState newState)
-    {
-        if (newState == GameStateHandler.GameState.Launch)
-            transform.position = _launchPos;
-    }
-
 }

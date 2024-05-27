@@ -654,7 +654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _reStartBt: {fileID: 6861316517743667566}
-  _StartBt: {fileID: 2987380600882442570}
+  _startBt: {fileID: 2987380600882442570}
   _headerSettingBt: {fileID: 2987380601306665875}
   _settingResumeBt: {fileID: 6756234330968913717}
   _settingHomeBt: {fileID: 1527673554}
@@ -1958,7 +1958,7 @@ MonoBehaviour:
   _launchPanel: {fileID: 6861316519060595712}
   _inGamePanel: {fileID: 6861316517680210255}
   _finPanel: {fileID: 6861316518308121203}
-  _HeaderPanel: {fileID: 1064040116}
+  _headerPanel: {fileID: 2987380601233235271}
   _settingsPanel: {fileID: 1356688444546702580}
 --- !u!1001 &1356688444546702579
 PrefabInstance:

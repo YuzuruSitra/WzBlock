@@ -1,47 +1,52 @@
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class TitleBtHandler : MonoBehaviour
+namespace InGame.UI
 {
-    [SerializeField]
-    private Button _startBt;
-    [SerializeField]
-    private Button _settingsBt;
-    [SerializeField]
-    private Button _QuitBt;
-    [SerializeField]
-    private Button _settingResumeBt;
-    [SerializeField]
-    private Button _settingDeleteBt;
-    [SerializeField]
-    private Button _confirmYesBt;
-    [SerializeField]
-    private Button _confirmNoBt;
-
-    [SerializeField]
-    private TitlePanelHandler _titlePanelHandler;
-    [SerializeField]
-    private SettingPanelHandler _settingPanelHandler;
-
-    void Start()
+    public class TitleBtHandler : MonoBehaviour
     {
-        _startBt.onClick.AddListener(SceneHandler.Instance.GoMainGameScene);
-        _settingsBt.onClick.AddListener(_titlePanelHandler.ChangeSettingPanel);
-        _settingResumeBt.onClick.AddListener(_titlePanelHandler.ChangeSettingPanel);
-        _settingResumeBt.onClick.AddListener(_settingPanelHandler.CloseFixedAction);
-        _QuitBt.onClick.AddListener(QuitGame);
-        _settingDeleteBt.onClick.AddListener(_titlePanelHandler.OpenContirmationPanel);
-        _confirmNoBt.onClick.AddListener(_titlePanelHandler.CloseContirmationPanel);
-        _confirmYesBt.onClick.AddListener(PlayDataIO.Instance.DeleteData);
-        _confirmYesBt.onClick.AddListener(_titlePanelHandler.DeletedData);
-    }
+        [SerializeField]
+        private Button _startBt;
+        [SerializeField]
+        private Button _settingsBt;
+        [SerializeField]
+        private Button _quitBt;
+        [SerializeField]
+        private Button _settingResumeBt;
+        [SerializeField]
+        private Button _settingDeleteBt;
+        [SerializeField]
+        private Button _confirmYesBt;
+        [SerializeField]
+        private Button _confirmNoBt;
 
-    private void QuitGame()
-    {
+        [SerializeField]
+        private TitlePanelHandler _titlePanelHandler;
+        [SerializeField]
+        private SettingPanelHandler _settingPanelHandler;
+
+        private void Start()
+        {
+            _startBt.onClick.AddListener(SceneHandler.Instance.GoMainGameScene);
+            _settingsBt.onClick.AddListener(_titlePanelHandler.ChangeSettingPanel);
+            _settingResumeBt.onClick.AddListener(_titlePanelHandler.ChangeSettingPanel);
+            _settingResumeBt.onClick.AddListener(_settingPanelHandler.CloseFixedAction);
+            _quitBt.onClick.AddListener(QuitGame);
+            _settingDeleteBt.onClick.AddListener(_titlePanelHandler.OpenConfirmationPanel);
+            _confirmNoBt.onClick.AddListener(_titlePanelHandler.CloseConfirmationPanel);
+            _confirmYesBt.onClick.AddListener(PlayDataIO.Instance.DeleteData);
+            _confirmYesBt.onClick.AddListener(_titlePanelHandler.DeletedData);
+        }
+
+        private void QuitGame()
+        {
 #if UNITY_EDITOR
-    UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
-    Application.Quit();
+			Application.Quit();
 #endif
+        }
     }
 }
