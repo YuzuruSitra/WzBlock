@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using InGame.InGameSystem;
 
 public class FinPanelHandler : MonoBehaviour
 {
@@ -41,7 +42,6 @@ public class FinPanelHandler : MonoBehaviour
         _gameStateHandler = GameStateHandler.Instance;
         _playerInfoHandler = PlayerInfoHandler.Instance;
         _countUpWait = new WaitForSeconds(WAIT_TIME);
-        // リスナー登録
         _playerInfoHandler.CalculatedEvent += LaunchRankUpAnim;
         _gameStateHandler.ChangeGameState += ChangeStateScoreUI;
     }
@@ -60,7 +60,6 @@ public class FinPanelHandler : MonoBehaviour
 
     private void ChangeResultScore()
     {
-        // テキストの変更
         _resultText.text = "Score : " + _scoreHandler.CurrentScore;
         
         if (_scoreHandler.TodayMaxScore == 0) _todayMaxScoreText.text = "---";
@@ -68,7 +67,7 @@ public class FinPanelHandler : MonoBehaviour
 
         if (_scoreHandler.MaxScore == 0) _maxScoreText.text = "---";
         else _maxScoreText.text = "" + _scoreHandler.MaxScore;
-        // テキストの色変更
+
         if (_scoreHandler.TodayMaxScore == _scoreHandler.CurrentScore)
         {
             _todayMaxScoreText.color = _emphasizedPink;
@@ -100,7 +99,6 @@ public class FinPanelHandler : MonoBehaviour
 
     private IEnumerator RankUpAnim()
     {
-        // パネルが開くまで待機
         while (_gameStateHandler.CurrentState != GameStateHandler.GameState.FinGame) yield return null;
         float getExp = _playerInfoHandler.CurrentGetExp;
         _getExpText.text = "+" + getExp;
@@ -110,15 +108,13 @@ public class FinPanelHandler : MonoBehaviour
         _rankText.text = currentRank.ToString();
         _rankSlider.maxValue = needExp;
         _rankSlider.value = currentExp;
-
-        // _animationDurationの時間で終わるように増加量を計算
+        
         float increase = getExp / _animationDuration * WAIT_TIME;
         while (getExp > 0)
         {            
             currentExp += increase;
             getExp -= increase;
             _rankSlider.value = currentExp;
-            // 必要経験値を超えた場合
             if (currentExp >= needExp)
             {
                 currentExp -= needExp;
@@ -131,8 +127,7 @@ public class FinPanelHandler : MonoBehaviour
             _expText.text = "Exp: " + Mathf.CeilToInt(currentExp) + "/" + needExp;
             yield return _countUpWait;
         }
-
-        // コルーチンの参照をクリア
+        
         _rankUpCoroutine = null;
     }
 }

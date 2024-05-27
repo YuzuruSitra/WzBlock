@@ -1,4 +1,5 @@
 using System.Collections;
+using InGame.InGameSystem;
 using UnityEngine;
 
 public class EnemySurviveManager : MonoBehaviour
