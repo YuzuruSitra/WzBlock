@@ -15,9 +15,13 @@ public class PlayDataIO
 
     public PlayDataIO()
     {
+#if UNITY_IOS
         // データの保存先をApplication.persistentDataPathに変更
         UnityEngine.iOS.Device.SetNoBackupFlag(Application.persistentDataPath);
         QuickSaveGlobalSettings.StorageLocation = Application.persistentDataPath;
+#elif UNITY_EDITOR
+        QuickSaveGlobalSettings.StorageLocation = Application.dataPath + "/SaveData";
+#endif //終了
         // QuickSaveSettingsのインスタンスを作成
         QuickSaveSettings settings = new QuickSaveSettings();
         // 暗号化の方法

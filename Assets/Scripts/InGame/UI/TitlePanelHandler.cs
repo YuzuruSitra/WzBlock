@@ -19,6 +19,7 @@ public class TitlePanelHandler : MonoBehaviour
     [SerializeField]
     private TMP_Text _userRankText;
     private PlayerInfoHandler _playerInfoHandler;
+    
     void Start()
     {
         _playerInfoHandler = PlayerInfoHandler.Instance;
