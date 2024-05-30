@@ -9,31 +9,33 @@ namespace InGame.InGameSystem
         private static BoredomMetaAI _instance;
         public static BoredomMetaAI Instance => _instance ??= new BoredomMetaAI();
         
-        private const int Act = 100;
-        private const int InitialAct = 50;
+        private const int Act = 10;
         private const int MaxQValue = 100;
         private const int InitialQValue = 50;
         private const int MaxRewardScore = 100;
         private const int BaseScore = MaxRewardScore / 2;
         private const int InitialRewardValue = 50;
-        private const float Alpha = 0.3f;
-        private const float Gamma = 0.9f;
+        private const float Alpha = 0.2f;
+        private const float Gamma = 0.7f;
         private const float ExplorationRate = 0.3f;
         private const int MaxStackData = 10;
+        private const int MaxAvoidBullet = 4;
+        private const int MaxReceiveBullet = 2;
         
         // Learning Parameter.
         private readonly List<int> _qValues;
         private int[] _qStackValue = { InitialQValue, InitialQValue};
         private int _currentMaxQ = MaxQValue;
         private int[] _rewardStackValue = { InitialRewardValue, InitialRewardValue};
-        private int[] _actionStackValue = { InitialAct, InitialAct};
+        private int[] _actionStackValue = { 0, 0};
         
         private readonly List<float> _rallyTimes;
-        private readonly List<int> _avoidBulletCounts;
-        private readonly List<int> _receiveBulletCounts;
 
         private readonly System.Random _random;
-
+        // Debug.
+        // public int CurrentSelectAction;
+        // public int LearnCount;
+        // public int CurrentQValue;
         private BoredomMetaAI()
         {
             _qValues = new List<int>();
@@ -41,12 +43,10 @@ namespace InGame.InGameSystem
             
             for (var i = 0; i < Act; ++i)
             {
-                var addValue = InitialAct == i ? InitialQValue : _random.Next(0, InitialQValue);
+                var addValue = InitialQValue - i;
                 _qValues.Add(addValue);
             }
             _rallyTimes = new List<float>();
-            _avoidBulletCounts = new List<int>();
-            _receiveBulletCounts = new List<int>();
         }
 
         public void Learning(float rallyTime, int avoidBulletCount, int receiveBulletCount)
@@ -62,6 +62,8 @@ namespace InGame.InGameSystem
             CalcQValue();
             SelectAction();
             
+            // Debug.
+            // LearnCount++;
         }
         
         // Select action for ε - greedy.
@@ -74,7 +76,7 @@ namespace InGame.InGameSystem
             }
             else
             {
-                var maxQValue = _qValues.Max();
+                var maxQValue = _qValues[0];
                 for (var i = 1; i < Act; ++i)
                 {
                     if (!(_qValues[i] > maxQValue)) continue;
@@ -83,6 +85,10 @@ namespace InGame.InGameSystem
                 }    
             }
             _actionStackValue = SwapStacks(_actionStackValue, bestAction);
+            
+            // Debug.
+            // CurrentSelectAction = bestAction;
+            // CurrentQValue = _qValues[bestAction];
         }
         
         private void CalcQValue()
@@ -92,6 +98,7 @@ namespace InGame.InGameSystem
             var oneBeforeMaxQ = _currentMaxQ;
             var calcValue = twoBeforeQ + Alpha * (twoBeforeReward + Gamma * oneBeforeMaxQ - twoBeforeQ);
             var clampQValue = Mathf.Clamp((int)calcValue, 0, MaxQValue);
+            
             // Set values.
             var twoBeforeAction = _actionStackValue[0];
             _qValues[twoBeforeAction] = clampQValue;
@@ -101,8 +108,8 @@ namespace InGame.InGameSystem
 
         private void CalcReward(int rallyRate, int avoidBulletRate, int receiveBulletRate)
         {
-            var calcValue = (rallyRate - avoidBulletRate - receiveBulletRate) / 3.0f;
-            var clampReward = Mathf.Clamp((int)calcValue, 0, MaxRewardScore);
+            var calcValue = (rallyRate + avoidBulletRate + receiveBulletRate) / 3.0f;
+            var clampReward = Mathf.Clamp((int)calcValue, 0, MaxRewardScore) - BaseScore;
             _rewardStackValue = SwapStacks(_rewardStackValue, clampReward);
         }
         
@@ -130,22 +137,16 @@ namespace InGame.InGameSystem
 
         private int CalcAvoidScore(int avoidBulletCount)
         {
-            _avoidBulletCounts.Add(avoidBulletCount);
-            if (_avoidBulletCounts.Count >= MaxStackData)
-                _avoidBulletCounts.RemoveAt(0);
-            var deviation = _avoidBulletCounts.Average() - avoidBulletCount;
-            var maxDeviation = _avoidBulletCounts.Max() - _avoidBulletCounts.Min();
-            return maxDeviation != 0 ? BaseScore + (int)(deviation / maxDeviation * BaseScore) : BaseScore;
+            var clampAvoid = Mathf.Clamp(avoidBulletCount, 0, MaxAvoidBullet);
+            var ratio = clampAvoid / (float)MaxAvoidBullet;
+            return (int)(MaxRewardScore * (1 - ratio));
         }
 
         private int CalcReceiveBulletScore(int receiveBulletCount)
         {
-            _receiveBulletCounts.Add(receiveBulletCount);
-            if (_receiveBulletCounts.Count >= MaxStackData)
-                _receiveBulletCounts.RemoveAt(0);
-            var deviation = _receiveBulletCounts.Average() - receiveBulletCount;
-            var maxDeviation = _receiveBulletCounts.Max() - _receiveBulletCounts.Min();
-            return maxDeviation != 0 ? BaseScore + (int)(deviation / maxDeviation * BaseScore) : BaseScore;
+            var clampReceive = Mathf.Clamp(receiveBulletCount, 0, MaxReceiveBullet);
+            var ratio = clampReceive / (float)MaxReceiveBullet;
+            return (int)(MaxRewardScore * (1 - ratio));
         }
     }
 }

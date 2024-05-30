@@ -44,7 +44,7 @@ namespace InGame.UI
         {
             ChangeSensiSlider(_sensiHandler.Sensitivity);
             var initialSetValue = _soundHandler.CurrentVolume * 10.0f;
-            _volumeValueText.text = initialSetValue.ToString();
+            _volumeValueText.text = initialSetValue.ToString(CultureInfo.InvariantCulture);
             _sensiSlider.value = _sensiHandler.Sensitivity;
             _volumeSlider.value = initialSetValue;
             _playerNameField.text = _playerInfoHandler.PlayerName;
