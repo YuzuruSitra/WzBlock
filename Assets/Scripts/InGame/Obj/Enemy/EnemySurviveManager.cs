@@ -39,9 +39,13 @@ namespace InGame.Obj.Enemy
         private Coroutine _destCoroutine;
 
         [SerializeField]
-        private ShakeByDOTween _shakeByDOTween;
+        private ShakeByDOTween _shakeByDoTween;
         [SerializeField]
         private float _shakePower = 2.0f;
+        
+        [SerializeField] 
+        private MetaAIManipulator _metaAIManipulator;
+        private readonly float[] _boredomScaleFactor = { 0.55f, 0.65f, 0.75f, 0.85f, 0.95f, 1.05f, 1.15f, 1.25f, 1.35f, 1.45f};
 
         private void Start()
         {
@@ -68,8 +72,8 @@ namespace InGame.Obj.Enemy
                 return;
             }
             _currentWaitT = 0;
-
-            _currentInsTime += Time.deltaTime;
+            float factor = _boredomScaleFactor[_metaAIManipulator.CurrentBoredomLevel];
+            _currentInsTime += Time.deltaTime * factor;
             if (_currentInsTime <= _generateInterVal) return;
             ResetCoroutine(ref _destCoroutine);
             _insCoroutine = StartCoroutine(GenerateEnemy());
@@ -131,7 +135,7 @@ namespace InGame.Obj.Enemy
             if (!IsActive) return;
             ResetCoroutine(ref _insCoroutine);
             _destCoroutine = StartCoroutine(DestroyEnemy());
-            _shakeByDOTween.StartShake(_shakePower);
+            _shakeByDoTween.StartShake(_shakePower);
         }
     }
 }

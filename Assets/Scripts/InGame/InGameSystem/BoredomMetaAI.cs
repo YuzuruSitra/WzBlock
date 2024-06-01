@@ -28,17 +28,18 @@ namespace InGame.InGameSystem
         private int[] _actionStackValue = { 0, 0};
         
         private readonly List<float> _rallyTimes;
-
         private readonly System.Random _random;
+        
+        public int CurrentSelectAction { get; private set; }
         // Debug.
-        // public int CurrentSelectAction;
         // public int LearnCount;
         // public int CurrentQValue;
         public BoredomMetaAI()
         {
+            CurrentSelectAction = 0;
             _qValues = new List<int>();
             _random = new System.Random();
-            
+               
             for (var i = 0; i < Act; ++i)
             {
                 var addValue = InitialQValue - i;
@@ -83,9 +84,8 @@ namespace InGame.InGameSystem
                 }    
             }
             _actionStackValue = SwapStacks(_actionStackValue, bestAction);
-            
+            CurrentSelectAction = bestAction;
             // Debug.
-            // CurrentSelectAction = bestAction;
             // CurrentQValue = _qValues[bestAction];
         }
         

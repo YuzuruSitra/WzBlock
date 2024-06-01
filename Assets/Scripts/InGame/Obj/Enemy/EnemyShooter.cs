@@ -1,4 +1,5 @@
 using System;
+using InGame.InGameSystem;
 using UnityEngine;
 
 namespace InGame.Obj.Enemy
@@ -15,6 +16,10 @@ namespace InGame.Obj.Enemy
         private Vector3 _rayOffSet;
         [SerializeField]
         private float _maxThreeTime = 5.0f;
+
+        [SerializeField] 
+        private MetaAIManipulator _metaAIManipulator;
+        private readonly float[] _boredomScaleFactor = { 0.55f, 0.65f, 0.75f, 0.85f, 0.95f, 1.05f, 1.15f, 1.25f, 1.35f, 1.45f};
         private float _threeBlockTime;
         [SerializeField]
         private BulletPool _bulletPool;
@@ -37,7 +42,8 @@ namespace InGame.Obj.Enemy
                 _bulletCount = 0;
                 return;
             }
-            _threeBlockTime += Time.deltaTime;
+            float factor = _boredomScaleFactor[_metaAIManipulator.CurrentBoredomLevel];
+            _threeBlockTime += Time.deltaTime * factor;
             if (_threeBlockTime <= _maxThreeTime) return;
             if (MaxBulletCount <= _bulletCount) return;
             _bulletPool.GetBullet(transform.position + _insOffSet);

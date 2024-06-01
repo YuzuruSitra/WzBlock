@@ -1157,6 +1157,7 @@ Transform:
   - {fileID: 1335568194}
   - {fileID: 465640906}
   - {fileID: 1554321715}
+  - {fileID: 1594675223}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1572,13 +1573,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594675222}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.6, z: -0.58426666}
+  m_LocalScale: {x: 0.004111904, y: 0.004111904, z: 0.004111904}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3539665605922732097}
-  m_RootOrder: 5
+  m_Father: {fileID: 1150775847}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1594675224
 MonoBehaviour:
@@ -2294,10 +2295,22 @@ PrefabInstance:
       propertyPath: _bulletPool
       value: 
       objectReference: {fileID: 1554321716}
+    - target: {fileID: 1804455561255082115, guid: df790dee7a32e4af5ab2484a72a08bd9, type: 3}
+      propertyPath: _metaAIManipulator
+      value: 
+      objectReference: {fileID: 1594675224}
     - target: {fileID: 2061129690210480299, guid: df790dee7a32e4af5ab2484a72a08bd9, type: 3}
       propertyPath: _shakeByDOTween
       value: 
       objectReference: {fileID: 656367191}
+    - target: {fileID: 2061129690210480299, guid: df790dee7a32e4af5ab2484a72a08bd9, type: 3}
+      propertyPath: _shakeByDoTween
+      value: 
+      objectReference: {fileID: 656367191}
+    - target: {fileID: 2061129690210480299, guid: df790dee7a32e4af5ab2484a72a08bd9, type: 3}
+      propertyPath: _metaAIManipulator
+      value: 
+      objectReference: {fileID: 1594675224}
     - target: {fileID: 2733330914311998851, guid: df790dee7a32e4af5ab2484a72a08bd9, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -2310,6 +2323,10 @@ PrefabInstance:
       propertyPath: _rightObj
       value: 
       objectReference: {fileID: 1151599002}
+    - target: {fileID: 2967823971967334413, guid: df790dee7a32e4af5ab2484a72a08bd9, type: 3}
+      propertyPath: _metaAIManipulator
+      value: 
+      objectReference: {fileID: 1594675224}
     - target: {fileID: 3361212889474619193, guid: df790dee7a32e4af5ab2484a72a08bd9, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -3837,7 +3854,6 @@ Transform:
   - {fileID: 1064040117}
   - {fileID: 2987380600725642672}
   - {fileID: 6756234329750650471}
-  - {fileID: 1594675223}
   m_Father: {fileID: 805686285}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -1,4 +1,5 @@
 using System;
+using InGame.InGameSystem;
 using UnityEngine;
 
 namespace InGame.Obj.Enemy
@@ -22,6 +23,10 @@ namespace InGame.Obj.Enemy
         private GameStateHandler _gameStateHandler;
         [SerializeField]
         private float _moveWaitTime;
+        
+        [SerializeField] 
+        private MetaAIManipulator _metaAIManipulator;
+        private readonly float[] _boredomScaleFactor = { 0.75f, 0.8f, 0.85f, 0.9f, 0.95f, 1.05f, 1.1f, 1.15f, 1.2f, 1.25f};
 
         public void Start()
         {
@@ -49,7 +54,8 @@ namespace InGame.Obj.Enemy
                 posX.x = RightMaxPos;
                 transform.position = posX;
             }
-            transform.position += _direction * (_speed * Time.deltaTime);
+            float factor = _boredomScaleFactor[_metaAIManipulator.CurrentBoredomLevel];
+            transform.position += _direction * (_speed * factor * Time.deltaTime);
         }
 
         private void OnDestroy()
