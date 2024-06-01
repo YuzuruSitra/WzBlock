@@ -6,8 +6,6 @@ namespace InGame.InGameSystem
 {
     public class BoredomMetaAI
     {
-        private static BoredomMetaAI _instance;
-        public static BoredomMetaAI Instance => _instance ??= new BoredomMetaAI();
         
         private const int Act = 10;
         private const int MaxQValue = 100;
@@ -36,7 +34,7 @@ namespace InGame.InGameSystem
         // public int CurrentSelectAction;
         // public int LearnCount;
         // public int CurrentQValue;
-        private BoredomMetaAI()
+        public BoredomMetaAI()
         {
             _qValues = new List<int>();
             _random = new System.Random();
@@ -98,7 +96,6 @@ namespace InGame.InGameSystem
             var oneBeforeMaxQ = _currentMaxQ;
             var calcValue = twoBeforeQ + Alpha * (twoBeforeReward + Gamma * oneBeforeMaxQ - twoBeforeQ);
             var clampQValue = Mathf.Clamp((int)calcValue, 0, MaxQValue);
-            Debug.Log("ChangeQ : " + Alpha * (twoBeforeReward + Gamma * oneBeforeMaxQ - twoBeforeQ));
             // Set values.
             var twoBeforeAction = _actionStackValue[0];
             _qValues[twoBeforeAction] = clampQValue;
@@ -110,7 +107,6 @@ namespace InGame.InGameSystem
         {
             var calcValue = (rallyRate + avoidBulletRate + receiveBulletRate) / 3.0f;
             var clampReward = Mathf.Clamp((int)calcValue, MinReward, MaxReward );
-            Debug.Log("reward : " + clampReward);
             _rewardStackValue = SwapStacks(_rewardStackValue, clampReward);
         }
         

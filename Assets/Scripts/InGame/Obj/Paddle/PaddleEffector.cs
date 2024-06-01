@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace InGame.Obj.Paddle
 {
-    public class PaddleEfecter : MonoBehaviour
+    public class PaddleEffector : MonoBehaviour
     {
         private AbilityReceiver _abilityReceiver;
         private GameObject _currentEffect;

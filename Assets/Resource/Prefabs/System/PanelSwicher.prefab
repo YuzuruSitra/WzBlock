@@ -1439,7 +1439,8 @@ MonoBehaviour:
   _launchPanel: {fileID: 439340224608030355}
   _inGamePanel: {fileID: 439340224128240604}
   _finPanel: {fileID: 439340225293689056}
-  _HeaderPanel: {fileID: 6422294276101037095}
+  _headerPanel: {fileID: 0}
+  _settingsPanel: {fileID: 0}
 --- !u!1 &8094618115799513350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1934,7 +1935,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b204722e2cb4e16b8c0abb846398ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreText: {fileID: 439340223966448849}
   _resultText: {fileID: 8094618116496135880}
   _todayMaxScoreText: {fileID: 8094618117579572805}
   _todaySeemText: {fileID: 439340223581123333}
@@ -1943,9 +1943,11 @@ MonoBehaviour:
   _defaultColor: {r: 0.9882353, g: 0.9882353, b: 0.9882353, a: 1}
   _emphasizedPink: {r: 1, g: 0.64705884, b: 0.90588236, a: 1}
   _emphasizedBlue: {r: 0.5686275, g: 1, b: 0.92156863, a: 1}
-  _countUpWaitTime: 0.025
-  _addScoreText: {fileID: 8094618117579269262}
-  _comboText: {fileID: 8094618116909319140}
+  _rankSlider: {fileID: 0}
+  _animationDuration: 3
+  _expText: {fileID: 0}
+  _rankText: {fileID: 0}
+  _getExpText: {fileID: 0}
 --- !u!1 &8094618116496135886
 GameObject:
   m_ObjectHideFlags: 0

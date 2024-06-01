@@ -12,6 +12,7 @@ TagManager:
   - Bullet
   - Enemy
   - SoundHandler
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

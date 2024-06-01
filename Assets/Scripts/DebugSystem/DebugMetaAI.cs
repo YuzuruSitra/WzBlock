@@ -24,7 +24,7 @@ namespace DebugSystem
         
         void Start()
         {
-            _boredomMetaAI = BoredomMetaAI.Instance;
+            _boredomMetaAI = new BoredomMetaAI();
         }
 
         public void DoLearning()
