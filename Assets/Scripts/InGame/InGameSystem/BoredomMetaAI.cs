@@ -12,11 +12,11 @@ namespace InGame.InGameSystem
         private const int Act = 10;
         private const int MaxQValue = 100;
         private const int InitialQValue = 50;
-        private const int MaxRewardScore = 100;
-        private const int BaseScore = MaxRewardScore / 2;
-        private const int InitialRewardValue = 50;
-        private const float Alpha = 0.2f;
-        private const float Gamma = 0.7f;
+        private const int MaxReward = 100;
+        private const int MinReward = -100;
+        private const int BaseReward = 0;
+        private const float Alpha = 0.1f;
+        private const float Gamma = 0.9f;
         private const float ExplorationRate = 0.3f;
         private const int MaxStackData = 10;
         private const int MaxAvoidBullet = 4;
@@ -26,7 +26,7 @@ namespace InGame.InGameSystem
         private readonly List<int> _qValues;
         private int[] _qStackValue = { InitialQValue, InitialQValue};
         private int _currentMaxQ = MaxQValue;
-        private int[] _rewardStackValue = { InitialRewardValue, InitialRewardValue};
+        private int[] _rewardStackValue = { BaseReward, BaseReward};
         private int[] _actionStackValue = { 0, 0};
         
         private readonly List<float> _rallyTimes;
@@ -66,7 +66,7 @@ namespace InGame.InGameSystem
             // LearnCount++;
         }
         
-        // Select action for ε - greedy.
+        // Select action for ﾎｵ - greedy.
         private void SelectAction()
         {
             var bestAction = 0;
@@ -98,7 +98,7 @@ namespace InGame.InGameSystem
             var oneBeforeMaxQ = _currentMaxQ;
             var calcValue = twoBeforeQ + Alpha * (twoBeforeReward + Gamma * oneBeforeMaxQ - twoBeforeQ);
             var clampQValue = Mathf.Clamp((int)calcValue, 0, MaxQValue);
-            
+            Debug.Log("ChangeQ : " + Alpha * (twoBeforeReward + Gamma * oneBeforeMaxQ - twoBeforeQ));
             // Set values.
             var twoBeforeAction = _actionStackValue[0];
             _qValues[twoBeforeAction] = clampQValue;
@@ -109,7 +109,8 @@ namespace InGame.InGameSystem
         private void CalcReward(int rallyRate, int avoidBulletRate, int receiveBulletRate)
         {
             var calcValue = (rallyRate + avoidBulletRate + receiveBulletRate) / 3.0f;
-            var clampReward = Mathf.Clamp((int)calcValue, 0, MaxRewardScore) - BaseScore;
+            var clampReward = Mathf.Clamp((int)calcValue, MinReward, MaxReward );
+            Debug.Log("reward : " + clampReward);
             _rewardStackValue = SwapStacks(_rewardStackValue, clampReward);
         }
         
@@ -128,25 +129,27 @@ namespace InGame.InGameSystem
         private int CalcRallyScore(float rallyTime)
         {
             _rallyTimes.Add(rallyTime);
-            if (_rallyTimes.Count >= MaxStackData)
+            if (_rallyTimes.Count > MaxStackData)
                 _rallyTimes.RemoveAt(0);
-            var deviation = rallyTime - _rallyTimes.Average();
-            var maxDeviation = _rallyTimes.Max() - _rallyTimes.Min();
-            return maxDeviation != 0 ? BaseScore + (int)(deviation / maxDeviation * BaseScore) : BaseScore;
+            var ratio = 0;
+            foreach (float time in _rallyTimes)
+                if (time < rallyTime)
+                    ratio++;
+            return MinReward + (MaxReward - MinReward) / _rallyTimes.Count * ratio;
         }
 
         private int CalcAvoidScore(int avoidBulletCount)
         {
             var clampAvoid = Mathf.Clamp(avoidBulletCount, 0, MaxAvoidBullet);
-            var ratio = clampAvoid / (float)MaxAvoidBullet;
-            return (int)(MaxRewardScore * (1 - ratio));
+            var ratio = MaxAvoidBullet - clampAvoid;
+            return MinReward + (MaxReward - MinReward) / MaxAvoidBullet * ratio;
         }
 
         private int CalcReceiveBulletScore(int receiveBulletCount)
         {
             var clampReceive = Mathf.Clamp(receiveBulletCount, 0, MaxReceiveBullet);
-            var ratio = clampReceive / (float)MaxReceiveBullet;
-            return (int)(MaxRewardScore * (1 - ratio));
+            var ratio = MaxReceiveBullet - clampReceive;
+            return MinReward + (MaxReward - MinReward) / MaxReceiveBullet * ratio;
         }
     }
 }
