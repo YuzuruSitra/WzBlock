@@ -6,9 +6,10 @@ namespace InGame.Obj.Enemy
 {
     public class EnemyShield : MonoBehaviour
     {
+        private bool _isActive;
         [SerializeField] 
         private float _fadeDuration = 1.5f;
-
+        
         [SerializeField] 
         private float _maxSize = 1.15f;
         [SerializeField]
@@ -22,12 +23,14 @@ namespace InGame.Obj.Enemy
         private Collider _col;
 
         private Color _initialColor;
+        private Color _afterColor;
         private Vector3 _initialScale;
         
         
         private void Start()
         {
             _material = GetComponent<Renderer>().material;
+            _afterColor = _material.color;
             var color = _material.color;
             color.a = 1;
             _initialColor = color;
@@ -39,34 +42,51 @@ namespace InGame.Obj.Enemy
             _material.color = _initialColor;
             _col.enabled = true;
             transform.localScale = _initialScale;
+            _isActive = true;
             if (_fadeCoroutine == null) return;
             StopCoroutine(_fadeCoroutine);
             _fadeCoroutine = null;
         }
+        
+        public void Inactive()
+        {
+            _material.color = _afterColor;
+            _col.enabled = false;
+        }
 
         private IEnumerator FadeOutCoroutine()
         {
+            _isActive = false;
+            _col.enabled = false;
+            
             var startColor = _material.color;
             var elapsedTime = 0f;
+    
             while (elapsedTime < _fadeDuration)
             {
                 elapsedTime += Time.deltaTime;
-                var alpha = Mathf.Lerp(startColor.a, 0, elapsedTime / _fadeDuration);
-                _material.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
-                
-                var newScale = Vector3.Lerp(_initialScale, _initialScale * _maxSize, elapsedTime / _fadeDuration);
-                transform.localScale = newScale;
+                var t = elapsedTime / _fadeDuration;
+        
+                // アルファ値の更新
+                startColor.a = Mathf.Lerp(1, 0, t);
+                _material.color = startColor;
+        
+                // スケールの更新
+                transform.localScale = Vector3.Lerp(_initialScale, _initialScale * _maxSize, t);
 
                 yield return null;
             }
-            _material.color = new Color(startColor.r, startColor.g, startColor.b, 0);
+    
+            // フェードアウト完了後の設定
+            startColor.a = 0;
+            _material.color = startColor;
             transform.localScale = _initialScale * _maxSize;
-            _col.enabled = false;
         }
         
         private void OnCollisionEnter(Collision collision)
         {
             if (!collision.gameObject.CompareTag("Ball")) return;
+            if (!_isActive) return;
             _fadeCoroutine = StartCoroutine(FadeOutCoroutine());
             _shakeByDoTween.StartShake(_shakePower);
         }

@@ -43,10 +43,10 @@ namespace InGame.Gimmick
 
         public void ChangeLookActive(bool newActive)
         {
+            _isActive = newActive;
+            _mesh.enabled = newActive;
+            _col.enabled = newActive;
             if (!newActive) return;
-            _isActive = true;
-            _mesh.enabled = true;
-            _col.enabled = true;
             _currentScale = _initialScale;
             transform.localScale = _initialScale;
             _currentTime = _remainTime;

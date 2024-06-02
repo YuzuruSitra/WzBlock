@@ -112,7 +112,7 @@ namespace InGame.Obj.Enemy
                 {
                     var bullet = _usedWallBullets[i];
                     bullet.ChangeLookActive(false);
-                    _usedBindBullets.RemoveAt(i);
+                    _usedWallBullets.RemoveAt(i);
                     _availableWallBullets.Add(bullet);
                 }
             }

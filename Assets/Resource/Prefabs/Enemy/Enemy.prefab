@@ -127,6 +127,7 @@ MonoBehaviour:
   _speed: 1
   _leftObj: {fileID: 0}
   _rightObj: {fileID: 0}
+  _movePadding: 0.4
   _moveWaitTime: 3
   _metaAIManipulator: {fileID: 0}
 --- !u!114 &2061129690210480299
@@ -280,8 +281,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30693f8750048de44a456d9f77302e7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fadeDuration: 1.5
-  _maxSize: 1.15
+  _fadeDuration: 0.3
+  _maxSize: 3
   _shakePower: 0.5
   _shakeByDoTween: {fileID: 0}
   _col: {fileID: 3843357010690144206}

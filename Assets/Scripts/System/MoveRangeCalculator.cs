@@ -10,15 +10,15 @@ namespace System
 
         private float _centerPosX;
 
-        public MoveRangeCalculator(GameObject targetObj, GameObject leftObj, GameObject rightObj)
+        public MoveRangeCalculator(GameObject targetObj, GameObject leftObj, GameObject rightObj, float padding)
         {
-            CalcMoveRange(targetObj, leftObj, rightObj);
+            CalcMoveRange(targetObj, leftObj, rightObj, padding);
         }
 
-        private void CalcMoveRange(GameObject targetObj, GameObject leftObj, GameObject rightObj)
+        private void CalcMoveRange(GameObject targetObj, GameObject leftObj, GameObject rightObj, float padding)
         {
             var meshRenderer = targetObj.GetComponent<MeshRenderer>();
-            var width = meshRenderer.bounds.size.x / 2;
+            var width = padding + meshRenderer.bounds.size.x / 2;
             
             _centerPosX = (leftObj.transform.position.x + rightObj.transform.position.x) / 2.0f;
             

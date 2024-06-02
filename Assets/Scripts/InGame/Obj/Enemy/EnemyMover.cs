@@ -20,6 +20,8 @@ namespace InGame.Obj.Enemy
         private MoveRangeCalculator _moveRangeCalculator;
         private float LeftMaxPos => _moveRangeCalculator.LeftMaxPos;
         private float RightMaxPos  => _moveRangeCalculator.RightMaxPos;
+        [SerializeField]
+        private float _movePadding;
         private GameStateHandler _gameStateHandler;
         [SerializeField]
         private float _moveWaitTime;
@@ -33,7 +35,7 @@ namespace InGame.Obj.Enemy
             _launchPos = transform.position;
             _gameStateHandler = GameStateHandler.Instance;
             _gameStateHandler.ChangeGameState += ChangeStateEnemyMover;
-            _moveRangeCalculator = new MoveRangeCalculator(gameObject, _leftObj, _rightObj);
+            _moveRangeCalculator = new MoveRangeCalculator(gameObject, _leftObj, _rightObj, _movePadding);
         }
 
         public void Update()

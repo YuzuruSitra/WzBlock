@@ -119,6 +119,7 @@ namespace InGame.Obj.Enemy
         {
             if (newState != GameStateHandler.GameState.Launch) return;
             ChangeLook(false);
+            _enemyShield.Inactive();
             _currentInsTime = 0;
             _currentWaitT = 0;
             ResetCoroutine(ref _insCoroutine);

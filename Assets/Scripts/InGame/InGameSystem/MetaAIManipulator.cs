@@ -1,3 +1,4 @@
+using System;
 using InGame.Obj.Paddle;
 using UnityEngine;
 
@@ -15,6 +16,11 @@ namespace InGame.InGameSystem
         {
             _boredomMetaAI = new BoredomMetaAI();
             _paddleInfo.DoLearnEvent += DoLearn;
+        }
+
+        private void OnDestroy()
+        {
+            _paddleInfo.DoLearnEvent -= DoLearn;
         }
 
         private void DoLearn()

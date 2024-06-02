@@ -19,7 +19,7 @@ namespace InGame.Obj.Paddle
 
         private void Start()
         {
-            _moveRangeCalculator = new MoveRangeCalculator(gameObject, _leftObj, _rightObj);
+            _moveRangeCalculator = new MoveRangeCalculator(gameObject, _leftObj, _rightObj, 0);
             _leftMaxPos = _moveRangeCalculator.LeftMaxPos;
             _rightMaxPos  = _moveRangeCalculator.RightMaxPos;
 
