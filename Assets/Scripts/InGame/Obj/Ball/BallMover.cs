@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using InGame.InGameSystem;
-using UnityEngine.Serialization;
 
 namespace InGame.Obj.Ball
 {
@@ -31,7 +30,9 @@ namespace InGame.Obj.Ball
         public event Action ExplosionEvent;
         public event Action HitPaddleEvent;
         private int _hitFrameCount;
-        [FormerlySerializedAs("_shakeByDOTween")] [SerializeField] private ShakeByDOTween _shakeByDoTween;
+
+        [SerializeField]
+        private ShakeByDOTween _shakeByDoTween;
 
         private readonly List<float> _baseAngles = new List<float> { 0f, 90f, 180f, 270f, 360f };
 
@@ -61,7 +62,6 @@ namespace InGame.Obj.Ball
 
             var velocity = _rigidBody.velocity;
             var speed = velocity.magnitude;
-
             if (Mathf.Approximately(speed, 0f))
                 velocity = _currentVelocity.normalized * _minSpeed;
             else if (speed < MinThreshold)
@@ -69,7 +69,6 @@ namespace InGame.Obj.Ball
 
             var setSpeed = Mathf.Clamp(speed, _minSpeed, _maxSpeed);
             _currentSpeed = setSpeed;
-
             velocity = velocity.normalized * setSpeed;
             _rigidBody.velocity = velocity;
             _currentVelocity = velocity;

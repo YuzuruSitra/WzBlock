@@ -15,7 +15,7 @@ namespace InGame.Gimmick
         public bool IsEnable => (DateTime.Now - _lastConditionChange).TotalSeconds >= CoolTime;
         private readonly GameStateHandler _gameStateHandler;
         
-        private WallPool _wallPool;
+        private readonly WallPool _wallPool;
 
         public enum Condition
         {

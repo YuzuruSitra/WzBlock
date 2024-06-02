@@ -13,7 +13,7 @@ namespace InGame.Gimmick
         private BoxCollider _col;
         [SerializeField]
         private float _remainTime = 3.0f;
-
+        
         private bool _isActive;
         private float _currentTime;
         private Vector3 _initialScale;

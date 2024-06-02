@@ -46,7 +46,9 @@ namespace InGame.Obj.Enemy
         [SerializeField] 
         private MetaAIManipulator _metaAIManipulator;
         private readonly float[] _boredomScaleFactor = { 0.55f, 0.65f, 0.75f, 0.85f, 0.95f, 1.05f, 1.15f, 1.25f, 1.35f, 1.45f};
-
+        [SerializeField] 
+        private EnemyShield _enemyShield;
+        
         private void Start()
         {
             _scoreHandler = ScoreHandler.Instance;
@@ -72,7 +74,7 @@ namespace InGame.Obj.Enemy
                 return;
             }
             _currentWaitT = 0;
-            float factor = _boredomScaleFactor[_metaAIManipulator.CurrentBoredomLevel];
+            var factor = _boredomScaleFactor[_metaAIManipulator.CurrentBoredomLevel];
             _currentInsTime += Time.deltaTime * factor;
             if (_currentInsTime <= _generateInterVal) return;
             ResetCoroutine(ref _destCoroutine);
@@ -93,6 +95,7 @@ namespace InGame.Obj.Enemy
             ChangeLook(true);
             _currentInsTime = 0;
             _insCoroutine = null;
+            _enemyShield.IsActive();
         }
 
         private IEnumerator DestroyEnemy()
