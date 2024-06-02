@@ -4100,9 +4100,21 @@ PrefabInstance:
       value: Ball
       objectReference: {fileID: 0}
     - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _paddleAddForce
+      value: 2.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: _shakeByDOTween
       value: 
       objectReference: {fileID: 656367191}
+    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _shakeByDoTween
+      value: 
+      objectReference: {fileID: 656367191}
+    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _hitReduceFactor
+      value: 0.75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
 --- !u!1001 &6623131933694451662

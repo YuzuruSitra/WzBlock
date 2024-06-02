@@ -14,7 +14,7 @@ namespace InGame.InGameSystem
         private void Start()
         {
             _boredomMetaAI = new BoredomMetaAI();
-            _paddleInfo.HitBallEvent += DoLearn;
+            _paddleInfo.DoLearnEvent += DoLearn;
         }
 
         private void DoLearn()

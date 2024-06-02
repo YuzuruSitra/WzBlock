@@ -26,7 +26,7 @@ namespace InGame.Obj.Enemy
         
         [SerializeField] 
         private MetaAIManipulator _metaAIManipulator;
-        private readonly float[] _boredomScaleFactor = { 0.75f, 0.8f, 0.85f, 0.9f, 0.95f, 1.05f, 1.1f, 1.15f, 1.2f, 1.25f};
+        private readonly float[] _boredomScaleFactor = { 0.55f, 0.65f, 0.75f, 0.85f, 0.95f, 1.05f, 1.15f, 1.25f, 1.35f, 1.45f};
 
         public void Start()
         {

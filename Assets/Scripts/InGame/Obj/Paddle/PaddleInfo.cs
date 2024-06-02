@@ -5,7 +5,7 @@ namespace InGame.Obj.Paddle
 {
     public class PaddleInfo : MonoBehaviour
     {
-        public event Action HitBallEvent;
+        public event Action DoLearnEvent;
         [SerializeField] 
         private float _rayDistance = 1.5f;
         public float RallyTime { get; private set; }
@@ -44,7 +44,7 @@ namespace InGame.Obj.Paddle
             }
             if (other.gameObject.CompareTag("Ball"))
             {
-                HitBallEvent?.Invoke();
+                DoLearnEvent?.Invoke();
                 RallyTime = 0;
                 AvoidEnemyBullet = 0;
                 ReceiveEnemyBullet = 0;

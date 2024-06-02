@@ -17,8 +17,8 @@ namespace InGame.Obj.Ball
         [SerializeField] private float _maxSpeed = 7f;
         [SerializeField] private float _shakeSpeedLimit = 4f;
         [SerializeField] private float _paddleAddForce = 1f;
-        [SerializeField] private float _hitReduceForce = 1f;
-        [SerializeField] private float _explotionForce = 1.75f;
+        [SerializeField] private float _hitReduceFactor = 0.9f;
+        [SerializeField] private float _explosionForce = 6.0f;
         [SerializeField] private float _shakePower = 1.0f;
         private Vector2 _launchDirection = new Vector2(1, 0.5f);
         private const float MinThreshold = 0.001f;
@@ -137,7 +137,7 @@ namespace InGame.Obj.Ball
             _rigidBody.velocity = Vector3.zero;
             _rigidBody.angularVelocity = Vector3.zero;
             var rnd = UnityEngine.Random.Range(0, _explosionDirection.Length);
-            _rigidBody.AddForce(_explosionDirection[rnd] * _explotionForce, ForceMode.Impulse);
+            _rigidBody.AddForce(_explosionDirection[rnd] * _explosionForce, ForceMode.Impulse);
             _hitFrameCount = 0;
             ExplosionEvent?.Invoke();
         }
@@ -168,7 +168,7 @@ namespace InGame.Obj.Ball
         private void ReduceForce(GameObject hitObj)
         {
             if (hitObj.CompareTag("Block") || hitObj.CompareTag("Bullet"))
-                _rigidBody.AddForce(-_rigidBody.velocity.normalized * _hitReduceForce, ForceMode.Impulse);
+                _rigidBody.velocity *= _hitReduceFactor;
         }
 
         private void CalcHitCount(GameObject hitObj)
