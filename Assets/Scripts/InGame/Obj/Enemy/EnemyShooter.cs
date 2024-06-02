@@ -6,11 +6,23 @@ namespace InGame.Obj.Enemy
 {
     public class EnemyShooter : MonoBehaviour
     {
+        public enum BulletType
+        {
+            Bind,
+            Wall,
+        }
+        [Serializable]
+        private struct BulletSelect
+        {
+            public BulletType _type;
+            public int[] _rate;
+        }
+        [SerializeField]
+        private BulletSelect[] _bulletSelects;
+
         [SerializeField]
         private EnemySurviveManager _enemySurviveManager;
         private GameStateHandler _gameStateHandler;
-        [SerializeField]
-        private GameObject _bullet;
         private readonly Vector3 _insOffSet = new Vector3(0, -0.45f, 0);
         [SerializeField]
         private Vector3 _rayOffSet;
@@ -42,11 +54,13 @@ namespace InGame.Obj.Enemy
                 _bulletCount = 0;
                 return;
             }
-            float factor = _boredomScaleFactor[_metaAIManipulator.CurrentBoredomLevel];
+            var factor = _boredomScaleFactor[_metaAIManipulator.CurrentBoredomLevel];
             _threeBlockTime += Time.deltaTime * factor;
             if (_threeBlockTime <= _maxThreeTime) return;
             if (MaxBulletCount <= _bulletCount) return;
-            _bulletPool.GetBullet(transform.position + _insOffSet);
+            var getPos = transform.position + _insOffSet;
+            var bulletType = SelectBullet();
+            _bulletPool.GetBullet(getPos, bulletType);
             _bulletCount ++;
             _threeBlockTime = 0;
         
@@ -56,6 +70,24 @@ namespace InGame.Obj.Enemy
         {
             _gameStateHandler.ChangeGameState -= ChangeStateShooter;
         }
+        private BulletType SelectBullet()
+        {
+            var allRate = 0;
+            for (var i = 0; i < _bulletSelects.Length; i++)
+                allRate += _bulletSelects[i]._rate[_metaAIManipulator.CurrentBoredomLevel];
+            var randomValue = UnityEngine.Random.Range(0, allRate);
+            var cumulativeProbability = 0;
+            var selectedElement = BulletType.Bind; // デフォルト値
+            for (var i = 0; i < _bulletSelects.Length; i++)
+            {
+                cumulativeProbability += _bulletSelects[i]._rate[_metaAIManipulator.CurrentBoredomLevel];
+                if (!(randomValue < cumulativeProbability)) continue;
+                selectedElement = (BulletType)i;
+                break;
+            }
+            return selectedElement;
+        }
+        
 
         private void ChangeStateShooter(GameStateHandler.GameState newState)
         {
@@ -70,10 +102,10 @@ namespace InGame.Obj.Enemy
             var hit = false;
             Debug.DrawRay(transform.position + _rayOffSet, Vector3.down, Color.red);
             Debug.DrawRay(transform.position - _rayOffSet, Vector3.down, Color.red);
-            if (Physics.Raycast(transform.position + _rayOffSet, Vector3.down, out RaycastHit hit1, Mathf.Infinity, 1 << LayerMask.NameToLayer("Block")))
+            if (Physics.Raycast(transform.position + _rayOffSet, Vector3.down, out var hit1, Mathf.Infinity, 1 << LayerMask.NameToLayer("Block")))
                 hit = true;
             
-            if (Physics.Raycast(transform.position - _rayOffSet, Vector3.down, out RaycastHit hit2, Mathf.Infinity, 1 << LayerMask.NameToLayer("Block")))
+            if (Physics.Raycast(transform.position - _rayOffSet, Vector3.down, out var hit2, Mathf.Infinity, 1 << LayerMask.NameToLayer("Block")))
                 hit = true;
             return hit;
         }

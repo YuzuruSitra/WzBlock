@@ -13,6 +13,8 @@ TagManager:
   - Enemy
   - SoundHandler
   - EnemyBullet
+  - WallPool
+  - WallBulletCol
   layers:
   - Default
   - TransparentFX

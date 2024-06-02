@@ -1,6 +1,7 @@
 using System;
+using UnityEngine;
 
-namespace InGame.Obj.Paddle
+namespace InGame.Gimmick
 {
     public class AbilityReceiver
     {
@@ -13,6 +14,8 @@ namespace InGame.Obj.Paddle
         private DateTime _lastConditionChange;
         public bool IsEnable => (DateTime.Now - _lastConditionChange).TotalSeconds >= CoolTime;
         private readonly GameStateHandler _gameStateHandler;
+        
+        private WallPool _wallPool;
 
         public enum Condition
         {
@@ -24,6 +27,7 @@ namespace InGame.Obj.Paddle
         {
             _gameStateHandler = GameStateHandler.Instance;
             _gameStateHandler.ChangeGameState += ChangeStateAbility;
+            _wallPool = GameObject.FindWithTag("WallPool").GetComponent<WallPool>();
         }
 
         public void ChangeCondition(Condition newCondition)
@@ -39,8 +43,14 @@ namespace InGame.Obj.Paddle
 
         private void ChangeStateAbility(GameStateHandler.GameState newState)
         {
-            if (newState == GameStateHandler.GameState.Launch)
-                ConditionChanged?.Invoke(Condition.Default);
+            if (newState != GameStateHandler.GameState.Launch) return;
+            ConditionChanged?.Invoke(Condition.Default);
+            _wallPool.ReturnAllWall();
+        }
+        
+        public void GenerateWall(Vector3 pos)
+        {
+            _wallPool.GetWall(pos);
         }
 
     }

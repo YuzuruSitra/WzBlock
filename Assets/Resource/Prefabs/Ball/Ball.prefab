@@ -172,10 +172,10 @@ MonoBehaviour:
   _maxSpeed: 9
   _shakeSpeedLimit: 5.5
   _paddleAddForce: 2
-  _hitReduceForce: 2
-  _explotionForce: 6
+  _hitReduceFactor: 0.85
+  _explosionForce: 6
   _shakePower: 1
-  _shakeByDOTween: {fileID: 0}
+  _shakeByDoTween: {fileID: 0}
 --- !u!1001 &8986797890284545219
 PrefabInstance:
   m_ObjectHideFlags: 0

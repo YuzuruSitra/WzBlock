@@ -1,3 +1,4 @@
+using InGame.Gimmick;
 using UnityEngine;
 
 namespace InGame.Obj.Paddle

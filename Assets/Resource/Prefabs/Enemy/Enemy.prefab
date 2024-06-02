@@ -100,10 +100,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69bcbac4d0b754c33bfc1200ff975d88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bulletProbability: []
   _enemySurviveManager: {fileID: 2061129690210480299}
-  _bullet: {fileID: 9047093242271327612, guid: 9a278f1b05a1542f795573a27e0975aa, type: 3}
   _rayOffSet: {x: 0.135, y: 0, z: 0}
   _maxThreeTime: 0.35
+  _metaAIManipulator: {fileID: 0}
   _bulletPool: {fileID: 0}
 --- !u!114 &2967823971967334413
 MonoBehaviour:
@@ -122,6 +123,7 @@ MonoBehaviour:
   _leftObj: {fileID: 0}
   _rightObj: {fileID: 0}
   _moveWaitTime: 3
+  _metaAIManipulator: {fileID: 0}
 --- !u!114 &2061129690210480299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,6 +143,9 @@ MonoBehaviour:
   _col: {fileID: 7891618495732961929}
   _insEffectPrefab: {fileID: 1658496247936348207, guid: 12a90a27f7ca6594782c5695dad3498c, type: 3}
   _breakEffectPrefab: {fileID: 6589385767113089740, guid: b6411517e5764b444b2d9a7c0e961cec, type: 3}
+  _shakeByDoTween: {fileID: 0}
+  _shakePower: 2
+  _metaAIManipulator: {fileID: 0}
 --- !u!64 &7891618495732961929
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -150,7 +155,7 @@ MeshCollider:
   m_GameObject: {fileID: 2733330914311998851}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
