@@ -9,7 +9,7 @@ namespace InGame.Gimmick
         private Transform _wallParent;
         [SerializeField]
         private GimmickWall _wallPrefab;
-        private const int LaunchPoolCount = 2;
+        private const int LaunchPoolCount = 5;
         private readonly List<GimmickWall> _availableWalls = new List<GimmickWall>();
         private readonly List<GimmickWall> _usedWalls = new List<GimmickWall>();
 

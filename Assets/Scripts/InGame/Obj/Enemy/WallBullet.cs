@@ -33,7 +33,7 @@ namespace InGame.Obj.Enemy
         private float _destroyTIme;
         private Coroutine _abilityCoroutine;
 
-        private int _isMisfireCount = 0;
+        private int _isMisfireCount;
         
         private void Start()
         {
@@ -68,10 +68,10 @@ namespace InGame.Obj.Enemy
         
         private IEnumerator GenerateWall()
         {
+            _abilityReceiver.GenerateWall(transform.position);
             OnReturnToPool?.Invoke(this);
             _hitEffect.transform.position = transform.position;
             _hitEffect.SetActive(true);
-            _abilityReceiver.GenerateWall(transform.position);
             yield return _wait;
             _hitEffect.SetActive(false);
         }

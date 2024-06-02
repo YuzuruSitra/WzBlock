@@ -71,7 +71,7 @@ namespace InGame.Obj.Ball
             _currentSpeed = setSpeed;
             velocity = velocity.normalized * setSpeed;
             _rigidBody.velocity = velocity;
-            _currentVelocity = velocity;
+            if (velocity != Vector3.zero) _currentVelocity = velocity;
             _currentAngular = _rigidBody.angularVelocity;
         }
 

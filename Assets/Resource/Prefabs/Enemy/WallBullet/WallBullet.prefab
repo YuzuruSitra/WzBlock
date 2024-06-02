@@ -61,7 +61,7 @@ MonoBehaviour:
   _prjEffect: {fileID: 7040253435536422565}
   _col: {fileID: 6736952774740926462}
   _destroyMinTime: 1.2
-  _destroyMaxTime: 2.1
+  _destroyMaxTime: 2
 --- !u!65 &6736952774740926462
 BoxCollider:
   m_ObjectHideFlags: 0
