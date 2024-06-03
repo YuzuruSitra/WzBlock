@@ -55,10 +55,7 @@ namespace InGame.Obj.Enemy
         }
 
         private IEnumerator FadeOutCoroutine()
-        {
-            _isActive = false;
-            _col.enabled = false;
-            
+        {            
             var startColor = _material.color;
             var elapsedTime = 0f;
     
@@ -77,7 +74,7 @@ namespace InGame.Obj.Enemy
                 yield return null;
             }
     
-            // フェードアウト完了後の設定
+            // フェードアウト完�?後�?�設�?
             startColor.a = 0;
             _material.color = startColor;
             transform.localScale = _initialScale * _maxSize;
@@ -87,6 +84,8 @@ namespace InGame.Obj.Enemy
         {
             if (!collision.gameObject.CompareTag("Ball")) return;
             if (!_isActive) return;
+            _isActive = false;
+            _col.enabled = false;
             _fadeCoroutine = StartCoroutine(FadeOutCoroutine());
             _shakeByDoTween.StartShake(_shakePower);
         }
