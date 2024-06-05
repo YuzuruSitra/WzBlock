@@ -65,7 +65,7 @@ namespace InGame.InGameSystem
             // LearnCount++;
         }
         
-        // Select action for ï¾Žï½µ - greedy.
+        // Select action for ?¾Žï½µ - greedy.
         private void SelectAction()
         {
             var bestAction = 0;
