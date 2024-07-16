@@ -2485,6 +2485,10 @@ PrefabInstance:
       propertyPath: _metaAIManipulator
       value: 
       objectReference: {fileID: 1594675224}
+    - target: {fileID: 2492686831622421664, guid: df790dee7a32e4af5ab2484a72a08bd9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2733330914311998851, guid: df790dee7a32e4af5ab2484a72a08bd9, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -4300,6 +4304,10 @@ PrefabInstance:
     - target: {fileID: 2129730774368245198, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: m_Mass
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129730774368245198, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: _paddleAddForce

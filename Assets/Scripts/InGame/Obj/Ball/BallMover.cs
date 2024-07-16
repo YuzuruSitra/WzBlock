@@ -62,18 +62,23 @@ namespace InGame.Obj.Ball
 
             var velocity = _rigidBody.velocity;
             var speed = velocity.magnitude;
-            if (Mathf.Approximately(speed, 0f))
+            Debug.Log(speed);
+            // 最小速度未満の場合、速度を修正する
+            if (speed < _minSpeed)
                 velocity = _currentVelocity.normalized * _minSpeed;
-            else if (speed < MinThreshold)
-                velocity = transform.forward * _minSpeed;
 
+            // 速度の再計算
             var setSpeed = Mathf.Clamp(speed, _minSpeed, _maxSpeed);
             _currentSpeed = setSpeed;
             velocity = velocity.normalized * setSpeed;
             _rigidBody.velocity = velocity;
-            if (velocity != Vector3.zero) _currentVelocity = velocity;
+
+            // 現在の速度を更新
+            if (velocity != Vector3.zero)
+                _currentVelocity = velocity;
             _currentAngular = _rigidBody.angularVelocity;
         }
+
 
         private void OnDestroy()
         {
@@ -154,15 +159,38 @@ namespace InGame.Obj.Ball
             return false;
         }
 
-        private void ChangeReflection(GameObject hitObj)
+        private void ReflectDirection(Collision collision)
         {
-            if (!hitObj.CompareTag("Paddle")) return;
-            HitPaddleEvent?.Invoke();
-            var playerPos = hitObj.transform.position;
-            var ballPos = transform.position;
-            var direction = (ballPos - playerPos).normalized;
-            _rigidBody.AddForce(direction * _paddleAddForce, ForceMode.Impulse);
+            // 衝突した法線ベクトルを取得
+            var normal = collision.contacts[0].normal;
+            var incomingVelocity = _currentVelocity; // 保持している現在の速度を使用
+            var speed = incomingVelocity.magnitude;
+            var reflectDirection = Vector3.Reflect(incomingVelocity.normalized, normal);
+
+            // パドルとの衝突処理
+            if (collision.gameObject.CompareTag("Paddle"))
+            {
+                HitPaddleEvent?.Invoke();
+                var paddle = collision.gameObject;
+                var playerPos = paddle.transform.position;
+                var ballPos = transform.position;
+
+                // パドルのローカル空間でのボールの位置を計算
+                var paddleLocalPos = paddle.transform.InverseTransformPoint(ballPos);
+                var paddleWidth = paddle.GetComponent<Renderer>().bounds.size.x;
+
+                // パドルの左端から右端までの位置を -1 から 1 の範囲に正規化
+                var offset = Mathf.Clamp(paddleLocalPos.x / (paddleWidth / 2), -1, 1);
+
+                // オフセットに応じて反射方向を計算
+                reflectDirection = new Vector3(offset, 1.0f, 0).normalized;
+            }
+
+            // 速度を保持しつつ反射方向のみ変更
+            _rigidBody.velocity = reflectDirection * speed;
+            _currentVelocity = _rigidBody.velocity; // 現在の速度を更新
         }
+
 
         private void ReduceForce(GameObject hitObj)
         {
@@ -190,7 +218,7 @@ namespace InGame.Obj.Ball
         private void OnCollisionEnter(Collision collision)
         {
             AvoidFrameStack(collision.gameObject);
-            ChangeReflection(collision.gameObject);
+            ReflectDirection(collision); // 反射処理を呼び出す
             ReduceForce(collision.gameObject);
             CalcHitCount(collision.gameObject);
             ShakeCamera(collision.gameObject);
