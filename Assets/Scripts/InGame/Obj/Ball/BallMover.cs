@@ -180,7 +180,10 @@ namespace InGame.Obj.Ball
                 var offset = Mathf.Clamp(paddleLocalPos.x / (paddleWidth / 2), -1, 1);
 
                 // オフセットに応じて反射方向を計算
-                reflectDirection = new Vector3(offset, 1.0f, 0).normalized;
+                reflectDirection.x = offset;
+                reflectDirection.y = 1.0f;
+                reflectDirection.z = 0;
+                reflectDirection = reflectDirection.normalized;
                 speed += _paddleAddForce;
             }
 
