@@ -6,20 +6,6 @@ namespace InGame.Obj.Enemy
 {
     public class EnemyShooter : MonoBehaviour
     {
-        public enum BulletType
-        {
-            Bind,
-            Wall,
-        }
-        [Serializable]
-        private struct BulletSelect
-        {
-            public BulletType _type;
-            public int[] _rate;
-        }
-        [SerializeField]
-        private BulletSelect[] _bulletSelects;
-
         [SerializeField]
         private EnemySurviveManager _enemySurviveManager;
         private GameStateHandler _gameStateHandler;
@@ -58,9 +44,10 @@ namespace InGame.Obj.Enemy
             _threeBlockTime += Time.deltaTime * factor;
             if (_threeBlockTime <= _maxThreeTime) return;
             if (MaxBulletCount <= _bulletCount) return;
-            var getPos = transform.position + _insOffSet;
-            var bulletType = SelectBullet();
-            _bulletPool.GetBullet(getPos, bulletType);
+            var pos = transform.position + _insOffSet;
+            var bullet = _bulletPool.GetBullet();
+            bullet.transform.position = pos;
+            bullet.ChangeLookActive(true);
             _bulletCount ++;
             _threeBlockTime = 0;
         
@@ -70,24 +57,6 @@ namespace InGame.Obj.Enemy
         {
             _gameStateHandler.ChangeGameState -= ChangeStateShooter;
         }
-        private BulletType SelectBullet()
-        {
-            var allRate = 0;
-            for (var i = 0; i < _bulletSelects.Length; i++)
-                allRate += _bulletSelects[i]._rate[_metaAIManipulator.CurrentBoredomLevel];
-            var randomValue = UnityEngine.Random.Range(0, allRate);
-            var cumulativeProbability = 0;
-            var selectedElement = BulletType.Bind; // デフォルト値
-            for (var i = 0; i < _bulletSelects.Length; i++)
-            {
-                cumulativeProbability += _bulletSelects[i]._rate[_metaAIManipulator.CurrentBoredomLevel];
-                if (!(randomValue < cumulativeProbability)) continue;
-                selectedElement = (BulletType)i;
-                break;
-            }
-            return selectedElement;
-        }
-        
 
         private void ChangeStateShooter(GameStateHandler.GameState newState)
         {

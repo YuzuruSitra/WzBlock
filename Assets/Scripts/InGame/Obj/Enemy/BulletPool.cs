@@ -14,70 +14,33 @@ namespace InGame.Obj.Enemy
         private const int BindBulletPoolCount = 10;
         private readonly List<BindBullet> _availableBindBullets = new List<BindBullet>();
         private readonly List<BindBullet> _usedBindBullets = new List<BindBullet>();
-        
-        [SerializeField]
-        private WallBullet _wallBulletPrefab;
-        private const int WallBulletPoolCount = 5;
-        private readonly List<WallBullet> _availableWallBullets = new List<WallBullet>();
-        private readonly List<WallBullet> _usedWallBullets = new List<WallBullet>();
 
         private void Awake()
         {
-            // 初期プールの作成
+            // 初期プ�?�ルの作�??
             for (var i = 0; i < BindBulletPoolCount; i++)
             {
                 var bullet = Instantiate(_bindBulletPrefab, _bulletParent, true);
                 bullet.OnReturnToPool += ReturnBindPool;
                 _availableBindBullets.Add(bullet);
             }
-            for (var i = 0; i < WallBulletPoolCount; i++)
-            {
-                var bullet = Instantiate(_wallBulletPrefab, _bulletParent, true);
-                bullet.OnReturnToPool += ReturnWallPool;
-                _availableWallBullets.Add(bullet);
-            }
         }
 
-        public void GetBullet(Vector3 pos, EnemyShooter.BulletType type)
+        public BindBullet GetBullet()
         {
-            switch (type)
+            BindBullet bullet;
+            if (_availableBindBullets.Count <= 0)
             {
-                case EnemyShooter.BulletType.Bind:
-                    if (_availableBindBullets.Count <= 0)
-                    {
-                        var insBullet = Instantiate(_bindBulletPrefab, _bulletParent, true);
-                        insBullet.transform.position = pos;
-                        insBullet.OnReturnToPool += ReturnBindPool;
-                        insBullet.ChangeLookActive(true);
-                        _usedBindBullets.Add(insBullet);
-                        return;
-                    }
-                    var bindBullet = _availableBindBullets[0];
-                    bindBullet.transform.position = pos;
-                    _availableBindBullets.RemoveAt(0);
-                    bindBullet.ChangeLookActive(true);
-                    _usedBindBullets.Add(bindBullet);
-                    break;
-                case EnemyShooter.BulletType.Wall:
-                    if (_availableWallBullets.Count <= 0)
-                    {
-                        var insBullet = Instantiate(_wallBulletPrefab, _bulletParent, true);
-                        insBullet.transform.position = pos;
-                        insBullet.OnReturnToPool += ReturnWallPool;
-                        insBullet.ChangeLookActive(true);
-                        _usedWallBullets.Add(insBullet);
-                        return;
-                    }
-                    var wallBullet = _availableWallBullets[0];
-                    wallBullet.transform.position = pos;
-                    _availableWallBullets.RemoveAt(0);
-                    wallBullet.ChangeLookActive(true);
-                    _usedWallBullets.Add(wallBullet);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                bullet = Instantiate(_bindBulletPrefab, _bulletParent, true);
+                bullet.OnReturnToPool += ReturnBindPool;
             }
-
+            else
+            {
+                bullet = _availableBindBullets[0];
+                _availableBindBullets.RemoveAt(0);
+            }
+            _usedBindBullets.Add(bullet);
+            return bullet;
         }
 
         private void ReturnBindPool(BindBullet bindBullet)
@@ -85,12 +48,6 @@ namespace InGame.Obj.Enemy
             bindBullet.ChangeLookActive(false);
             _usedBindBullets.Remove(bindBullet);
             _availableBindBullets.Add(bindBullet);
-        }
-        private void ReturnWallPool(WallBullet wallBullet)
-        {
-            wallBullet.ChangeLookActive(false);
-            _usedWallBullets.Remove(wallBullet);
-            _availableWallBullets.Add(wallBullet);
         }
 
         public void ReturnAllBlock()
@@ -106,16 +63,6 @@ namespace InGame.Obj.Enemy
                 }
             }
             
-            if (_usedWallBullets.Count != 0)
-            {
-                for (var i = _usedWallBullets.Count - 1; i >= 0; i--)
-                {
-                    var bullet = _usedWallBullets[i];
-                    bullet.ChangeLookActive(false);
-                    _usedWallBullets.RemoveAt(i);
-                    _availableWallBullets.Add(bullet);
-                }
-            }
         }
 
     }
