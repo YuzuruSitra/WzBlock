@@ -193,7 +193,10 @@ namespace InGame.Obj.Ball
         private void ReduceForce(GameObject hitObj)
         {
             if (hitObj.CompareTag("Block") || hitObj.CompareTag("Bullet"))
-                _rigidBody.velocity *= _hitReduceFactor;
+            {
+                var speed = _currentVelocity.magnitude * _hitReduceFactor;
+                _rigidBody.velocity = _rigidBody.velocity.normalized * speed;
+            }
         }
 
         private void CalcHitCount(GameObject hitObj)
