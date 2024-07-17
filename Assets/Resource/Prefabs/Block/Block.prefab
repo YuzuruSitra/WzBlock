@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4561537781649656749}
   - component: {fileID: 9206532192890621476}
   - component: {fileID: 2849479634259899338}
+  - component: {fileID: -3729423613760998875}
   m_Layer: 6
   m_Name: Block
   m_TagString: Block
@@ -51,7 +52,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2450542972240285341}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -95,7 +96,7 @@ BoxCollider:
   m_GameObject: {fileID: 2450542972240285341}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -115,6 +116,24 @@ MonoBehaviour:
   _hitEffect: {fileID: 8668628219860071088}
   _col: {fileID: 9206532192890621476}
   _mesh: {fileID: 4561537781649656749}
+  _rb: {fileID: -3729423613760998875}
+  _speed: 1
+--- !u!54 &-3729423613760998875
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2450542972240285341}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 122
+  m_CollisionDetection: 0
 --- !u!1001 &3464593626050914802
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -264,6 +283,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4790706200189242775, guid: a1eac228a24e54e4a9b68cded3a055c1, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5213359654510746432, guid: a1eac228a24e54e4a9b68cded3a055c1, type: 3}
+      propertyPath: lengthInSec
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5213359654510746433, guid: a1eac228a24e54e4a9b68cded3a055c1, type: 3}

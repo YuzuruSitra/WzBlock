@@ -7,9 +7,6 @@ namespace InGame.Obj.Ball
 {
     public class BallMover : MonoBehaviour
     {
-        public int HitCount { get; private set; }
-
-        public event Action<int> ChangeHitCount;
         private Vector3 _launchPos;
         [Range(1, 10)] [SerializeField] private float _launchSpeed = 3f;
         [SerializeField] private float _minSpeed = 1f;
@@ -47,6 +44,7 @@ namespace InGame.Obj.Ball
         private const int MaxStackCount = 5;
         private const float TiltThreshold = 10;
         private bool _isFirstPush;
+        private ComboCounter _comboCounter;
 
         private void Start()
         {
@@ -54,6 +52,7 @@ namespace InGame.Obj.Ball
             _launchPos = transform.position;
             _gameStateHandler = GameStateHandler.Instance;
             _gameStateHandler.ChangeGameState += ChangeStateBall;
+            _comboCounter = ComboCounter.Instance;
         }
 
         public void FixedUpdate()
@@ -62,11 +61,11 @@ namespace InGame.Obj.Ball
 
             var velocity = _rigidBody.velocity;
             var speed = velocity.magnitude;
-            Debug.Log(speed);
             // 最小速度未満の場合、速度を修正する
             if (speed < _minSpeed)
+            {
                 velocity = _currentVelocity.normalized * _minSpeed;
-
+            }
             // 速度の再計算
             var setSpeed = Mathf.Clamp(speed, _minSpeed, _maxSpeed);
             _currentSpeed = setSpeed;
@@ -102,8 +101,6 @@ namespace InGame.Obj.Ball
                     break;
                 case GameStateHandler.GameState.Launch:
                     _isFirstPush = false;
-                    HitCount = 0;
-                    ChangeHitCount?.Invoke(HitCount);
                     _hitFrameCount = 0;
                     transform.position = _launchPos;
                     break;
@@ -184,6 +181,7 @@ namespace InGame.Obj.Ball
 
                 // オフセットに応じて反射方向を計算
                 reflectDirection = new Vector3(offset, 1.0f, 0).normalized;
+                speed += _paddleAddForce;
             }
 
             // 速度を保持しつつ反射方向のみ変更
@@ -200,10 +198,8 @@ namespace InGame.Obj.Ball
 
         private void CalcHitCount(GameObject hitObj)
         {
-            if (hitObj.CompareTag("Paddle")) HitCount = 0;
-            if (hitObj.CompareTag("Block")) HitCount++;
-            if (hitObj.CompareTag("Enemy")) HitCount++;
-            ChangeHitCount?.Invoke(HitCount);
+            
+            if (hitObj.CompareTag("Paddle")) _comboCounter.ChangeCount(0);
         }
 
         private void ShakeCamera(GameObject hitObj)

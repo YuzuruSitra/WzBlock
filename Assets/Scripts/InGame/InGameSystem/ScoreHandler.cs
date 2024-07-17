@@ -20,6 +20,7 @@ namespace InGame.InGameSystem
 
         private readonly PlayDataIO _playDataIO;
         private readonly PlayerInfoHandler _playerInfoHandler;
+        private ComboCounter _comboCounter;
 
         private ScoreHandler()
         {
@@ -29,11 +30,12 @@ namespace InGame.InGameSystem
             _playerInfoHandler = PlayerInfoHandler.Instance;
             GameStateHandler.Instance.ChangeGameState += ScoreStateFunction;
             _ballMover = GameObject.FindWithTag("Ball").GetComponent<BallMover>();
+            _comboCounter = ComboCounter.Instance;
         }
 
         public void AddScore(int addValue)
         {
-            var addScore = addValue * _ballMover.HitCount;
+            var addScore = addValue * _comboCounter.ComboCount;
             CurrentScore += addScore;
             AddScoreEvent?.Invoke(addScore);
             ChangeScore?.Invoke(CurrentScore);

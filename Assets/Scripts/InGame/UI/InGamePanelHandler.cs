@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using InGame.InGameSystem;
-using InGame.Obj.Ball;
 using TMPro;
 using UnityEngine;
 
@@ -24,8 +23,8 @@ namespace InGame.UI
         private Animator _addScoreAnim;
         [SerializeField]
         private TMP_Text _comboText;
-        private BallMover _ballMover;
         private GameStateHandler _gameStateHandler;
+        private ComboCounter _comboCounter;
 
         private void Start()
         {
@@ -34,8 +33,8 @@ namespace InGame.UI
             _addScoreAnim = _addScoreText.GetComponent<Animator>();
             _countUpWait = new WaitForSeconds(_countUpWaitTime);
             _scoreHandler.AddScoreEvent += AddScoreAnim;
-            _ballMover = GameObject.FindWithTag("Ball").GetComponent<BallMover>();
-            _ballMover.ChangeHitCount += ChangeComboText;
+            _comboCounter = ComboCounter.Instance;
+            _comboCounter.ChangeComboCount += ChangeComboText;
             _gameStateHandler = GameStateHandler.Instance;
             _gameStateHandler.ChangeGameState += ChangeStateScoreUI;
         }
@@ -44,7 +43,7 @@ namespace InGame.UI
         {
             _scoreHandler.ChangeScore -= ChangeScoreUI;
             _scoreHandler.AddScoreEvent -= AddScoreAnim;
-            _ballMover.ChangeHitCount -= ChangeComboText;
+            _comboCounter.ChangeComboCount -= ChangeComboText;
             _gameStateHandler.ChangeGameState -= ChangeStateScoreUI;
         }
 

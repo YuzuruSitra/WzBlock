@@ -15,6 +15,7 @@ TagManager:
   - EnemyBullet
   - WallPool
   - WallBulletCol
+  - CubeLim
   layers:
   - Default
   - TransparentFX

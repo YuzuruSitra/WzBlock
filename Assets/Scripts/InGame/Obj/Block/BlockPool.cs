@@ -11,9 +11,9 @@ namespace InGame.Obj.Block
         [SerializeField] 
         private Block _blockPrefab;
         private BlockPositions _blockPositions;
+        public List<BlockPositions.BlockSlotInfo> BlockSlot => _blockPositions.SlotInfo;
 
-        private List<Block> _availableBlocks;
-        public int AvailableBlocksCount => _availableBlocks.Count;
+        private List<Block> _availableBlocks = new List<Block>();
         [SerializeField] 
         private List<Block> _usedBlocks = new List<Block>();
 
@@ -21,36 +21,27 @@ namespace InGame.Obj.Block
         {
             var pureAssetLoader = new PureAssetLoader();
             _blockPositions = pureAssetLoader.LoadScriptableObject<BlockPositions>("BlockPositions");
-            _availableBlocks = new List<Block>();
-            for (var i = 0; i < _blockPositions.SlotInfo.Count; i++)
+            if (_blockPositions == null)
             {
-                var block = Instantiate(_blockPrefab, _blockPositions.SlotInfo[i].Position, Quaternion.identity,
-                    _blockParent);
-                block.OnReturnToPool += ReturnBlock;
-                block.transform.position = _blockPositions.SlotInfo[i].Position;
-                block.ChangeLookActive(true);
-                _usedBlocks.Add(block);
-            }
-        }
-
-        public void AllGetPool()
-        {
-            var blocksToActivate = new List<Block>(_availableBlocks);
-            foreach (var block in blocksToActivate)
-            {
-                block.ChangeLookActive(true);
-                
-                _availableBlocks.Remove(block);
-                _usedBlocks.Add(block);
+                Debug.LogError("Failed to load BlockPositions");
+                return;
             }
         }
 
         public Block GetBlock()
         {
-            if (_availableBlocks.Count <= 0) return null;
-            var block = _availableBlocks[0];
-            _availableBlocks.RemoveAt(0);
-            block.ChangeLookActive(true);
+            Block block;
+            if (_availableBlocks.Count <= 0) 
+            {
+                block = Instantiate(_blockPrefab);
+                block.gameObject.transform.SetParent(_blockParent);
+                block.OnReturnToPool += ReturnBlock;
+            }
+            else
+            {
+                block = _availableBlocks[0];
+                _availableBlocks.RemoveAt(0);
+            }
             _usedBlocks.Add(block);
             return block;
         }
@@ -58,7 +49,10 @@ namespace InGame.Obj.Block
         private void ReturnBlock(Block block)
         {
             block.ChangeLookActive(false);
-            _usedBlocks.Remove(block);
+            if (!_usedBlocks.Remove(block))
+            {
+                Debug.LogWarning("Block not found in _usedBlocks");
+            }
             _availableBlocks.Add(block);
         }
     }
