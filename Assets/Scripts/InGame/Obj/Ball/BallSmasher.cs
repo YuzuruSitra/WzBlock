@@ -7,9 +7,9 @@ namespace InGame.Obj.Ball
     {
         private GameStateHandler _gameStateHandler;
         public event Action SmashEvent;
-        public float ExplosionAddForce = 2.0f;
+        public readonly float ExplosionAddForce = 2.0f;
         public const int MaxSmashCount = 5;
-        public readonly Vector3[] ExplosionDirection = new[]
+        private readonly Vector3[] _explosionDirection = new[]
         {
             new Vector3(1, -1, 0),
             new Vector3(1, 1, 0),
@@ -19,11 +19,16 @@ namespace InGame.Obj.Ball
         private int _smashCount;
         public event Action<int> ChangeCountEvent;
         [SerializeField] private BallMover _ballMover;
+        [SerializeField] private Transform _cubeLim;
+        [SerializeField] private Transform _cubeUpper;
+        private Vector2 _centerPos;
         
         private void Start()
         {
             _gameStateHandler = GameStateHandler.Instance;
             _gameStateHandler.ChangeGameState += ChangeStateBall;
+            _centerPos.x = 0;
+            _centerPos.y = _cubeUpper.transform.position.y - _cubeLim.transform.position.y;
         }
 
         private void OnDestroy()
@@ -49,6 +54,19 @@ namespace InGame.Obj.Ball
             if (_smashCount < MaxSmashCount) return;
             SmashEvent?.Invoke();
             OnChangeCountEvent(0);
+        }
+
+        public Vector3 SmashPos()
+        {
+            var pos = transform.position;
+            // Left Upper
+            if (pos.x < _centerPos.x && pos.y > _centerPos.y) return _explosionDirection[0];
+            // Left Bottom
+            if (pos.x < _centerPos.x && pos.y < _centerPos.y) return _explosionDirection[1];
+            // Right Upper
+            if (pos.x > _centerPos.x && pos.y > _centerPos.y) return _explosionDirection[2];
+            // Right Bottom
+            return _explosionDirection[3];
         }
         
         private void OnChangeCountEvent(int count)

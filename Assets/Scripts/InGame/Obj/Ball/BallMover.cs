@@ -48,8 +48,7 @@ namespace InGame.Obj.Ball
 
         private void DoSmash()
         {
-            var rnd = UnityEngine.Random.Range(0, _ballSmasher.ExplosionDirection.Length);
-            _currentDirection = _ballSmasher.ExplosionDirection[rnd];
+            _currentDirection = _ballSmasher.SmashPos();
             _currentSpeed += _ballSmasher.ExplosionAddForce;
         }
 
