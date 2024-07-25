@@ -932,6 +932,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2129730774368245184, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
   m_PrefabInstance: {fileID: 4729510587903471763}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &672120979 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+  m_PrefabInstance: {fileID: 4729510587903471763}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 485774402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ef17a126a064369906bc14a07d1ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &672120986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -945,6 +956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _explosionForce: 6
+  _ballMover: {fileID: 672120979}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -4545,6 +4557,22 @@ PrefabInstance:
       value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 7533679646343231646, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _maxColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533679646343231646, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _maxColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533679646343231646, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _maxColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533679646343231646, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533679646343231646, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: _ballSmasher
       value: 
       objectReference: {fileID: 672120986}
@@ -4612,6 +4640,10 @@ PrefabInstance:
     - target: {fileID: 6623131933159735591, guid: 718b93432681142c5879c7570e54d806, type: 3}
       propertyPath: m_Name
       value: BlockGenerator
+      objectReference: {fileID: 0}
+    - target: {fileID: 6623131933159735591, guid: 718b93432681142c5879c7570e54d806, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 718b93432681142c5879c7570e54d806, type: 3}

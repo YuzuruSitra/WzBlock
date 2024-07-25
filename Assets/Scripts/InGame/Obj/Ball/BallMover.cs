@@ -27,7 +27,7 @@ namespace InGame.Obj.Ball
         private ShakeByDOTween _shakeByDoTween;
         private bool _isFirstPush;
         private ComboCounter _comboCounter;
-
+        [SerializeField] private BallSmasher _ballSmasher;
         private void Start()
         {
             _rigidBody = GetComponent<Rigidbody>();
@@ -55,8 +55,7 @@ namespace InGame.Obj.Ball
             _rigidBody.velocity = velocity;
 
             // 現在の速度を更新
-            if (velocity != Vector3.zero)
-                _currentVelocity = velocity;
+            if (speed >= _minSpeed) _currentVelocity = velocity;
             _currentAngular = _rigidBody.angularVelocity;
         }
 
@@ -136,11 +135,9 @@ namespace InGame.Obj.Ball
 
         private void ReduceForce(GameObject hitObj)
         {
-            if (hitObj.CompareTag("Block") || hitObj.CompareTag("Bullet"))
-            {
-                var speed = _currentVelocity.magnitude * _hitReduceFactor;
-                _rigidBody.velocity = _rigidBody.velocity.normalized * speed;
-            }
+            if (!hitObj.CompareTag("Block") && !hitObj.CompareTag("Bullet")) return;
+            var speed = _currentVelocity.magnitude * _hitReduceFactor;
+            _rigidBody.velocity = _rigidBody.velocity.normalized * speed;
         }
 
         private void CalcHitCount(GameObject hitObj)
@@ -160,6 +157,7 @@ namespace InGame.Obj.Ball
         private void OnCollisionEnter(Collision collision)
         {
             ReflectDirection(collision); // 反射処理を呼び出す
+            _ballSmasher.AvoidFrameStack(collision.gameObject);
             ReduceForce(collision.gameObject);
             CalcHitCount(collision.gameObject);
             ShakeCamera(collision.gameObject);

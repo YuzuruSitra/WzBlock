@@ -18,7 +18,12 @@ namespace InGame.Obj.Ball
         private GameObject _expEffect;
         private WaitForSeconds _explosionEffectDuration;
         [SerializeField] private BallMover _ballMover;
+        
         [SerializeField] private BallSmasher _ballSmasher;
+        private MeshRenderer _meshRenderer;
+        private Color _initialColor;
+        [SerializeField] private Color _maxColor;
+        private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
 
         private void Start()
         {
@@ -30,11 +35,21 @@ namespace InGame.Obj.Ball
             _expEffect = Instantiate(_explosionEffect);
             _explosionEffectDuration = new WaitForSeconds(_expEffect.GetComponent<ParticleSystem>().main.duration);
             _ballSmasher.ExplosionEvent += LaunchExplosion;
+            _ballSmasher.ChangeCountEvent += ChangeColor;
             _originSizeEffects = new Vector3[_changeSizeEffects.Length];
             for (var i = 0; i < _changeSizeEffects.Length; i++)
                 _originSizeEffects[i] = _changeSizeEffects[i].transform.localScale;
+            _meshRenderer = GetComponent<MeshRenderer>();
+            _initialColor = _meshRenderer.material.GetColor(EmissionColor);
         }
-
+        
+        private void OnDestroy()
+        {
+            _ballMover.HitPaddleEvent -= LaunchHitEffect;
+            _ballSmasher.ExplosionEvent -= LaunchExplosion;
+            _ballSmasher.ChangeCountEvent -= ChangeColor;
+        }
+        
         private void Update()
         {
             for (var i = 0; i < _changeSizeEffects.Length; i++)
@@ -68,15 +83,24 @@ namespace InGame.Obj.Ball
 
         private void LaunchExplosion()
         {
-            StartCoroutine(ExplotionAnim());
+            StartCoroutine(ExplosionAnim());
         }
 
-        private IEnumerator ExplotionAnim()
+        private IEnumerator ExplosionAnim()
         {
             _expEffect.transform.position = transform.position;
             _expEffect.SetActive(true);
             yield return _explosionEffectDuration;
             _expEffect.SetActive(false);
+        }
+        
+        private void ChangeColor(int smashCount)
+        {
+            var factor = smashCount / (float)(BallSmasher.MaxSmashCount - 1);
+            // カウントに応じて色を補間
+            var currentColor = Color.Lerp(_initialColor, _maxColor, factor);
+            // 例として、オブジェクトの色を変更
+            _meshRenderer.material.SetColor(EmissionColor, currentColor);
         }
     }
 }
