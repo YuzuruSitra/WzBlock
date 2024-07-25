@@ -767,6 +767,11 @@ MonoBehaviour:
   _settingResumeBt: {fileID: 6756234330968913717}
   _settingHomeBt: {fileID: 1527673554}
   _settingPanelHandler: {fileID: 6756234329750650468}
+--- !u!1 &485774402 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2129730774368245188, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+  m_PrefabInstance: {fileID: 4729510587903471763}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &585098827
 GameObject:
   m_ObjectHideFlags: 0
@@ -927,6 +932,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2129730774368245184, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
   m_PrefabInstance: {fileID: 4729510587903471763}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &672120986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 485774402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b2ea873cf71cf44d87ed14824a5364f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _explosionForce: 6
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1755,7 +1773,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletParent: {fileID: 94018207}
   _bindBulletPrefab: {fileID: 8220919020720933115, guid: 9a278f1b05a1542f795573a27e0975aa, type: 3}
-  _wallBulletPrefab: {fileID: 4715465063308107405, guid: 1c20fa1dbcf3a3b439af56be5e774c5b, type: 3}
 --- !u!1 &1594675222
 GameObject:
   m_ObjectHideFlags: 0
@@ -4527,6 +4544,10 @@ PrefabInstance:
       propertyPath: _hitReduceFactor
       value: 0.75
       objectReference: {fileID: 0}
+    - target: {fileID: 7533679646343231646, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _ballSmasher
+      value: 
+      objectReference: {fileID: 672120986}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
 --- !u!1001 &6623131933694451662

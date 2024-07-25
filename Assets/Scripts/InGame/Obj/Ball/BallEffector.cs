@@ -16,8 +16,9 @@ namespace InGame.Obj.Ball
 
         [SerializeField] private GameObject _explosionEffect;
         private GameObject _expEffect;
-        private WaitForSeconds _explosionEffectDurtion;
+        private WaitForSeconds _explosionEffectDuration;
         [SerializeField] private BallMover _ballMover;
+        [SerializeField] private BallSmasher _ballSmasher;
 
         private void Start()
         {
@@ -27,8 +28,8 @@ namespace InGame.Obj.Ball
             _ballMover.HitPaddleEvent += LaunchHitEffect;
 
             _expEffect = Instantiate(_explosionEffect);
-            _explosionEffectDurtion = new WaitForSeconds(_expEffect.GetComponent<ParticleSystem>().main.duration);
-            _ballMover.ExplosionEvent += LaunchExplosion;
+            _explosionEffectDuration = new WaitForSeconds(_expEffect.GetComponent<ParticleSystem>().main.duration);
+            _ballSmasher.ExplosionEvent += LaunchExplosion;
             _originSizeEffects = new Vector3[_changeSizeEffects.Length];
             for (var i = 0; i < _changeSizeEffects.Length; i++)
                 _originSizeEffects[i] = _changeSizeEffects[i].transform.localScale;
@@ -74,7 +75,7 @@ namespace InGame.Obj.Ball
         {
             _expEffect.transform.position = transform.position;
             _expEffect.SetActive(true);
-            yield return _explosionEffectDurtion;
+            yield return _explosionEffectDuration;
             _expEffect.SetActive(false);
         }
     }

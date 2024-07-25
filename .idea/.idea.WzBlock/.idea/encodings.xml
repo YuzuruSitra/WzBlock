@@ -3,5 +3,6 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/Assets/Scripts/InGame/InGameSystem/ScoreHandler.cs" charset="windows-31j" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/InGame/Obj/Ball/BallEffector.cs" charset="windows-31j" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/InGame/Obj/Ball/BallMover.cs" charset="windows-31j" />
   </component>
 </project>

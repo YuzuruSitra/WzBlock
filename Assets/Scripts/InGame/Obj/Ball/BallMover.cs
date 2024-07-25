@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 using System;
 using InGame.InGameSystem;
 
@@ -14,35 +13,18 @@ namespace InGame.Obj.Ball
         [SerializeField] private float _shakeSpeedLimit = 4f;
         [SerializeField] private float _paddleAddForce = 1f;
         [SerializeField] private float _hitReduceFactor = 0.9f;
-        [SerializeField] private float _explosionForce = 6.0f;
         [SerializeField] private float _shakePower = 1.0f;
         private Vector2 _launchDirection = new Vector2(1, 0.5f);
-        private const float MinThreshold = 0.001f;
         private Rigidbody _rigidBody;
         private GameStateHandler _gameStateHandler;
         private Vector3 _currentVelocity;
         private Vector3 _currentAngular;
         private float _currentSpeed;
         public float CurrentSpeedRatio => Mathf.Clamp(_currentSpeed / _maxSpeed, 0, _maxSpeed);
-        public event Action ExplosionEvent;
         public event Action HitPaddleEvent;
-        private int _hitFrameCount;
 
         [SerializeField]
         private ShakeByDOTween _shakeByDoTween;
-
-        private readonly List<float> _baseAngles = new List<float> { 0f, 90f, 180f, 270f, 360f };
-
-        private readonly Vector3[] _explosionDirection = new Vector3[]
-        {
-            new Vector3(1, -1, 0),
-            new Vector3(1, 1, 0),
-            new Vector3(-1, -1, 0),
-            new Vector3(-1, 1, 0)
-        };
-
-        private const int MaxStackCount = 5;
-        private const float TiltThreshold = 10;
         private bool _isFirstPush;
         private ComboCounter _comboCounter;
 
@@ -101,7 +83,6 @@ namespace InGame.Obj.Ball
                     break;
                 case GameStateHandler.GameState.Launch:
                     _isFirstPush = false;
-                    _hitFrameCount = 0;
                     transform.position = _launchPos;
                     break;
                 case GameStateHandler.GameState.FinGame:
@@ -116,46 +97,7 @@ namespace InGame.Obj.Ball
                     break;
             }
         }
-
-        private void AvoidFrameStack(GameObject hitObj)
-        {
-            if (!hitObj.CompareTag("Frame") && !hitObj.CompareTag("Paddle"))
-            {
-                _hitFrameCount = 0;
-                return;
-            }
-
-            var velocity = _rigidBody.velocity;
-            var angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
-
-            var isWithinThreshold = IsAngleWithinThreshold(angle);
-            if (!isWithinThreshold) return;
-
-            if (hitObj.CompareTag("Frame")) _hitFrameCount++;
-
-            if (_hitFrameCount < MaxStackCount) return;
-
-            _rigidBody.velocity = Vector3.zero;
-            _rigidBody.angularVelocity = Vector3.zero;
-            var rnd = UnityEngine.Random.Range(0, _explosionDirection.Length);
-            _rigidBody.AddForce(_explosionDirection[rnd] * _explosionForce, ForceMode.Impulse);
-            _hitFrameCount = 0;
-            ExplosionEvent?.Invoke();
-        }
-
-        private bool IsAngleWithinThreshold(float angle)
-        {
-            var index = 0;
-            for (; index < _baseAngles.Count; index++)
-            {
-                var baseAngle = _baseAngles[index];
-                if (Mathf.Abs(Mathf.Abs(angle) - baseAngle) <= TiltThreshold)
-                    return true;
-            }
-
-            return false;
-        }
-
+        
         private void ReflectDirection(Collision collision)
         {
             // 衝突した法線ベクトルを取得
@@ -169,7 +111,6 @@ namespace InGame.Obj.Ball
             {
                 HitPaddleEvent?.Invoke();
                 var paddle = collision.gameObject;
-                var playerPos = paddle.transform.position;
                 var ballPos = transform.position;
 
                 // パドルのローカル空間でのボールの位置を計算
@@ -204,7 +145,6 @@ namespace InGame.Obj.Ball
 
         private void CalcHitCount(GameObject hitObj)
         {
-            
             if (hitObj.CompareTag("Paddle")) _comboCounter.ChangeCount(0);
         }
 
@@ -219,7 +159,6 @@ namespace InGame.Obj.Ball
 
         private void OnCollisionEnter(Collision collision)
         {
-            AvoidFrameStack(collision.gameObject);
             ReflectDirection(collision); // 反射処理を呼び出す
             ReduceForce(collision.gameObject);
             CalcHitCount(collision.gameObject);
