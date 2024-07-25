@@ -41,8 +41,6 @@ namespace InGame.Obj.Enemy
         public void Update()
         {
             if (!_enemySurviveManager.IsActive) return;
-            if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
-            if (_gameStateHandler.CurrentState == GameStateHandler.GameState.Settings) return;
             var posX = transform.position;
             if (posX.x <= LeftMaxPos)
             {
@@ -56,7 +54,7 @@ namespace InGame.Obj.Enemy
                 posX.x = RightMaxPos;
                 transform.position = posX;
             }
-            float factor = _boredomScaleFactor[_metaAIManipulator.CurrentBoredomLevel];
+            var factor = _boredomScaleFactor[_metaAIManipulator.CurrentBoredomLevel];
             transform.position += _direction * (_speed * factor * Time.deltaTime);
         }
 

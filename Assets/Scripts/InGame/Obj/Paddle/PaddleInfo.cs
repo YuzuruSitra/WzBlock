@@ -42,13 +42,12 @@ namespace InGame.Obj.Paddle
             {
                 ReceiveEnemyBullet++;
             }
-            if (other.gameObject.CompareTag("Ball"))
-            {
-                DoLearnEvent?.Invoke();
-                RallyTime = 0;
-                AvoidEnemyBullet = 0;
-                ReceiveEnemyBullet = 0;
-            }
+
+            if (!other.gameObject.CompareTag("Ball")) return;
+            DoLearnEvent?.Invoke();
+            RallyTime = 0;
+            AvoidEnemyBullet = 0;
+            ReceiveEnemyBullet = 0;
         }
 
     }

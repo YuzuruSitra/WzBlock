@@ -30,9 +30,8 @@ namespace System
         {
             CurrentState = newState;
             ChangeGameState?.Invoke(CurrentState);
-        
-            if (newState == GameState.Settings) return;
-            CurrentInGameState = newState;
+            if (newState != GameState.Settings) CurrentInGameState = newState;
+            Time.timeScale = newState == GameState.InGame ? 1f : 0f;
         }
     }
 }

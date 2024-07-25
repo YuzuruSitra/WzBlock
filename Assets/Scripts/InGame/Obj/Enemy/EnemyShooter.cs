@@ -33,8 +33,6 @@ namespace InGame.Obj.Enemy
         public void Update()
         {
             if (!_enemySurviveManager.IsActive) return;
-            if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
-            if (_gameStateHandler.CurrentState == GameStateHandler.GameState.Settings) return;
             if (IsBlocking()) 
             {   
                 _bulletCount = 0;

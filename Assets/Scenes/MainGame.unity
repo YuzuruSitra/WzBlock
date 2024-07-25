@@ -955,7 +955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b2ea873cf71cf44d87ed14824a5364f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _explosionForce: 6
+  ExplosionAddForce: 5
   _ballMover: {fileID: 672120979}
 --- !u!1 &705507993
 GameObject:
@@ -4541,6 +4541,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _maxSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _ballSmasher
+      value: 
+      objectReference: {fileID: 672120986}
+    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _launchSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _reduceSpeed
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: _paddleAddForce
       value: 1
       objectReference: {fileID: 0}
@@ -4643,7 +4659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6623131933159735591, guid: 718b93432681142c5879c7570e54d806, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 718b93432681142c5879c7570e54d806, type: 3}

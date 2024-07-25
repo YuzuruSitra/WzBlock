@@ -37,7 +37,6 @@ namespace InGame.Obj.Paddle
         public void MoveReceive(Vector3 movement)
         {
             if (_abilityReceiver.CurrentCondition == AbilityReceiver.Condition.Stan) return;
-            if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
             var newPosition = transform.position + movement;
             
             if (newPosition.x <= _leftMaxPos)

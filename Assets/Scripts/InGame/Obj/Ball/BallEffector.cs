@@ -34,7 +34,7 @@ namespace InGame.Obj.Ball
 
             _expEffect = Instantiate(_explosionEffect);
             _explosionEffectDuration = new WaitForSeconds(_expEffect.GetComponent<ParticleSystem>().main.duration);
-            _ballSmasher.ExplosionEvent += LaunchExplosion;
+            _ballSmasher.SmashEvent += LaunchSmash;
             _ballSmasher.ChangeCountEvent += ChangeColor;
             _originSizeEffects = new Vector3[_changeSizeEffects.Length];
             for (var i = 0; i < _changeSizeEffects.Length; i++)
@@ -46,7 +46,7 @@ namespace InGame.Obj.Ball
         private void OnDestroy()
         {
             _ballMover.HitPaddleEvent -= LaunchHitEffect;
-            _ballSmasher.ExplosionEvent -= LaunchExplosion;
+            _ballSmasher.SmashEvent -= LaunchSmash;
             _ballSmasher.ChangeCountEvent -= ChangeColor;
         }
         
@@ -81,7 +81,7 @@ namespace InGame.Obj.Ball
             _hitEffect.SetActive(false);
         }
 
-        private void LaunchExplosion()
+        private void LaunchSmash()
         {
             StartCoroutine(ExplosionAnim());
         }

@@ -11,20 +11,18 @@ namespace InGame.Obj.Ball
         [SerializeField] private float _minSpeed = 1f;
         [SerializeField] private float _maxSpeed = 7f;
         [SerializeField] private float _shakeSpeedLimit = 4f;
-        [SerializeField] private float _paddleAddForce = 1f;
-        [SerializeField] private float _hitReduceFactor = 0.9f;
+        [SerializeField] private float _addSpeed = 1f;
+        [SerializeField] private float _reduceSpeed = 0.25f;
         [SerializeField] private float _shakePower = 1.0f;
-        private Vector2 _launchDirection = new Vector2(1, 0.5f);
+        private Vector2 _launchDirection = new Vector2(-1, -0.5f);
         private Rigidbody _rigidBody;
         private GameStateHandler _gameStateHandler;
-        private Vector3 _currentVelocity;
-        private Vector3 _currentAngular;
+        private Vector3 _currentDirection;
         private float _currentSpeed;
         public float CurrentSpeedRatio => Mathf.Clamp(_currentSpeed / _maxSpeed, 0, _maxSpeed);
         public event Action HitPaddleEvent;
 
-        [SerializeField]
-        private ShakeByDOTween _shakeByDoTween;
+        [SerializeField] private ShakeByDOTween _shakeByDoTween;
         private bool _isFirstPush;
         private ComboCounter _comboCounter;
         [SerializeField] private BallSmasher _ballSmasher;
@@ -34,31 +32,26 @@ namespace InGame.Obj.Ball
             _launchPos = transform.position;
             _gameStateHandler = GameStateHandler.Instance;
             _gameStateHandler.ChangeGameState += ChangeStateBall;
+            _ballSmasher.SmashEvent += DoSmash;
             _comboCounter = ComboCounter.Instance;
         }
 
         public void FixedUpdate()
         {
-            if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
-
-            var velocity = _rigidBody.velocity;
-            var speed = velocity.magnitude;
-            // 最小速度未満の場合、速度を修正する
-            if (speed < _minSpeed)
-            {
-                velocity = _currentVelocity.normalized * _minSpeed;
-            }
-            // 速度の再計算
-            var setSpeed = Mathf.Clamp(speed, _minSpeed, _maxSpeed);
-            _currentSpeed = setSpeed;
-            velocity = velocity.normalized * setSpeed;
-            _rigidBody.velocity = velocity;
-
-            // 現在の速度を更新
-            if (speed >= _minSpeed) _currentVelocity = velocity;
-            _currentAngular = _rigidBody.angularVelocity;
+            // Care stack.
+            if (_rigidBody.velocity.magnitude <= 0)  _currentDirection = -_currentDirection;
+            
+            _rigidBody.velocity = _currentDirection * _currentSpeed;
+            if (_rigidBody.velocity.normalized != Vector3.zero) _currentDirection = _rigidBody.velocity.normalized;
+            if (_rigidBody.velocity.magnitude <= _minSpeed) _currentSpeed = _minSpeed;
         }
 
+        private void DoSmash()
+        {
+            var rnd = UnityEngine.Random.Range(0, _ballSmasher.ExplosionDirection.Length);
+            _currentDirection = _ballSmasher.ExplosionDirection[rnd];
+            _currentSpeed += _ballSmasher.ExplosionAddForce;
+        }
 
         private void OnDestroy()
         {
@@ -72,13 +65,10 @@ namespace InGame.Obj.Ball
                 case GameStateHandler.GameState.InGame:
                     if (!_isFirstPush)
                     {
-                        _rigidBody.AddForce(_launchDirection.normalized * _launchSpeed, ForceMode.Impulse);
+                        _currentDirection = _launchDirection.normalized;
+                        _currentSpeed = _launchSpeed;
                         _isFirstPush = true;
-                        return;
                     }
-
-                    _rigidBody.velocity = _currentVelocity;
-                    _rigidBody.angularVelocity = _currentAngular;
                     break;
                 case GameStateHandler.GameState.Launch:
                     _isFirstPush = false;
@@ -86,13 +76,6 @@ namespace InGame.Obj.Ball
                     break;
                 case GameStateHandler.GameState.FinGame:
                     _rigidBody.velocity = Vector3.zero;
-                    _rigidBody.angularVelocity = Vector3.zero;
-                    _currentVelocity = Vector3.zero;
-                    _currentSpeed = 0;
-                    break;
-                case GameStateHandler.GameState.Settings:
-                    _rigidBody.velocity = Vector3.zero;
-                    _rigidBody.angularVelocity = Vector3.zero;
                     break;
             }
         }
@@ -101,9 +84,7 @@ namespace InGame.Obj.Ball
         {
             // 衝突した法線ベクトルを取得
             var normal = collision.contacts[0].normal;
-            var incomingVelocity = _currentVelocity; // 保持している現在の速度を使用
-            var speed = incomingVelocity.magnitude;
-            var reflectDirection = Vector3.Reflect(incomingVelocity.normalized, normal);
+            var reflectDirection = Vector3.Reflect(_currentDirection, normal);
 
             // パドルとの衝突処理
             if (collision.gameObject.CompareTag("Paddle"))
@@ -123,21 +104,21 @@ namespace InGame.Obj.Ball
                 reflectDirection.x = offset;
                 reflectDirection.y = 1.0f;
                 reflectDirection.z = 0;
-                reflectDirection = reflectDirection.normalized;
-                speed += _paddleAddForce;
+                var newSpeed= _currentSpeed + _addSpeed;
+                if (newSpeed >= _maxSpeed) newSpeed = _maxSpeed;
+                _currentSpeed = newSpeed;
             }
-
-            // 速度を保持しつつ反射方向のみ変更
-            _rigidBody.velocity = reflectDirection * speed;
-            _currentVelocity = _rigidBody.velocity; // 現在の速度を更新
+            _currentDirection = reflectDirection;
+            _rigidBody.velocity = _currentDirection * _currentSpeed;
         }
-
-
+        
         private void ReduceForce(GameObject hitObj)
         {
             if (!hitObj.CompareTag("Block") && !hitObj.CompareTag("Bullet")) return;
-            var speed = _currentVelocity.magnitude * _hitReduceFactor;
-            _rigidBody.velocity = _rigidBody.velocity.normalized * speed;
+            
+            var newSpeed= _currentSpeed - _reduceSpeed;
+            if (newSpeed <= _minSpeed) newSpeed = _minSpeed;
+            _currentSpeed = newSpeed;
         }
 
         private void CalcHitCount(GameObject hitObj)

@@ -21,11 +21,8 @@ namespace InGame.Obj.Block
         {
             var pureAssetLoader = new PureAssetLoader();
             _blockPositions = pureAssetLoader.LoadScriptableObject<BlockPositions>("BlockPositions");
-            if (_blockPositions == null)
-            {
-                Debug.LogError("Failed to load BlockPositions");
-                return;
-            }
+            if (_blockPositions != null) return;
+            Debug.LogError("Failed to load BlockPositions");
         }
 
         public Block GetBlock()
@@ -33,8 +30,7 @@ namespace InGame.Obj.Block
             Block block;
             if (_availableBlocks.Count <= 0) 
             {
-                block = Instantiate(_blockPrefab);
-                block.gameObject.transform.SetParent(_blockParent);
+                block = Instantiate(_blockPrefab, _blockParent, true);
                 block.OnReturnToPool += ReturnBlock;
             }
             else
@@ -49,10 +45,7 @@ namespace InGame.Obj.Block
         private void ReturnBlock(Block block)
         {
             block.ChangeLookActive(false);
-            if (!_usedBlocks.Remove(block))
-            {
-                Debug.LogWarning("Block not found in _usedBlocks");
-            }
+            _usedBlocks.Remove(block);
             _availableBlocks.Add(block);
         }
     }

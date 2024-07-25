@@ -66,8 +66,6 @@ namespace InGame.Obj.Enemy
 
         private void FixedUpdate()
         {
-            if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
-
             if (_isAlive)
             {
                 _currentWaitT += Time.deltaTime;

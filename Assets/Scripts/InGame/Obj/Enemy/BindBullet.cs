@@ -28,11 +28,9 @@ namespace InGame.Obj.Enemy
         [SerializeField]
         private float _abilityTime;
         private WaitForSeconds _waitAbility;
-        private GameStateHandler _gameStateHandler;
 
         private void Start()
         {
-            _gameStateHandler = GameStateHandler.Instance;
             _hitEffect = Instantiate(_hitEffectPrefab, transform, true);
             _ps = _hitEffect.GetComponent<ParticleSystem>();
             _wait = new WaitForSeconds(_ps.main.duration);
@@ -43,7 +41,6 @@ namespace InGame.Obj.Enemy
         public void Update()
         {
             if (!_isActive) return;
-            if (_gameStateHandler.CurrentState == GameStateHandler.GameState.Settings) return;
             transform.position += Vector3.down * (_speed * Time.deltaTime);
         }
 

@@ -17,7 +17,7 @@ namespace InGame.Obj.Enemy
 
         private void Awake()
         {
-            // 初期プ�?�ルの作�??
+            // 初期プ�?�ルの作�??
             for (var i = 0; i < BindBulletPoolCount; i++)
             {
                 var bullet = Instantiate(_bindBulletPrefab, _bulletParent, true);
@@ -52,17 +52,15 @@ namespace InGame.Obj.Enemy
 
         public void ReturnAllBlock()
         {
-            if (_usedBindBullets.Count != 0)
+            if (_usedBindBullets.Count == 0) return;
+            for (var i = _usedBindBullets.Count - 1; i >= 0; i--)
             {
-                for (var i = _usedBindBullets.Count - 1; i >= 0; i--)
-                {
-                    var bullet = _usedBindBullets[i];
-                    bullet.ChangeLookActive(false);
-                    _usedBindBullets.RemoveAt(i);
-                    _availableBindBullets.Add(bullet);
-                }
+                var bullet = _usedBindBullets[i];
+                bullet.ChangeLookActive(false);
+                _usedBindBullets.RemoveAt(i);
+                _availableBindBullets.Add(bullet);
             }
-            
+
         }
 
     }

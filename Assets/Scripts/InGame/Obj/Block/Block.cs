@@ -42,7 +42,6 @@ namespace InGame.Obj.Block
 
         private void Update()
         {
-            if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
             if (!_isActive) return;
             if (_yLimit > transform.position.y) ReturnBlock();
 
@@ -50,7 +49,6 @@ namespace InGame.Obj.Block
 
         private void FixedUpdate()
         {
-            if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
             if (!_isActive) return;
             _rb.velocity = Vector3.down * _speed;
         }
@@ -79,7 +77,7 @@ namespace InGame.Obj.Block
 
         private void HitBall()
         {
-            // Às‡‚ğŠm”F‚·‚é ƒuƒƒbƒN¨ƒ{[ƒ‹
+            // ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½mï¿½Fï¿½ï¿½ï¿½ï¿½ ï¿½uï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½{ï¿½[ï¿½ï¿½
             _comboCounter.ChangeCount(_comboCounter.ComboCount + 1);
             _scoreHandler.AddScore(_score);
             _coroutine = StartCoroutine(BreakWallAnim());
