@@ -73,6 +73,8 @@ namespace InGame.Obj.Block
             _isActive = newActive;
             _col.enabled = newActive;
             _mesh.enabled = newActive;
+            if (newActive) _hitEffect.SetActive(false);
+            
         }
 
         private void HitBall()
