@@ -11,33 +11,30 @@ namespace InGame.Obj.Block
             Default,
             Bomb
         }
-
-        public int BlocksLength { get; private set; }
         
         [SerializeField] private Transform _blockParent;
         private BlockPositions _blockPositions;
         public List<BlockPositions.BlockSlotInfo> BlockSlot => _blockPositions.SlotInfo;
         
-        [SerializeField] private Block[] _blocks;
-        private readonly List<Block> _availableBlocks1 = new List<Block>();
-        [SerializeField]  private List<Block> _usedBlocks1 = new List<Block>();
+        [SerializeField] private BlockBase[] _blocks;
+        private readonly List<BlockBase> _availableBlocks1 = new List<BlockBase>();
+        [SerializeField]  private List<BlockBase> _usedBlocks1 = new List<BlockBase>();
 
-        private readonly List<Block> _availableBlocks2 = new List<Block>();
-        [SerializeField]  private List<Block> _usedBlocks2 = new List<Block>();
+        private readonly List<BlockBase> _availableBlocks2 = new List<BlockBase>();
+        [SerializeField]  private List<BlockBase> _usedBlocks2 = new List<BlockBase>();
 
         private void Awake()
         {
-            BlocksLength = Enum.GetNames(typeof(BlockPool.Blocks)).Length;
             var pureAssetLoader = new PureAssetLoader();
             _blockPositions = pureAssetLoader.LoadScriptableObject<BlockPositions>("BlockPositions");
             if (_blockPositions != null) return;
             Debug.LogError("Failed to load BlockPositions");
         }
 
-        public Block GetBlock(Blocks kind)
+        public BlockBase GetBlock(Blocks kind)
         {
             var num = (int)kind;
-            Block block = null;
+            BlockBase block = null;
             
             switch (kind)
             {
@@ -73,7 +70,7 @@ namespace InGame.Obj.Block
             return block;
         }
 
-        private void ReturnBlock(Block block)
+        private void ReturnBlock(BlockBase block)
         {
             var kind = block.Kind;
             switch (kind)

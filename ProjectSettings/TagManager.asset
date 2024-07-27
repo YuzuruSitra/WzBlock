@@ -16,6 +16,7 @@ TagManager:
   - WallPool
   - WallBulletCol
   - CubeLim
+  - BlockBomb
   layers:
   - Default
   - TransparentFX

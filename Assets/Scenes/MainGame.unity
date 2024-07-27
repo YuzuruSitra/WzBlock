@@ -4615,6 +4615,22 @@ PrefabInstance:
       propertyPath: _blockPool
       value: 
       objectReference: {fileID: 1335568195}
+    - target: {fileID: 6623131933159735589, guid: 718b93432681142c5879c7570e54d806, type: 3}
+      propertyPath: _needStackCount.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6623131933159735589, guid: 718b93432681142c5879c7570e54d806, type: 3}
+      propertyPath: _blocksStackInfo.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6623131933159735589, guid: 718b93432681142c5879c7570e54d806, type: 3}
+      propertyPath: _blocksStackInfo.Array.data[1]._type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6623131933159735589, guid: 718b93432681142c5879c7570e54d806, type: 3}
+      propertyPath: _blocksStackInfo.Array.data[1]._needStackCount
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6623131933159735591, guid: 718b93432681142c5879c7570e54d806, type: 3}
       propertyPath: m_Name
       value: BlockGenerator
@@ -5801,11 +5817,11 @@ PrefabInstance:
     - target: {fileID: 8938014386013121144, guid: 66a672f1a13d443869e67f565b868bb5, type: 3}
       propertyPath: _blocks.Array.data[0]
       value: 
-      objectReference: {fileID: 2849479634259899338, guid: e91d55a7b2d37452f9a3c9c60feb0f11, type: 3}
+      objectReference: {fileID: 3931350888106389958, guid: e91d55a7b2d37452f9a3c9c60feb0f11, type: 3}
     - target: {fileID: 8938014386013121144, guid: 66a672f1a13d443869e67f565b868bb5, type: 3}
       propertyPath: _blocks.Array.data[1]
       value: 
-      objectReference: {fileID: 2849479634259899338, guid: 4cfac94f0fae447528e1e8f2dea22a60, type: 3}
+      objectReference: {fileID: 2252771236819428933, guid: 4cfac94f0fae447528e1e8f2dea22a60, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66a672f1a13d443869e67f565b868bb5, type: 3}
 --- !u!222 &8524476066808518888
