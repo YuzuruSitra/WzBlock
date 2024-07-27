@@ -34,7 +34,7 @@ namespace InGame.Obj.Ball
 
         public void AvoidFrameStack(GameObject hitObj)
         {
-            if (hitObj.CompareTag("Paddle"))
+            if (hitObj.CompareTag("Paddle") || hitObj.CompareTag("BlockBomb"))
             {
                 OnChangeCountEvent(0);
                 return;

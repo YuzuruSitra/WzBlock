@@ -20,30 +20,30 @@ namespace InGame.Obj.Block
         private GameStateHandler _gameStateHandler;
         private ScoreHandler _scoreHandler;
         private ParticleSystem _ps;
-        private WaitForSeconds _wait;
+        private WaitForSeconds _returnWait;
         private float _yLimit;
         private Coroutine _coroutine;
         private ComboCounter _comboCounter;
         private bool _isActive;
 
-        protected virtual void Awake()
+        protected virtual void Start()
         {
             _scoreHandler = ScoreHandler.Instance;
             _ps = _hitEffect.GetComponent<ParticleSystem>();
             _gameStateHandler = GameStateHandler.Instance;
             _comboCounter = ComboCounter.Instance;
-            _wait = new WaitForSeconds(_ps.main.duration);
+            _returnWait = new WaitForSeconds(_ps.main.duration);
             _yLimit = GameObject.FindWithTag("CubeLim").transform.position.y + transform.localScale.y / 2.0f;
             _gameStateHandler.ChangeGameState += ChangeState;
         }
 
-        protected virtual void Update()
+        private void Update()
         {
             if (!_isActive || !(transform.position.y < _yLimit)) return;
             ReturnBlock();
         }
 
-        protected virtual void FixedUpdate()
+        private void FixedUpdate()
         {
             if (_isActive)
             {
@@ -77,7 +77,7 @@ namespace InGame.Obj.Block
             Kind = kind;
         }
 
-        private void HitBall()
+        protected virtual void HitBall()
         {
             _comboCounter.ChangeCount(_comboCounter.ComboCount + 1);
             _scoreHandler.AddScore(_score);
@@ -88,7 +88,7 @@ namespace InGame.Obj.Block
         {
             SetActiveState(false);
             ToggleParticleSystem(true);
-            yield return _wait;
+            yield return _returnWait;
             ToggleParticleSystem(false);
             _coroutine = null;
             OnReturnToPool?.Invoke(this);
@@ -97,6 +97,11 @@ namespace InGame.Obj.Block
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.CompareTag("Ball")) HitBall();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("BlockBomb")) HitBall();
         }
 
         private void ReturnBlock()
@@ -110,7 +115,7 @@ namespace InGame.Obj.Block
             OnReturnToPool?.Invoke(this);
         }
 
-        private void SetActiveState(bool isActive)
+        protected virtual void SetActiveState(bool isActive)
         {
             _isActive = isActive;
             _col.enabled = isActive;
