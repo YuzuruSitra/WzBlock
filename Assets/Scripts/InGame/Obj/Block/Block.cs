@@ -9,9 +9,8 @@ namespace InGame.Obj.Block
     {
         private GameStateHandler _gameStateHandler;
         public event Action<Block> OnReturnToPool;
-
-        [SerializeField] 
-        private int _score;
+        
+        [SerializeField] private int _score;
         private ScoreHandler _scoreHandler;
         [SerializeField] private GameObject _hitEffect;
         private ParticleSystem _ps;
@@ -44,7 +43,6 @@ namespace InGame.Obj.Block
         {
             if (!_isActive) return;
             if (_yLimit > transform.position.y) ReturnBlock();
-
         }
 
         private void FixedUpdate()
@@ -66,11 +64,17 @@ namespace InGame.Obj.Block
             }
         }
 
-        public void ChangeLookActive(bool newActive)
+        public void Activate()
+        {
+            ChangeLookActive(true);
+        }
+
+        private void ChangeLookActive(bool newActive)
         {
             _isActive = newActive;
             _col.enabled = newActive;
             _mesh.enabled = newActive;
+            if (newActive) ChangeParticleSystem(false);
         }
 
         private void HitBall()
@@ -82,11 +86,12 @@ namespace InGame.Obj.Block
 
         private IEnumerator BreakWallAnim()
         {
-            OnReturnToPool?.Invoke(this);
+            ChangeLookActive(false);
             ChangeParticleSystem(true);
             yield return _wait;
             ChangeParticleSystem(false);
             _coroutine = null;
+            OnReturnToPool?.Invoke(this);
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -103,13 +108,16 @@ namespace InGame.Obj.Block
                 _coroutine = null;
                 ChangeParticleSystem(false);
             }
+            ChangeLookActive(false);
             OnReturnToPool?.Invoke(this);    
         }
 
         private void ChangeParticleSystem(bool isPlay)
         {
+            if (!_ps) return;
             if (isPlay)
             {
+                if (_ps.isPlaying) return;
                 _ps.Play();
             }
             else

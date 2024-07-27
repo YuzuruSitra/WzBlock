@@ -13,7 +13,7 @@ namespace InGame.Obj.Block
         private BlockPositions _blockPositions;
         public List<BlockPositions.BlockSlotInfo> BlockSlot => _blockPositions.SlotInfo;
 
-        private List<Block> _availableBlocks = new List<Block>();
+        private readonly List<Block> _availableBlocks = new List<Block>();
         [SerializeField] 
         private List<Block> _usedBlocks = new List<Block>();
 
@@ -44,7 +44,6 @@ namespace InGame.Obj.Block
 
         private void ReturnBlock(Block block)
         {
-            block.ChangeLookActive(false);
             _usedBlocks.Remove(block);
             _availableBlocks.Add(block);
         }

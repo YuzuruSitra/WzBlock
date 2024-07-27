@@ -54,7 +54,7 @@ namespace InGame.Obj.Block
                 if (isIns == 0) continue;
                 var block =  _blockPool.GetBlock();
                 block.transform.position = _blockPool.BlockSlot[i].Position;
-                block.ChangeLookActive(true);
+                block.Activate();
             }
         }
 

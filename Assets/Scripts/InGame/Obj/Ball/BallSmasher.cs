@@ -8,7 +8,7 @@ namespace InGame.Obj.Ball
         private GameStateHandler _gameStateHandler;
         public event Action SmashEvent;
         public readonly float ExplosionAddForce = 2.0f;
-        public const int MaxSmashCount = 5;
+        public const int MaxSmashCount = 4;
         private readonly Vector3[] _explosionDirection = new[]
         {
             new Vector3(1, -1, 0),
@@ -44,13 +44,12 @@ namespace InGame.Obj.Ball
 
         public void AvoidFrameStack(GameObject hitObj)
         {
-            if (!hitObj.CompareTag("Frame") && !hitObj.CompareTag("Paddle"))
+            if (hitObj.CompareTag("Paddle"))
             {
                 OnChangeCountEvent(0);
                 return;
             }
-            
-            if (hitObj.CompareTag("Frame")) OnChangeCountEvent(_smashCount + 1);
+            if (hitObj.CompareTag("Block")) OnChangeCountEvent(_smashCount + 1);
             if (_smashCount < MaxSmashCount) return;
             SmashEvent?.Invoke();
             OnChangeCountEvent(0);
