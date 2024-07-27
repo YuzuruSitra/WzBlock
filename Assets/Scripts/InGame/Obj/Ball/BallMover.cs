@@ -48,8 +48,8 @@ namespace InGame.Obj.Ball
 
         private void DoSmash()
         {
-            _currentDirection = _ballSmasher.SmashPos();
-            _currentSpeed += _ballSmasher.ExplosionAddForce;
+            _currentDirection = _ballSmasher.SmashDirection();
+            _currentSpeed += BallSmasher.ExplosionAddForce;
         }
 
         private void OnDestroy()

@@ -7,28 +7,18 @@ namespace InGame.Obj.Ball
     {
         private GameStateHandler _gameStateHandler;
         public event Action SmashEvent;
-        public readonly float ExplosionAddForce = 2.0f;
+        public const float ExplosionAddForce = 2.0f;
         public const int MaxSmashCount = 4;
-        private readonly Vector3[] _explosionDirection = new[]
-        {
-            new Vector3(1, -1, 0),
-            new Vector3(1, 1, 0),
-            new Vector3(-1, -1, 0),
-            new Vector3(-1, 1, 0)
-        };
         private int _smashCount;
         public event Action<int> ChangeCountEvent;
         [SerializeField] private BallMover _ballMover;
         [SerializeField] private Transform _cubeLim;
         [SerializeField] private Transform _cubeUpper;
-        private Vector2 _centerPos;
         
         private void Start()
         {
             _gameStateHandler = GameStateHandler.Instance;
             _gameStateHandler.ChangeGameState += ChangeStateBall;
-            _centerPos.x = 0;
-            _centerPos.y = _cubeUpper.transform.position.y - _cubeLim.transform.position.y;
         }
 
         private void OnDestroy()
@@ -55,17 +45,13 @@ namespace InGame.Obj.Ball
             OnChangeCountEvent(0);
         }
 
-        public Vector3 SmashPos()
+        public Vector3 SmashDirection()
         {
-            var pos = transform.position;
-            // Left Upper
-            if (pos.x < _centerPos.x && pos.y > _centerPos.y) return _explosionDirection[0];
-            // Left Bottom
-            if (pos.x < _centerPos.x && pos.y < _centerPos.y) return _explosionDirection[1];
-            // Right Upper
-            if (pos.x > _centerPos.x && pos.y > _centerPos.y) return _explosionDirection[2];
-            // Right Bottom
-            return _explosionDirection[3];
+            var direction = Vector3.zero;
+            direction.x = UnityEngine.Random.Range(-1.0f, 1.0f);
+            direction.y = -1.0f;
+            // Random Bottom
+            return direction;
         }
         
         private void OnChangeCountEvent(int count)
