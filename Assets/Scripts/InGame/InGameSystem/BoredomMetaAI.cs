@@ -65,7 +65,7 @@ namespace InGame.InGameSystem
             // LearnCount++;
         }
         
-        // Select action for ?��ｵ - greedy.
+        // Select action for ?ｾ趣ｽｵ - greedy.
         private void SelectAction()
         {
             var bestAction = 0;

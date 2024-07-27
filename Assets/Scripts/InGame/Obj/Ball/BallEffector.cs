@@ -7,7 +7,7 @@ namespace InGame.Obj.Ball
     {
         private Rigidbody _rigidBody;
         [SerializeField] private GameObject _prjEffect;
-        [SerializeField] private GameObject[] _changeSizeEffects;
+        [SerializeField] private GameObject[] _prjEffects;
         private Vector3[] _originSizeEffects;
 
         [SerializeField] private GameObject _paddleHitEffect;
@@ -21,10 +21,13 @@ namespace InGame.Obj.Ball
         
         [SerializeField] private BallSmasher _ballSmasher;
         private MeshRenderer _meshRenderer;
-        private Color _initialColor;
+        private Color _initialBallColor;
         [SerializeField] private Color _maxColor;
+        private Color _initialPrjColor;
+        [SerializeField] private Color _maxPrjColor;
         private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
-
+        [SerializeField] private ParticleSystem _particleSystem;
+        
         private void Start()
         {
             _rigidBody = GetComponent<Rigidbody>();
@@ -36,11 +39,13 @@ namespace InGame.Obj.Ball
             _explosionEffectDuration = new WaitForSeconds(_expEffect.GetComponent<ParticleSystem>().main.duration);
             _ballSmasher.SmashEvent += LaunchSmash;
             _ballSmasher.ChangeCountEvent += ChangeColor;
-            _originSizeEffects = new Vector3[_changeSizeEffects.Length];
-            for (var i = 0; i < _changeSizeEffects.Length; i++)
-                _originSizeEffects[i] = _changeSizeEffects[i].transform.localScale;
+            _originSizeEffects = new Vector3[_prjEffects.Length];
+            for (var i = 0; i < _prjEffects.Length; i++)
+                _originSizeEffects[i] = _prjEffects[i].transform.localScale;
             _meshRenderer = GetComponent<MeshRenderer>();
-            _initialColor = _meshRenderer.material.GetColor(EmissionColor);
+            _initialBallColor = _meshRenderer.material.GetColor(EmissionColor);
+            _initialPrjColor = _particleSystem.main.startColor.color;
+
         }
         
         private void OnDestroy()
@@ -52,16 +57,16 @@ namespace InGame.Obj.Ball
         
         private void Update()
         {
-            for (var i = 0; i < _changeSizeEffects.Length; i++)
-                _changeSizeEffects[i].transform.localScale = _originSizeEffects[i] * _ballMover.CurrentSpeedRatio;
+            for (var i = 0; i < _prjEffects.Length; i++)
+                _prjEffects[i].transform.localScale = _originSizeEffects[i] * _ballMover.CurrentSpeedRatio;
 
             var velocity = _rigidBody.velocity;
             if (velocity.magnitude <= 0)
-                foreach (var t in _changeSizeEffects)
+                foreach (var t in _prjEffects)
                     t.transform.localScale = Vector3.zero;
 
             var angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
-
+            
             var targetRotation = Quaternion.Euler(0, 0, angle);
 
             _prjEffect.transform.rotation =
@@ -96,11 +101,16 @@ namespace InGame.Obj.Ball
         
         private void ChangeColor(int smashCount)
         {
-            var factor = smashCount / (float)(BallSmasher.MaxSmashCount - 1);
+            var factor1 = smashCount / (float)(BallSmasher.MaxSmashCount - 1);
             // カウントに応じて色を補間
-            var currentColor = Color.Lerp(_initialColor, _maxColor, factor);
+            var targetColor1 = Color.Lerp(_initialBallColor, _maxColor, factor1);
             // 例として、オブジェクトの色を変更
-            _meshRenderer.material.SetColor(EmissionColor, currentColor);
+            _meshRenderer.material.SetColor(EmissionColor, targetColor1);
+            
+            var factor2 = smashCount / (float)(BallSmasher.MaxSmashCount - 1);
+            var targetColor2 = Color.Lerp(_initialPrjColor, _maxColor, factor2);
+            var mainModule = _particleSystem.main;
+            mainModule.startColor = targetColor2;
         }
     }
 }

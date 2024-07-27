@@ -71,13 +71,10 @@ namespace InGame.Obj.Block
             _isActive = newActive;
             _col.enabled = newActive;
             _mesh.enabled = newActive;
-            if (newActive) _hitEffect.SetActive(false);
-            
         }
 
         private void HitBall()
         {
-            // ���s�����m�F���� �u���b�N���{�[��
             _comboCounter.ChangeCount(_comboCounter.ComboCount + 1);
             _scoreHandler.AddScore(_score);
             _coroutine = StartCoroutine(BreakWallAnim());
@@ -86,9 +83,9 @@ namespace InGame.Obj.Block
         private IEnumerator BreakWallAnim()
         {
             OnReturnToPool?.Invoke(this);
-            _hitEffect.SetActive(true);
+            ChangeParticleSystem(true);
             yield return _wait;
-            _hitEffect.SetActive(false);
+            ChangeParticleSystem(false);
             _coroutine = null;
         }
 
@@ -104,10 +101,23 @@ namespace InGame.Obj.Block
             {
                 StopCoroutine(_coroutine);
                 _coroutine = null;
-                _hitEffect.SetActive(false);
-                return;
+                ChangeParticleSystem(false);
             }
             OnReturnToPool?.Invoke(this);    
+        }
+
+        private void ChangeParticleSystem(bool isPlay)
+        {
+            if (isPlay)
+            {
+                _ps.Play();
+            }
+            else
+            {
+                if (!_ps.isPlaying) return;
+                _ps.Stop();
+                _ps.Clear();
+            }
         }
 
     }

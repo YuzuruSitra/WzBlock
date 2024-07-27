@@ -767,11 +767,6 @@ MonoBehaviour:
   _settingResumeBt: {fileID: 6756234330968913717}
   _settingHomeBt: {fileID: 1527673554}
   _settingPanelHandler: {fileID: 6756234329750650468}
---- !u!1 &485774402 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2129730774368245188, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-  m_PrefabInstance: {fileID: 4729510587903471763}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &585098827
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,7 +848,7 @@ Transform:
   m_GameObject: {fileID: 659514892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.4, z: 0.05}
-  m_LocalScale: {x: 3.75, y: 0.05, z: 0.05}
+  m_LocalScale: {x: 3.75, y: 0.03, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1845910274}
@@ -932,32 +927,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2129730774368245184, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
   m_PrefabInstance: {fileID: 4729510587903471763}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &672120979 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-  m_PrefabInstance: {fileID: 4729510587903471763}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 485774402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63ef17a126a064369906bc14a07d1ae4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &672120986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 485774402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b2ea873cf71cf44d87ed14824a5364f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _ballMover: {fileID: 672120979}
-  _cubeLim: {fileID: 659514893}
-  _cubeUpper: {fileID: 1641749454}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1885,7 +1854,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641749453}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4477,6 +4446,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 672120986, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _cubeLim
+      value: 
+      objectReference: {fileID: 659514893}
+    - target: {fileID: 672120986, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _cubeUpper
+      value: 
+      objectReference: {fileID: 1641749454}
     - target: {fileID: 2129730774368245184, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -4521,65 +4498,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245187, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2129730774368245188, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: m_Name
       value: Ball
       objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245198, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245198, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: m_Constraints
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245198, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _maxSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _ballSmasher
-      value: 
-      objectReference: {fileID: 672120986}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _launchSpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _reduceSpeed
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _paddleAddForce
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _shakeByDOTween
-      value: 
-      objectReference: {fileID: 656367191}
     - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: _shakeByDoTween
       value: 
       objectReference: {fileID: 656367191}
-    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _hitReduceFactor
-      value: 0.75
+    - target: {fileID: 5618098228103522118, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7533679646343231646, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _maxColor.a
+    - target: {fileID: 5618098228103522118, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618098228103522118, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7533679646343231646, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: _maxColor.b
-      value: 0
+      value: 0.269979
       objectReference: {fileID: 0}
     - target: {fileID: 7533679646343231646, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: _maxColor.g
@@ -4590,9 +4531,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7533679646343231646, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
-      propertyPath: _ballSmasher
-      value: 
-      objectReference: {fileID: 672120986}
+      propertyPath: _maxPrjColor.b
+      value: 0.27058825
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533679646343231646, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _maxPrjColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533679646343231646, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _maxPrjColor.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
 --- !u!1001 &6623131933694451662
@@ -4660,7 +4609,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6623131933159735591, guid: 718b93432681142c5879c7570e54d806, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 718b93432681142c5879c7570e54d806, type: 3}
