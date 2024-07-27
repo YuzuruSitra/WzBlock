@@ -113,10 +113,10 @@ namespace InGame.Obj.Ball
         
         private void ReduceForce(GameObject hitObj)
         {
-            if (!hitObj.CompareTag("Block") && !hitObj.CompareTag("Bullet")) return;
+            if (hitObj.layer != LayerMask.NameToLayer("Block") && !hitObj.CompareTag("Bullet")) return;
             
             var newSpeed= _currentSpeed - _reduceSpeed;
-            if (newSpeed <= _minSpeed) newSpeed = _minSpeed;
+            if (newSpeed < _minSpeed) newSpeed = _minSpeed;
             _currentSpeed = newSpeed;
         }
 
@@ -127,7 +127,7 @@ namespace InGame.Obj.Ball
 
         private void ShakeCamera(GameObject hitObj)
         {
-            if (!hitObj.CompareTag("Block")) return;
+            if (hitObj.layer != LayerMask.NameToLayer("Block")) return;
             var velocity = _rigidBody.velocity;
             var speed = velocity.magnitude;
             if (speed < _shakeSpeedLimit) return;

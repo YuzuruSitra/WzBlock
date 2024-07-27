@@ -7,6 +7,7 @@ namespace InGame.Obj.Block
 {
     public class Block : MonoBehaviour
     {
+        public BlockPool.Blocks Kind { get; private set; }
         [SerializeField] private int _score;
         [SerializeField] private GameObject _hitEffect;
         [SerializeField] private BoxCollider _col;
@@ -66,6 +67,11 @@ namespace InGame.Obj.Block
         public void Activate()
         {
             SetActiveState(true);
+        }
+
+        public void SetKind(BlockPool.Blocks kind)
+        {
+            Kind = kind;
         }
 
         private void HitBall()

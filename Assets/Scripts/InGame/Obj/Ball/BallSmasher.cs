@@ -7,7 +7,7 @@ namespace InGame.Obj.Ball
     {
         private GameStateHandler _gameStateHandler;
         public event Action SmashEvent;
-        public const float ExplosionAddForce = 2.0f;
+        public const float ExplosionAddForce = 3.0f;
         public const int MaxSmashCount = 4;
         private int _smashCount;
         public event Action<int> ChangeCountEvent;
@@ -39,7 +39,7 @@ namespace InGame.Obj.Ball
                 OnChangeCountEvent(0);
                 return;
             }
-            if (hitObj.CompareTag("Block")) OnChangeCountEvent(_smashCount + 1);
+            if (hitObj.CompareTag("BlockDefault")) OnChangeCountEvent(_smashCount + 1);
             if (_smashCount < MaxSmashCount) return;
             SmashEvent?.Invoke();
             OnChangeCountEvent(0);

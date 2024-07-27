@@ -8,7 +8,7 @@ TagManager:
   - DestroyArea
   - Ball
   - Frame
-  - Block
+  - BlockDefault
   - Bullet
   - Enemy
   - SoundHandler

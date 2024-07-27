@@ -4503,6 +4503,18 @@ PrefabInstance:
       value: Ball
       objectReference: {fileID: 0}
     - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _addSpeed
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _minSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _reduceSpeed
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: _shakeByDoTween
       value: 
       objectReference: {fileID: 656367191}
@@ -5782,6 +5794,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8938014386013121144, guid: 66a672f1a13d443869e67f565b868bb5, type: 3}
+      propertyPath: _blocks.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8938014386013121144, guid: 66a672f1a13d443869e67f565b868bb5, type: 3}
+      propertyPath: _blocks.Array.data[0]
+      value: 
+      objectReference: {fileID: 2849479634259899338, guid: e91d55a7b2d37452f9a3c9c60feb0f11, type: 3}
+    - target: {fileID: 8938014386013121144, guid: 66a672f1a13d443869e67f565b868bb5, type: 3}
+      propertyPath: _blocks.Array.data[1]
+      value: 
+      objectReference: {fileID: 2849479634259899338, guid: 4cfac94f0fae447528e1e8f2dea22a60, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66a672f1a13d443869e67f565b868bb5, type: 3}
 --- !u!222 &8524476066808518888

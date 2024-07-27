@@ -83,7 +83,7 @@ namespace InGame.Obj.Enemy
         private void OnCollisionEnter (Collision collision)
         {
             if (collision.gameObject.CompareTag("Frame")
-                || collision.gameObject.CompareTag("Block")
+                || collision.gameObject.layer == LayerMask.NameToLayer("Block")
                 || collision.gameObject.CompareTag("Ball"))
                 StartCoroutine(BreakBulletAnim());
             if (collision.gameObject.CompareTag("Paddle"))
