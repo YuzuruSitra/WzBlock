@@ -66,6 +66,7 @@ namespace InGame.Obj.Enemy
 
         private void FixedUpdate()
         {
+            _enemyShield.EnemyActive = IsActive;
             if (_isAlive)
             {
                 _currentWaitT += Time.deltaTime;

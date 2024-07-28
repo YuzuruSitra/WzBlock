@@ -77,6 +77,11 @@ namespace InGame.Obj.Block
             Kind = kind;
         }
 
+        public void ReceiveBreak()
+        {
+            HitBall();
+        }
+
         protected virtual void HitBall()
         {
             _comboCounter.ChangeCount(_comboCounter.ComboCount + 1);

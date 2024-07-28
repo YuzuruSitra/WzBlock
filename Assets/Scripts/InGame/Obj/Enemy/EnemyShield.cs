@@ -6,7 +6,8 @@ namespace InGame.Obj.Enemy
 {
     public class EnemyShield : MonoBehaviour
     {
-        private bool _isActive;
+        private bool _isActiveShield;
+        public bool EnemyActive { set; private get; }
         [SerializeField] 
         private float _fadeDuration = 1.5f;
         
@@ -25,8 +26,13 @@ namespace InGame.Obj.Enemy
         private Color _initialColor;
         private Color _afterColor;
         private Vector3 _initialScale;
-        
-        
+
+        public EnemyShield(bool enemyActive)
+        {
+            EnemyActive = enemyActive;
+        }
+
+
         private void Start()
         {
             _material = GetComponent<Renderer>().material;
@@ -42,7 +48,7 @@ namespace InGame.Obj.Enemy
             _material.color = _initialColor;
             _col.enabled = true;
             transform.localScale = _initialScale;
-            _isActive = true;
+            _isActiveShield = true;
             if (_fadeCoroutine == null) return;
             StopCoroutine(_fadeCoroutine);
             _fadeCoroutine = null;
@@ -74,7 +80,7 @@ namespace InGame.Obj.Enemy
                 yield return null;
             }
     
-            // フェードアウト完�?後�?�設�?
+            // フェードアウト完�?後�?�設�?
             startColor.a = 0;
             _material.color = startColor;
             transform.localScale = _initialScale * _maxSize;
@@ -83,8 +89,9 @@ namespace InGame.Obj.Enemy
         private void OnCollisionEnter(Collision collision)
         {
             if (!collision.gameObject.CompareTag("Ball")) return;
-            if (!_isActive) return;
-            _isActive = false;
+            if (!_isActiveShield) return;
+            if (!EnemyActive) return;
+            _isActiveShield = false;
             _col.enabled = false;
             _fadeCoroutine = StartCoroutine(FadeOutCoroutine());
             _shakeByDoTween.StartShake(_shakePower);

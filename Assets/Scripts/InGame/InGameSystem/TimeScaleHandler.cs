@@ -12,7 +12,7 @@ namespace InGame.InGameSystem
             Application.targetFrameRate = 60;
         }
         
-        public static void ChangeTimeScale(float t)
+        public void ChangeTimeScale(float t)
         {
             Time.timeScale = t;
         }

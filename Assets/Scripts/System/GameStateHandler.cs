@@ -1,5 +1,4 @@
 using InGame.InGameSystem;
-using UnityEngine;
 
 namespace System
 {
@@ -24,8 +23,8 @@ namespace System
 
         private GameStateHandler()
         {
-            SetGameState(GameState.Launch);
             _timeScaleHandler = TimeScaleHandler.Instance;
+            SetGameState(GameState.Launch);
         }
 
         public void SetGameState(GameState newState)
@@ -33,7 +32,7 @@ namespace System
             CurrentState = newState;
             ChangeGameState?.Invoke(CurrentState);
             if (newState != GameState.Settings) CurrentInGameState = newState;
-            TimeScaleHandler.ChangeTimeScale(newState == GameState.InGame ? 1f : 0f);
+            _timeScaleHandler.ChangeTimeScale(newState == GameState.InGame ? 1f : 0f);
         }
     }
 }

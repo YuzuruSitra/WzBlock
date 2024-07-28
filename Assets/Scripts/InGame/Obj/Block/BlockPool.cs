@@ -18,11 +18,11 @@ namespace InGame.Obj.Block
         
         [SerializeField] private BlockBase[] _blocks;
         private readonly List<BlockBase> _availableBlocks1 = new List<BlockBase>();
-        [SerializeField]  private List<BlockBase> _usedBlocks1 = new List<BlockBase>();
+        public List<BlockBase> UsedBlocks1 { get; private set; } = new List<BlockBase>();
 
         private readonly List<BlockBase> _availableBlocks2 = new List<BlockBase>();
-        [SerializeField]  private List<BlockBase> _usedBlocks2 = new List<BlockBase>();
-
+        public List<BlockBase> UsedBlocks2 { get; private set; } = new List<BlockBase>();
+        
         private void Awake()
         {
             var pureAssetLoader = new PureAssetLoader();
@@ -50,7 +50,7 @@ namespace InGame.Obj.Block
                         block = _availableBlocks1[0];
                         _availableBlocks1.RemoveAt(0);
                     }
-                    _usedBlocks1.Add(block);
+                    UsedBlocks1.Add(block);
                     break;
                 case Blocks.Bomb:
                     if (_availableBlocks2.Count <= 0) 
@@ -64,7 +64,7 @@ namespace InGame.Obj.Block
                         block = _availableBlocks2[0];
                         _availableBlocks2.RemoveAt(0);
                     }
-                    _usedBlocks2.Add(block);
+                    UsedBlocks2.Add(block);
                     break;
             }
             return block;
@@ -76,11 +76,11 @@ namespace InGame.Obj.Block
             switch (kind)
             {
                 case Blocks.Default:
-                    _usedBlocks1.Remove(block);
+                    UsedBlocks1.Remove(block);
                     _availableBlocks1.Add(block);
                     break;
                 case Blocks.Bomb:
-                    _usedBlocks2.Remove(block);
+                    UsedBlocks2.Remove(block);
                     _availableBlocks2.Add(block);
                     break;
             }

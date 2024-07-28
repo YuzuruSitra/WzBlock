@@ -1364,6 +1364,7 @@ Transform:
   - {fileID: 1554321715}
   - {fileID: 1594675223}
   - {fileID: 182583016}
+  - {fileID: 1459692619}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1607,6 +1608,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08836ce6f6a3e4781bd619a16253392b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1459692618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1459692619}
+  - component: {fileID: 1459692620}
+  m_Layer: 0
+  m_Name: AllBreakEvent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1459692619
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459692618}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1150775847}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1459692620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459692618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83c6ae9d7b02d8044a6a0b68a0f04605, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _blockPool: {fileID: 1335568195}
+  _durationTime: 0.6
+  _targetTimeScale: 0.25
+  _breakTime: 0.1
+  _shakePower: 0.6
+  _shakeByDoTween: {fileID: 656367191}
 --- !u!114 &1527673554 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8151131713605368180, guid: f6dc70411e2c24f2dae28e68833f18c3, type: 3}
@@ -2670,6 +2721,10 @@ PrefabInstance:
       propertyPath: _metaAIManipulator
       value: 
       objectReference: {fileID: 1594675224}
+    - target: {fileID: 2061129690210480299, guid: df790dee7a32e4af5ab2484a72a08bd9, type: 3}
+      propertyPath: _allBreakEvent
+      value: 
+      objectReference: {fileID: 1459692620}
     - target: {fileID: 2061129690210480299, guid: df790dee7a32e4af5ab2484a72a08bd9, type: 3}
       propertyPath: _shakeByDoTween
       value: 
@@ -4508,7 +4563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: _minSpeed
-      value: 2
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: _reduceSpeed
