@@ -4444,6 +4444,10 @@ PrefabInstance:
       propertyPath: _dragHandlerPad
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4291067531639714389, guid: 77a7d692748bd4e3f8d3b70aa504bbb7, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4291067531639714394, guid: 77a7d692748bd4e3f8d3b70aa504bbb7, type: 3}
       propertyPath: m_RootOrder
       value: 4
