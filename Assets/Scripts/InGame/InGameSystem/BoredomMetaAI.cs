@@ -6,8 +6,7 @@ namespace InGame.InGameSystem
 {
     public class BoredomMetaAI
     {
-        
-        private const int Act = 10;
+        public const int Act = 10;
         private const int MaxQValue = 100;
         private const int InitialQValue = 50;
         private const int MaxReward = 100;
@@ -18,7 +17,6 @@ namespace InGame.InGameSystem
         private const float ExplorationRate = 0.3f;
         private const int MaxStackData = 10;
         private const int MaxAvoidBullet = 4;
-        private const int MaxReceiveBullet = 2;
         
         // Learning Parameter.
         private readonly List<int> _qValues;
@@ -29,6 +27,7 @@ namespace InGame.InGameSystem
         
         private readonly List<float> _rallyTimes;
         private readonly System.Random _random;
+        private readonly List<int> _comboCounts;
         
         public int CurrentSelectAction { get; private set; }
         // Debug.
@@ -36,24 +35,26 @@ namespace InGame.InGameSystem
         // public int CurrentQValue;
         public BoredomMetaAI()
         {
-            CurrentSelectAction = 0;
+            CurrentSelectAction = 4;
             _qValues = new List<int>();
             _random = new System.Random();
                
             for (var i = 0; i < Act; ++i)
             {
-                var addValue = InitialQValue - i;
+                var diff = CurrentSelectAction - i;
+                var addValue = InitialQValue - Mathf.Abs(diff);
                 _qValues.Add(addValue);
             }
             _rallyTimes = new List<float>();
+            _comboCounts = new List<int>();
         }
 
-        public void Learning(float rallyTime, int avoidBulletCount, int receiveBulletCount)
+        public void Learning(float rallyTime, int avoidBulletCount, int comboCount)
         {
             // Convert calc value.
             var calcActionRate = CalcRallyScore(rallyTime);
             var calcIdleRate = CalcAvoidScore(avoidBulletCount);
-            var calcRepeatingActionsRate = CalcReceiveBulletScore(receiveBulletCount);
+            var calcRepeatingActionsRate = CalcComboCount(comboCount);
 
             // Calc reward.
             CalcReward(calcActionRate, calcIdleRate, calcRepeatingActionsRate);
@@ -128,9 +129,8 @@ namespace InGame.InGameSystem
             if (_rallyTimes.Count > MaxStackData)
                 _rallyTimes.RemoveAt(0);
             var ratio = 0;
-            foreach (float time in _rallyTimes)
-                if (time < rallyTime)
-                    ratio++;
+            foreach (var time in _rallyTimes)
+                if (time < rallyTime) ratio++;
             return MinReward + (MaxReward - MinReward) / _rallyTimes.Count * ratio;
         }
 
@@ -141,11 +141,15 @@ namespace InGame.InGameSystem
             return MinReward + (MaxReward - MinReward) / MaxAvoidBullet * ratio;
         }
 
-        private int CalcReceiveBulletScore(int receiveBulletCount)
+        private int CalcComboCount(int comboCount)
         {
-            var clampReceive = Mathf.Clamp(receiveBulletCount, 0, MaxReceiveBullet);
-            var ratio = MaxReceiveBullet - clampReceive;
-            return MinReward + (MaxReward - MinReward) / MaxReceiveBullet * ratio;
+            _comboCounts.Add(comboCount);
+            if (_comboCounts.Count > MaxStackData)
+                _comboCounts.RemoveAt(0);
+            var ratio = 0;
+            foreach (var count in _comboCounts)
+                if (count > comboCount) ratio++;
+            return MinReward + (MaxReward - MinReward) / _comboCounts.Count * ratio;
         }
     }
 }

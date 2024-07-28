@@ -11,10 +11,12 @@ namespace InGame.InGameSystem
 
         private BoredomMetaAI _boredomMetaAI;
         public int CurrentBoredomLevel => _boredomMetaAI.CurrentSelectAction;
-
-        private void Start()
+        public int MaxLevel { get; private set; }
+        
+        private void Awake()
         {
             _boredomMetaAI = new BoredomMetaAI();
+            MaxLevel = BoredomMetaAI.Act;
             _paddleInfo.DoLearnEvent += DoLearn;
         }
 
@@ -25,7 +27,7 @@ namespace InGame.InGameSystem
 
         private void DoLearn()
         {
-            _boredomMetaAI.Learning(_paddleInfo.RallyTime, _paddleInfo.AvoidEnemyBullet, _paddleInfo.ReceiveEnemyBullet);
+            _boredomMetaAI.Learning(_paddleInfo.RallyTime, _paddleInfo.AvoidEnemyBullet, _paddleInfo.LastCombo);
         }
     }
 }

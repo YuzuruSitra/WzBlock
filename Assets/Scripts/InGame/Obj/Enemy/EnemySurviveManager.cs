@@ -44,8 +44,7 @@ namespace InGame.Obj.Enemy
         [SerializeField]
         private float _shakePower = 2.0f;
         
-        [SerializeField] 
-        private MetaAIManipulator _metaAIManipulator;
+        [SerializeField] private MetaAIManipulator _metaAIManipulator;
         private readonly float[] _boredomScaleFactor = { 0.55f, 0.65f, 0.75f, 0.85f, 0.95f, 1.05f, 1.15f, 1.25f, 1.35f, 1.45f};
         [SerializeField] private EnemyShield _enemyShield;
         [SerializeField] private AllBreakEvent _allBreakEvent;

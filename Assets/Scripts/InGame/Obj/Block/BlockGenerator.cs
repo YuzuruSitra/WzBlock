@@ -1,5 +1,6 @@
 using System;
 using InGame.Event;
+using InGame.InGameSystem;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -23,11 +24,24 @@ namespace InGame.Obj.Block
         }
         [SerializeField] private BlockStackInfo[] _blocksStackInfo;
         [SerializeField] private AllBreakEvent _allBreakEvent;
-        
+        [SerializeField] private MetaAIManipulator _metaAIManipulator;
+        private int[] _boredomInsFactor;
+        [SerializeField] private int _minProbability;
+        [SerializeField] private int _maxProbability;
         public void Start()
         {
             _gameStateHandler = GameStateHandler.Instance;
             _gameStateHandler.ChangeGameState += ReStartIns;
+            // Calc boredomInsFactor.
+            var size = _metaAIManipulator.MaxLevel;
+            _boredomInsFactor = new int[size];
+            _boredomInsFactor[0] = _minProbability;
+            _boredomInsFactor[size - 1] = _maxProbability;
+            var interval = (_maxProbability - _minProbability) / (float)(size - 1);
+            for (var i = 1; i < size - 1; i++)
+            {
+                _boredomInsFactor[i] = _minProbability + (int)(interval * i);
+            }
         }
 
         private void Update()
@@ -61,8 +75,8 @@ namespace InGame.Obj.Block
         {
             for (var i = 0; i < _blockPool.BlockSlot.Count; i++)
             {
-                var isIns = Random.Range(0, 2);
-                if (isIns == 0) continue;
+                var rnd = Random.Range(0, 100);
+                if (rnd < _boredomInsFactor[_metaAIManipulator.CurrentBoredomLevel]) continue;
                 var kind = ChooseBlockKind();
                 var block =  _blockPool.GetBlock(kind);
                 block.transform.position = _blockPool.BlockSlot[i].Position;

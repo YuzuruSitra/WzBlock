@@ -1,4 +1,5 @@
 using System;
+using InGame.InGameSystem;
 using UnityEngine;
 
 namespace InGame.Obj.Paddle
@@ -11,13 +12,15 @@ namespace InGame.Obj.Paddle
         public float RallyTime { get; private set; }
         public int AvoidEnemyBullet { get; private set; }
         private GameObject _currentAvoid;
-        public int ReceiveEnemyBullet { get; private set; }
-
+        private ComboCounter _comboCounter;
+        public int LastCombo { get; private set; }
+        
         private void Start()
         {
             RallyTime = 0;
             AvoidEnemyBullet = 0;
-            ReceiveEnemyBullet = 0;
+            _comboCounter = ComboCounter.Instance;
+            _comboCounter.ChangeComboCount += ComboUpdate;
         }
         
         public void Update()
@@ -36,18 +39,19 @@ namespace InGame.Obj.Paddle
             AvoidEnemyBullet ++;
         }
 
+        private void ComboUpdate(int count)
+        {
+            if (count == 0) return;
+            LastCombo = (LastCombo < count) ? count : LastCombo;
+        }
+
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.CompareTag("EnemyBullet"))
-            {
-                ReceiveEnemyBullet++;
-            }
-
             if (!other.gameObject.CompareTag("Ball")) return;
             DoLearnEvent?.Invoke();
             RallyTime = 0;
             AvoidEnemyBullet = 0;
-            ReceiveEnemyBullet = 0;
+            LastCombo = 0;
         }
 
     }

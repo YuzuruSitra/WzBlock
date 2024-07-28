@@ -20,7 +20,7 @@ namespace InGame.InGameSystem
 
         private readonly PlayDataIO _playDataIO;
         private readonly PlayerInfoHandler _playerInfoHandler;
-        private ComboCounter _comboCounter;
+        private readonly ComboCounter _comboCounter;
 
         private ScoreHandler()
         {
