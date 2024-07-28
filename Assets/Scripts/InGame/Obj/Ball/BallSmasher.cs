@@ -39,7 +39,7 @@ namespace InGame.Obj.Ball
                 OnChangeCountEvent(0);
                 return;
             }
-            if (hitObj.CompareTag("BlockDefault")) OnChangeCountEvent(_smashCount + 1);
+            if (hitObj.CompareTag("BlockDefault") || hitObj.CompareTag("EnemyBullet")) OnChangeCountEvent(_smashCount + 1);
             if (_smashCount < MaxSmashCount) return;
             SmashEvent?.Invoke();
             OnChangeCountEvent(0);

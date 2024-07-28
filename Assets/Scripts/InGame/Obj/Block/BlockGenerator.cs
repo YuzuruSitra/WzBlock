@@ -73,6 +73,7 @@ namespace InGame.Obj.Block
 
         private void PeriodicSpawn()
         {
+            var spawned = false;
             for (var i = 0; i < _blockPool.BlockSlot.Count; i++)
             {
                 var rnd = Random.Range(0, 100);
@@ -80,6 +81,16 @@ namespace InGame.Obj.Block
                 var kind = ChooseBlockKind();
                 var block =  _blockPool.GetBlock(kind);
                 block.transform.position = _blockPool.BlockSlot[i].Position;
+                block.Activate();
+                spawned = true;
+            }
+            
+            if (!spawned)
+            {
+                var randomSlotIndex = Random.Range(0, _blockPool.BlockSlot.Count);
+                var kind = ChooseBlockKind();
+                var block = _blockPool.GetBlock(kind);
+                block.transform.position = _blockPool.BlockSlot[randomSlotIndex].Position;
                 block.Activate();
             }
         }
