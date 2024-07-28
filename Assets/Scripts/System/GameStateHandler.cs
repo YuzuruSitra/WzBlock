@@ -1,3 +1,4 @@
+using InGame.InGameSystem;
 using UnityEngine;
 
 namespace System
@@ -19,11 +20,12 @@ namespace System
         public GameState CurrentState { get; private set; }
 
         public event Action<GameState> ChangeGameState;
+        private readonly TimeScaleHandler _timeScaleHandler;
 
         private GameStateHandler()
         {
-            Application.targetFrameRate = 60;
             SetGameState(GameState.Launch);
+            _timeScaleHandler = TimeScaleHandler.Instance;
         }
 
         public void SetGameState(GameState newState)
@@ -31,7 +33,7 @@ namespace System
             CurrentState = newState;
             ChangeGameState?.Invoke(CurrentState);
             if (newState != GameState.Settings) CurrentInGameState = newState;
-            Time.timeScale = newState == GameState.InGame ? 1f : 0f;
+            TimeScaleHandler.ChangeTimeScale(newState == GameState.InGame ? 1f : 0f);
         }
     }
 }
