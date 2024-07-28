@@ -40,7 +40,7 @@ namespace InGame.Obj.Paddle
         public void MoveReceive(Vector3 movement)
         {
             if (_abilityReceiver.CurrentCondition == AbilityReceiver.Condition.Stan) return;
-
+            
             var targetPosition = transform.position + movement;
             if (targetPosition.x <= _leftMaxPos)
                 targetPosition.x = _leftMaxPos;
@@ -48,6 +48,8 @@ namespace InGame.Obj.Paddle
                 targetPosition.x = _rightMaxPos;
 
             _rigidbody.MovePosition(targetPosition);
+            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.angularVelocity = Vector3.zero;
         }
 
         private void ChangeStatePaddle(GameStateHandler.GameState newState)

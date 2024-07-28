@@ -86,7 +86,7 @@ namespace InGame.Obj.Ball
             var reflectDirection = Vector3.Reflect(_currentDirection, normal);
 
             // ƒpƒhƒ‹‚Æ‚ÌÕ“Ëˆ—
-            if (collision.gameObject.CompareTag("Paddle"))
+            if (collision.gameObject.CompareTag("Paddle") && collision.gameObject.transform.position.y <= transform.position.y )
             {
                 HitPaddleEvent?.Invoke();
                 var paddle = collision.gameObject;
@@ -136,7 +136,7 @@ namespace InGame.Obj.Ball
 
         private void OnCollisionEnter(Collision collision)
         {
-            ReflectDirection(collision); // ”½Ëˆ—‚ğŒÄ‚Ño‚·
+            ReflectDirection(collision);
             _ballSmasher.AvoidFrameStack(collision.gameObject);
             ReduceForce(collision.gameObject);
             CalcHitCount(collision.gameObject);
