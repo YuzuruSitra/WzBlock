@@ -4671,6 +4671,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1335568195}
     - target: {fileID: 6623131933159735589, guid: 718b93432681142c5879c7570e54d806, type: 3}
+      propertyPath: _allBreakEvent
+      value: 
+      objectReference: {fileID: 1459692620}
+    - target: {fileID: 6623131933159735589, guid: 718b93432681142c5879c7570e54d806, type: 3}
       propertyPath: _needStackCount.Array.size
       value: 2
       objectReference: {fileID: 0}

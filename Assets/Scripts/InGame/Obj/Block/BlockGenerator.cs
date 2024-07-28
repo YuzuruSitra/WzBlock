@@ -1,4 +1,5 @@
 using System;
+using InGame.Event;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -21,6 +22,7 @@ namespace InGame.Obj.Block
             public int _currentStackCount;
         }
         [SerializeField] private BlockStackInfo[] _blocksStackInfo;
+        [SerializeField] private AllBreakEvent _allBreakEvent;
         
         public void Start()
         {
@@ -48,6 +50,7 @@ namespace InGame.Obj.Block
         {
             if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
             if (_gameStateHandler.CurrentState == GameStateHandler.GameState.Settings) return;
+            if (_allBreakEvent.IsBreaking) return;
             _currentInsTime += Time.deltaTime;
             if (_currentInsTime <= InsInterval) return;
             _currentInsTime = 0;

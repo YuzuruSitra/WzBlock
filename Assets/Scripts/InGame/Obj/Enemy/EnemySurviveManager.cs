@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using InGame.Event;
 using InGame.InGameSystem;
 using UnityEngine;
 
@@ -46,8 +47,8 @@ namespace InGame.Obj.Enemy
         [SerializeField] 
         private MetaAIManipulator _metaAIManipulator;
         private readonly float[] _boredomScaleFactor = { 0.55f, 0.65f, 0.75f, 0.85f, 0.95f, 1.05f, 1.15f, 1.25f, 1.35f, 1.45f};
-        [SerializeField] 
-        private EnemyShield _enemyShield;
+        [SerializeField] private EnemyShield _enemyShield;
+        [SerializeField] private AllBreakEvent _allBreakEvent;
         
         private void Start()
         {
@@ -100,6 +101,7 @@ namespace InGame.Obj.Enemy
         private IEnumerator DestroyEnemy()
         {
             _scoreHandler.AddScore(_score);
+            _allBreakEvent.DoAllBreak();
             ChangeLook(false);
             _breakEffect.SetActive(true);
             _breakEffect.transform.position = transform.position;

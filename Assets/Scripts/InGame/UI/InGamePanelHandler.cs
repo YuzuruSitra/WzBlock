@@ -12,7 +12,7 @@ namespace InGame.UI
 
         [SerializeField]
         private TMP_Text _scoreText;
-        private Coroutine _changeScoreCoroutine = null;
+        private Coroutine _changeScoreCoroutine;
         private int _currentSetScore;
         [SerializeField]
         private float _countUpWaitTime;
@@ -97,6 +97,7 @@ namespace InGame.UI
                 _changeScoreCoroutine = null;
                 _addScoreAnim.Rebind();
             }
+            _addScoreAnim.Rebind();
             _currentSetScore = 0;
             _scoreText.text = "Score : 0";
         }

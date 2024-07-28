@@ -23,12 +23,15 @@ namespace InGame.Event
         [SerializeField] private float _shakePower;
         private WaitForSecondsRealtime _waitForSecondsRealtime;
         [SerializeField] private ShakeByDOTween _shakeByDoTween;
+        public bool IsBreaking { get; private set; }
+        
         private void Start()
         {
             _gameStateHandler = GameStateHandler.Instance;
             _timeScaleHandler = TimeScaleHandler.Instance;
             _gameStateHandler.ChangeGameState += StopBreak;
             _waitForSecondsRealtime = new WaitForSecondsRealtime(_breakTime);
+            IsBreaking = false;
         }
         
         private void OnDestroy()
@@ -42,6 +45,7 @@ namespace InGame.Event
             if (_breakCoroutine == null) return;
             StopCoroutine(_breakCoroutine);
             _breakCoroutine = null;
+            IsBreaking = false;
         }
 
         public void DoAllBreak()
@@ -56,6 +60,7 @@ namespace InGame.Event
 
         IEnumerator BreakBlocks(List<BlockBase> blockList)
         {
+            IsBreaking = true;
             var elapsedTime = 0f;
 
             while (elapsedTime < _durationTime)
@@ -76,9 +81,7 @@ namespace InGame.Event
             }
             _timeScaleHandler.ChangeTimeScale(1f);
             _breakCoroutine = null;
+            IsBreaking = false;
         }
-        
-        
-        
     }
 }
