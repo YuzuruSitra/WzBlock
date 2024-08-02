@@ -96,8 +96,8 @@ namespace InGame.UI
                 StopCoroutine(_changeScoreCoroutine);
                 _changeScoreCoroutine = null;
                 _addScoreAnim.Rebind();
+                _addScoreAnim.Update(0);
             }
-            _addScoreAnim.Rebind();
             _currentSetScore = 0;
             _scoreText.text = "Score : 0";
         }
