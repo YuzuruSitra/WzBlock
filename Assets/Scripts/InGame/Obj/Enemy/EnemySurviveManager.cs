@@ -66,6 +66,7 @@ namespace InGame.Obj.Enemy
 
         private void FixedUpdate()
         {
+            if (_gameStateHandler.CurrentInGameState != GameStateHandler.GameState.InGame) return;
             _enemyShield.EnemyActive = IsActive;
             if (_isAlive)
             {

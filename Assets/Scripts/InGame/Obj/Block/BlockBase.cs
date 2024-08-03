@@ -39,16 +39,16 @@ namespace InGame.Obj.Block
 
         private void Update()
         {
+            if (_gameStateHandler.CurrentInGameState != GameStateHandler.GameState.InGame) return;
             if (!_isActive || !(transform.position.y < _yLimit)) return;
             ReturnBlock();
         }
 
         private void FixedUpdate()
         {
-            if (_isActive)
-            {
-                _rb.velocity = Vector3.down * _speed;
-            }
+            if (_gameStateHandler.CurrentInGameState != GameStateHandler.GameState.InGame) return;
+            if (!_isActive) return;    
+            _rb.velocity = Vector3.down * _speed;
         }
 
         private void ChangeState(GameStateHandler.GameState state)

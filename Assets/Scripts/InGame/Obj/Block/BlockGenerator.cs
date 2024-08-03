@@ -46,6 +46,7 @@ namespace InGame.Obj.Block
 
         private void Update()
         {
+            if (_gameStateHandler.CurrentInGameState != GameStateHandler.GameState.InGame) return;
             InsCountDown();
         }
 
@@ -62,7 +63,6 @@ namespace InGame.Obj.Block
 
         private void InsCountDown()
         {
-            if (_gameStateHandler.CurrentState != GameStateHandler.GameState.InGame) return;
             if (_gameStateHandler.CurrentState == GameStateHandler.GameState.Settings) return;
             if (_allBreakEvent.IsBreaking) return;
             _currentInsTime += Time.deltaTime;

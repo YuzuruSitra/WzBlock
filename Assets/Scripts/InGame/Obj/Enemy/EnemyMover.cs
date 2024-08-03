@@ -40,6 +40,7 @@ namespace InGame.Obj.Enemy
 
         public void Update()
         {
+            if (_gameStateHandler.CurrentInGameState != GameStateHandler.GameState.InGame) return;
             if (!_enemySurviveManager.IsActive) return;
             var posX = transform.position;
             if (posX.x <= LeftMaxPos)

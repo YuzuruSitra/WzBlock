@@ -32,7 +32,7 @@ namespace System
             CurrentState = newState;
             ChangeGameState?.Invoke(CurrentState);
             if (newState != GameState.Settings) CurrentInGameState = newState;
-            _timeScaleHandler.ChangeTimeScale(newState == GameState.InGame ? 1f : 0f);
+            _timeScaleHandler.ChangeTimeScale(newState == GameState.Settings ? 0f : 1f);
         }
     }
 }

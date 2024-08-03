@@ -14,17 +14,20 @@ namespace InGame.Obj.Paddle
         private GameObject _currentAvoid;
         private ComboCounter _comboCounter;
         public int LastCombo { get; private set; }
+        private GameStateHandler _gameStateHandler;
         
         private void Start()
         {
             RallyTime = 0;
             AvoidEnemyBullet = 0;
             _comboCounter = ComboCounter.Instance;
+            _gameStateHandler = GameStateHandler.Instance;
             _comboCounter.ChangeComboCount += ComboUpdate;
         }
         
         public void Update()
         {
+            if (_gameStateHandler.CurrentInGameState != GameStateHandler.GameState.InGame) return;
             RallyTime += Time.deltaTime;
             AvoidanceJudgment();
         }

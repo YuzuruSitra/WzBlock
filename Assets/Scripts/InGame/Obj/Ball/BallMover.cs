@@ -38,6 +38,7 @@ namespace InGame.Obj.Ball
 
         public void FixedUpdate()
         {
+            if (_gameStateHandler.CurrentInGameState != GameStateHandler.GameState.InGame) return;
             // Care stack.
             if (_rigidBody.velocity.magnitude <= 0)  _currentDirection = -_currentDirection;
             
