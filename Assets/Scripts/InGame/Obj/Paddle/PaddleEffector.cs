@@ -6,9 +6,8 @@ namespace InGame.Obj.Paddle
     public class PaddleEffector : MonoBehaviour
     {
         private AbilityReceiver _abilityReceiver;
-        private GameObject _currentEffect;
-        [SerializeField]
-        private GameObject _stanEffect;
+        private ParticleSystem _currentEffect;
+        [SerializeField] private ParticleSystem _stanEffect;
         
         private void Start()
         {
@@ -18,11 +17,12 @@ namespace InGame.Obj.Paddle
 
         private void ChangeEffect(AbilityReceiver.Condition newCondition)
         {
-            _currentEffect?.SetActive(false);
-            GameObject newEffect = null;
+            _currentEffect?.Stop();
+            _currentEffect?.Clear();
+            ParticleSystem newEffect = null;
             if (newCondition == AbilityReceiver.Condition.Stan)
                 newEffect = _stanEffect;
-            newEffect?.SetActive(true);
+            newEffect?.Play();
             _currentEffect = newEffect;
         }
     }

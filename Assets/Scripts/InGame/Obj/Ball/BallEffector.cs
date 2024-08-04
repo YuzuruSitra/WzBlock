@@ -16,6 +16,7 @@ namespace InGame.Obj.Ball
 
         [SerializeField] private GameObject _explosionEffect;
         private GameObject _expEffect;
+        private ParticleSystem _ps;
         private WaitForSeconds _explosionEffectDuration;
         [SerializeField] private BallMover _ballMover;
         
@@ -36,6 +37,7 @@ namespace InGame.Obj.Ball
             _ballMover.HitPaddleEvent += LaunchHitEffect;
 
             _expEffect = Instantiate(_explosionEffect);
+            _ps = _expEffect.GetComponent<ParticleSystem>();
             _explosionEffectDuration = new WaitForSeconds(_expEffect.GetComponent<ParticleSystem>().main.duration);
             _ballSmasher.SmashEvent += LaunchSmash;
             _ballSmasher.ChangeCountEvent += ChangeColor;
@@ -95,8 +97,10 @@ namespace InGame.Obj.Ball
         {
             _expEffect.transform.position = transform.position;
             _expEffect.SetActive(true);
+            _ps.Play();
             yield return _explosionEffectDuration;
-            _expEffect.SetActive(false);
+            _ps.Stop();
+            _ps.Clear();
         }
         
         private void ChangeColor(int smashCount)

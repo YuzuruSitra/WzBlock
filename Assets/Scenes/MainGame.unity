@@ -4568,6 +4568,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3174497481133173983, guid: 77a7d692748bd4e3f8d3b70aa504bbb7, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3217439526611825624, guid: 77a7d692748bd4e3f8d3b70aa504bbb7, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3892008041759671407, guid: 77a7d692748bd4e3f8d3b70aa504bbb7, type: 3}
+      propertyPath: _stanEffect
+      value: 
+      objectReference: {fileID: 4291067530137959998}
     - target: {fileID: 4291067531639714388, guid: 77a7d692748bd4e3f8d3b70aa504bbb7, type: 3}
       propertyPath: _leftObj
       value: 
@@ -4594,7 +4606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4291067531639714394, guid: 77a7d692748bd4e3f8d3b70aa504bbb7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.5
+      value: -1.25
       objectReference: {fileID: 0}
     - target: {fileID: 4291067531639714394, guid: 77a7d692748bd4e3f8d3b70aa504bbb7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4632,8 +4644,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Paddle
       objectReference: {fileID: 0}
+    - target: {fileID: 5376728742194588486, guid: 77a7d692748bd4e3f8d3b70aa504bbb7, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5478706896946506371, guid: 77a7d692748bd4e3f8d3b70aa504bbb7, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139429694279464401, guid: 77a7d692748bd4e3f8d3b70aa504bbb7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6726297797844541079, guid: 77a7d692748bd4e3f8d3b70aa504bbb7, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545350985147345561, guid: 77a7d692748bd4e3f8d3b70aa504bbb7, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77a7d692748bd4e3f8d3b70aa504bbb7, type: 3}
+--- !u!198 &4291067530137959998 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5376728742194588486, guid: 77a7d692748bd4e3f8d3b70aa504bbb7, type: 3}
+  m_PrefabInstance: {fileID: 4291067530137959997}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4729510587903471763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4700,6 +4737,10 @@ PrefabInstance:
     - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: _addSpeed
       value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
+      propertyPath: _maxSpeed
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 2129730774368245199, guid: e4013d7dbc2554a87abb139bbc759c32, type: 3}
       propertyPath: _minSpeed

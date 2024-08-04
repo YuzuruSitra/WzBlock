@@ -28,7 +28,7 @@ namespace InGame.Obj.Enemy
         [SerializeField]
         private GameObject _insEffectPrefab;
         private GameObject _insEffect;
-        private ParticleSystem _psIns;
+        private ParticleSystem _ps;
         private WaitForSeconds _waitIns;
 
         [SerializeField]
@@ -53,8 +53,8 @@ namespace InGame.Obj.Enemy
         {
             _scoreHandler = ScoreHandler.Instance;
             _insEffect = Instantiate(_insEffectPrefab);
-            _psIns = _insEffect.GetComponent<ParticleSystem>();
-            _waitIns = new WaitForSeconds(_psIns.main.duration / 3.0f);
+            _ps = _insEffect.GetComponent<ParticleSystem>();
+            _waitIns = new WaitForSeconds(_ps.main.duration / 3.0f);
 
             _breakEffect = Instantiate(_breakEffectPrefab);
             _psBreak = _breakEffect.GetComponent<ParticleSystem>();
@@ -88,10 +88,11 @@ namespace InGame.Obj.Enemy
 
         private IEnumerator GenerateEnemy()
         {
-            _insEffect.SetActive(true);
             _insEffect.transform.position = transform.position;
+            _ps.Play();
             yield return _waitIns;
-            _insEffect.SetActive(false);
+            _ps.Stop();
+            _ps.Clear();
             ChangeLook(true);
             _currentInsTime = 0;
             _insCoroutine = null;

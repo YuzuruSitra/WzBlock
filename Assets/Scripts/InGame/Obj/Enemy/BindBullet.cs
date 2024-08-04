@@ -28,9 +28,11 @@ namespace InGame.Obj.Enemy
         [SerializeField]
         private float _abilityTime;
         private WaitForSeconds _waitAbility;
+        private GameStateHandler _gameStateHandler;
 
         private void Start()
         {
+            _gameStateHandler = GameStateHandler.Instance;
             _hitEffect = Instantiate(_hitEffectPrefab, transform, true);
             _ps = _hitEffect.GetComponent<ParticleSystem>();
             _wait = new WaitForSeconds(_ps.main.duration);
@@ -40,6 +42,7 @@ namespace InGame.Obj.Enemy
 
         public void Update()
         {
+            if (_gameStateHandler.CurrentInGameState != GameStateHandler.GameState.InGame) return;
             if (!_isActive) return;
             transform.position += Vector3.down * (_speed * Time.deltaTime);
         }
@@ -55,9 +58,11 @@ namespace InGame.Obj.Enemy
         {
             OnReturnToPool?.Invoke(this);
             _hitEffect.transform.position = transform.position;
-            _hitEffect.SetActive(true);
+            _ps.Play();
             yield return _wait;
             _hitEffect.SetActive(false);
+            _ps.Stop();
+            _ps.Clear();
         }
 
         private IEnumerator SendAbility()
