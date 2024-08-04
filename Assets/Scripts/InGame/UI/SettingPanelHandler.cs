@@ -29,7 +29,7 @@ namespace InGame.UI
             _volumeSlider.onValueChanged.AddListener(ChangeVolumeSlider);
             _playerNameField.onEndEdit.AddListener(ChangePlayerNameField);
             _playerInfoHandler.ChangeRank += ChangeRankText;
-            PlayDataIO.Instance.DeleteDataEvent += InitializingDataSet;
+            PlayDataIO.Instance.DeletedDataEvent += InitializingDataSet;
 
             InitializingDataSet();
         }
@@ -37,7 +37,7 @@ namespace InGame.UI
         private void OnDestroy()
         {
             _playerInfoHandler.ChangeRank -= ChangeRankText;
-            PlayDataIO.Instance.DeleteDataEvent -= InitializingDataSet;
+            PlayDataIO.Instance.DeletedDataEvent -= InitializingDataSet;
         }
 
         private void InitializingDataSet()

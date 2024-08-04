@@ -11,6 +11,7 @@ namespace System
         private readonly QuickSaveReader _reader;
 
         public event Action DeleteDataEvent;
+        public event Action DeletedDataEvent;
 
         private PlayDataIO()
         {
@@ -117,6 +118,7 @@ namespace System
             QuickSaveBase.DeleteRoot("SaveData");
             InitializingData();
             DeleteDataEvent?.Invoke();
+            DeletedDataEvent?.Invoke();
         }
 
         private void InitializingData()

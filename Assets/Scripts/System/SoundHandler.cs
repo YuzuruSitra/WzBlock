@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// SEï¿½ï¿½BGMï¿½ÌÄï¿½ï¿½ï¿½~
+// SE?¿½?¿½BGM?¿½ÌÄï¿½?¿½?¿½~
 namespace System
 {
     public class SoundHandler : MonoBehaviour
