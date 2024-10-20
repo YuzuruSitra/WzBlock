@@ -9,30 +9,23 @@ namespace InGame.Obj.Enemy
     public class EnemySurviveManager : MonoBehaviour
     {
         private ScoreHandler _scoreHandler;
-        [SerializeField]
-        private int _score;
+        [SerializeField] private int _score;
         private GameStateHandler _gameStateHandler;
-        [SerializeField]
-        private float _generateInterVal;
+        [SerializeField] private float _generateInterVal;
         private float _currentInsTime;
         private bool _isAlive;
         public bool IsActive => _activateWaitT <= _currentWaitT;
-        [SerializeField]
-        private float _activateWaitT;
+        [SerializeField] private float _activateWaitT;
         private float _currentWaitT;
-        [SerializeField]
-        private MeshRenderer _mesh;
-        [SerializeField]
-        private Collider _col;
+        [SerializeField] private MeshRenderer _mesh;
+        [SerializeField] private Collider _col;
 
-        [SerializeField]
-        private GameObject _insEffectPrefab;
+        [SerializeField] private GameObject _insEffectPrefab;
         private GameObject _insEffect;
         private ParticleSystem _ps;
         private WaitForSeconds _waitIns;
 
-        [SerializeField]
-        private GameObject _breakEffectPrefab;
+        [SerializeField] private GameObject _breakEffectPrefab;
         private GameObject _breakEffect;
         private ParticleSystem _psBreak;
         private WaitForSeconds _waitBreak;
@@ -45,6 +38,7 @@ namespace InGame.Obj.Enemy
         private float _shakePower = 2.0f;
         
         [SerializeField] private MetaAIManipulator _metaAIManipulator;
+        private int _currentBoredomLevel;
         private readonly float[] _boredomScaleFactor = { 0.55f, 0.65f, 0.75f, 0.85f, 0.95f, 1.05f, 1.15f, 1.25f, 1.35f, 1.45f};
         [SerializeField] private EnemyShield _enemyShield;
         [SerializeField] private AllBreakEvent _allBreakEvent;
@@ -62,8 +56,17 @@ namespace InGame.Obj.Enemy
         
             _gameStateHandler = GameStateHandler.Instance;
             _gameStateHandler.ChangeGameState += ChangeStateEnemySurvive;
+            
+            _metaAIManipulator.ChangeBoredomLevel += ChangeBoredomLevel;
+            _currentBoredomLevel = _metaAIManipulator.InitialBoredomLevel;
         }
-
+        
+        private void OnDestroy()
+        {
+            _gameStateHandler.ChangeGameState -= ChangeStateEnemySurvive;
+            _metaAIManipulator.ChangeBoredomLevel -= ChangeBoredomLevel;
+        }
+        
         private void FixedUpdate()
         {
             if (_gameStateHandler.CurrentInGameState != GameStateHandler.GameState.InGame) return;
@@ -74,16 +77,11 @@ namespace InGame.Obj.Enemy
                 return;
             }
             _currentWaitT = 0;
-            var factor = _boredomScaleFactor[_metaAIManipulator.CurrentBoredomLevel];
+            var factor = _boredomScaleFactor[_currentBoredomLevel];
             _currentInsTime += Time.deltaTime * factor;
             if (_currentInsTime <= _generateInterVal) return;
             ResetCoroutine(ref _destCoroutine);
             _insCoroutine = StartCoroutine(GenerateEnemy());
-        }
-
-        private void OnDestroy()
-        {
-            _gameStateHandler.ChangeGameState -= ChangeStateEnemySurvive;
         }
 
         private IEnumerator GenerateEnemy()
@@ -142,6 +140,11 @@ namespace InGame.Obj.Enemy
             ResetCoroutine(ref _insCoroutine);
             _destCoroutine = StartCoroutine(DestroyEnemy());
             _shakeByDoTween.StartShake(_shakePower);
+        }
+        
+        private void ChangeBoredomLevel(int level)
+        {
+            _currentBoredomLevel = level;
         }
     }
 }

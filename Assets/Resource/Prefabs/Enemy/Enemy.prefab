@@ -101,15 +101,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69bcbac4d0b754c33bfc1200ff975d88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletSelects:
-  - _type: 0
-    _rate: 08000000070000000600000005000000040000000300000002000000010000000000000000000000
-  - _type: 1
-    _rate: 02000000030000000400000005000000060000000700000008000000090000000a0000000a000000
   _enemySurviveManager: {fileID: 2061129690210480299}
   _rayOffSet: {x: 0.135, y: 0, z: 0}
   _maxThreeTime: 0.35
   _metaAIManipulator: {fileID: 0}
+  _changeScaleDuration: 1
   _bulletPool: {fileID: 0}
 --- !u!114 &2967823971967334413
 MonoBehaviour:
@@ -130,6 +126,7 @@ MonoBehaviour:
   _movePadding: 0.4
   _moveWaitTime: 3
   _metaAIManipulator: {fileID: 0}
+  _changeSpeedDuration: 1
 --- !u!114 &2061129690210480299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +150,7 @@ MonoBehaviour:
   _shakePower: 2
   _metaAIManipulator: {fileID: 0}
   _enemyShield: {fileID: 1176686924179744947}
+  _allBreakEvent: {fileID: 0}
 --- !u!64 &7891618495732961929
 MeshCollider:
   m_ObjectHideFlags: 0

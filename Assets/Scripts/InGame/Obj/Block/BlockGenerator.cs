@@ -8,10 +8,8 @@ namespace InGame.Obj.Block
 {
     public class BlockGenerator : MonoBehaviour
     {
-        [SerializeField] 
-        private Transform _ball;
-        [SerializeField] 
-        private BlockPool _blockPool;
+        [SerializeField] private Transform _ball;
+        [SerializeField] private BlockPool _blockPool;
         private const float InsInterval = 1.5f;
         private float _currentInsTime;
         private GameStateHandler _gameStateHandler;
@@ -25,6 +23,7 @@ namespace InGame.Obj.Block
         [SerializeField] private BlockStackInfo[] _blocksStackInfo;
         [SerializeField] private AllBreakEvent _allBreakEvent;
         [SerializeField] private MetaAIManipulator _metaAIManipulator;
+        private int _currentBoredomLevel;
         private int[] _boredomInsFactor;
         [SerializeField] private int _minProbability;
         [SerializeField] private int _maxProbability;
@@ -32,6 +31,8 @@ namespace InGame.Obj.Block
         {
             _gameStateHandler = GameStateHandler.Instance;
             _gameStateHandler.ChangeGameState += ReStartIns;
+            _metaAIManipulator.ChangeBoredomLevel += ChangeBoredomLevel;
+            _currentBoredomLevel = _metaAIManipulator.InitialBoredomLevel;
             // Calc boredomInsFactor.
             var size = _metaAIManipulator.MaxLevel;
             _boredomInsFactor = new int[size];
@@ -53,6 +54,7 @@ namespace InGame.Obj.Block
         private void OnDestroy()
         {
             _gameStateHandler.ChangeGameState -= ReStartIns;
+            _metaAIManipulator.ChangeBoredomLevel -= ChangeBoredomLevel;
         }
 
         private void ReStartIns(GameStateHandler.GameState newState)
@@ -77,7 +79,7 @@ namespace InGame.Obj.Block
             for (var i = 0; i < _blockPool.BlockSlot.Count; i++)
             {
                 var rnd = Random.Range(0, 100);
-                if (rnd < _boredomInsFactor[_metaAIManipulator.CurrentBoredomLevel]) continue;
+                if (rnd < _boredomInsFactor[_currentBoredomLevel]) continue;
                 var kind = ChooseBlockKind();
                 var block =  _blockPool.GetBlock(kind);
                 block.transform.position = _blockPool.BlockSlot[i].Position;
@@ -107,6 +109,12 @@ namespace InGame.Obj.Block
             _blocksStackInfo[selectNum]._currentStackCount = 0;
             return _blocksStackInfo[selectNum]._type;
         }
+
+        private void ChangeBoredomLevel(int level)
+        {
+            _currentBoredomLevel = level;
+        }
+        
     }
 }
 
