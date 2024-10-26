@@ -28,6 +28,7 @@ namespace InGame.Obj.Ball
         [SerializeField] private BallSmasher _ballSmasher;
         private SoundHandler _soundHandler;
         [SerializeField] protected AudioClip _hitSound;
+        [SerializeField] protected AudioClip _smashSound;
         
         private void Start()
         {
@@ -53,6 +54,7 @@ namespace InGame.Obj.Ball
 
         private void DoSmash()
         {
+            _soundHandler.PlaySe(_smashSound);
             _currentDirection = _ballSmasher.SmashDirection();
             _currentSpeed += BallSmasher.ExplosionAddForce;
         }

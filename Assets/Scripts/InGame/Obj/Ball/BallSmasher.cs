@@ -7,7 +7,7 @@ namespace InGame.Obj.Ball
     {
         private GameStateHandler _gameStateHandler;
         public event Action SmashEvent;
-        public const float ExplosionAddForce = 3.0f;
+        public const float ExplosionAddForce = 2.5f;
         public const int MaxSmashCount = 4;
         private int _smashCount;
         public event Action<int> ChangeCountEvent;

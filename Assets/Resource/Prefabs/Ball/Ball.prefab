@@ -157,8 +157,8 @@ MonoBehaviour:
   _explosionEffect: {fileID: 6436662279796987237, guid: a9a130bc66ae649479ed9c256dff5997, type: 3}
   _ballMover: {fileID: 2129730774368245199}
   _ballSmasher: {fileID: 672120986}
-  _maxColor: {r: 0.039215688, g: 0.039215688, b: 0.039215688, a: 1}
-  _maxPrjColor: {r: 0, g: 0, b: 0, a: 0}
+  _maxColor: {r: 1, g: 0, b: 0.269979, a: 1}
+  _maxPrjColor: {r: 1, g: 0, b: 0.27058825, a: 0}
   _particleSystem: {fileID: 5103800206346093109}
 --- !u!114 &2129730774368245199
 MonoBehaviour:
@@ -173,14 +173,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _launchSpeed: 4
-  _minSpeed: 3
+  _minSpeed: 2.5
   _maxSpeed: 6.5
   _shakeSpeedLimit: 5.5
-  _addSpeed: 0.75
-  _reduceSpeed: 0.5
+  _addSpeed: 0.9
+  _reduceSpeed: 0.75
   _shakePower: 1
   _shakeByDoTween: {fileID: 0}
   _ballSmasher: {fileID: 672120986}
+  _hitSound: {fileID: 8300000, guid: 1c8e03e9204494b4c9fb239b01acb3df, type: 3}
+  _smashSound: {fileID: 8300000, guid: 5072f4c88a6bc0d489d3dcbe35c4a80b, type: 3}
 --- !u!114 &672120986
 MonoBehaviour:
   m_ObjectHideFlags: 0
