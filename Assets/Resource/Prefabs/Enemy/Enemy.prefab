@@ -151,6 +151,7 @@ MonoBehaviour:
   _metaAIManipulator: {fileID: 0}
   _enemyShield: {fileID: 1176686924179744947}
   _allBreakEvent: {fileID: 0}
+  _breakSound: {fileID: 8300000, guid: 5072f4c88a6bc0d489d3dcbe35c4a80b, type: 3}
 --- !u!64 &7891618495732961929
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -284,6 +285,7 @@ MonoBehaviour:
   _shakePower: 0.5
   _shakeByDoTween: {fileID: 0}
   _col: {fileID: 3843357010690144206}
+  _breakSound: {fileID: 8300000, guid: 4b4e75e9c8ab6dd448c93ca03dd808f1, type: 3}
 --- !u!54 &3843357010690144205
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using InGame.InGameSystem;
 using UnityEngine;
@@ -26,13 +27,15 @@ namespace InGame.Obj.Enemy
         private Color _initialColor;
         private Color _afterColor;
         private Vector3 _initialScale;
+        
+        private SoundHandler _soundHandler;
+        [SerializeField] protected AudioClip _breakSound;
 
         public EnemyShield(bool enemyActive)
         {
             EnemyActive = enemyActive;
         }
-
-
+        
         private void Start()
         {
             _material = GetComponent<Renderer>().material;
@@ -41,6 +44,7 @@ namespace InGame.Obj.Enemy
             color.a = 1;
             _initialColor = color;
             _initialScale = transform.localScale;
+            _soundHandler = GameObject.FindWithTag("SoundHandler").GetComponent<SoundHandler>();
         }
         
         public void IsActive()
@@ -79,8 +83,7 @@ namespace InGame.Obj.Enemy
 
                 yield return null;
             }
-    
-            // フェードアウト完�?後�?�設�?
+            
             startColor.a = 0;
             _material.color = startColor;
             transform.localScale = _initialScale * _maxSize;
@@ -93,6 +96,7 @@ namespace InGame.Obj.Enemy
             if (!EnemyActive) return;
             _isActiveShield = false;
             _col.enabled = false;
+            _soundHandler.PlaySe(_breakSound);
             _fadeCoroutine = StartCoroutine(FadeOutCoroutine());
             _shakeByDoTween.StartShake(_shakePower);
         }

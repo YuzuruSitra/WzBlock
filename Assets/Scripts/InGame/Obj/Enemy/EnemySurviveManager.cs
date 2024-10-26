@@ -42,6 +42,8 @@ namespace InGame.Obj.Enemy
         private readonly float[] _boredomScaleFactor = { 0.55f, 0.65f, 0.75f, 0.85f, 0.95f, 1.05f, 1.15f, 1.25f, 1.35f, 1.45f};
         [SerializeField] private EnemyShield _enemyShield;
         [SerializeField] private AllBreakEvent _allBreakEvent;
+        private SoundHandler _soundHandler;
+        [SerializeField] protected AudioClip _breakSound;
         
         private void Start()
         {
@@ -59,6 +61,7 @@ namespace InGame.Obj.Enemy
             
             _metaAIManipulator.ChangeBoredomLevel += ChangeBoredomLevel;
             _currentBoredomLevel = _metaAIManipulator.InitialBoredomLevel;
+            _soundHandler = GameObject.FindWithTag("SoundHandler").GetComponent<SoundHandler>();
         }
         
         private void OnDestroy()
@@ -102,6 +105,7 @@ namespace InGame.Obj.Enemy
             _scoreHandler.AddScore(_score);
             _allBreakEvent.DoAllBreak();
             ChangeLook(false);
+            _soundHandler.PlaySe(_breakSound);
             _breakEffect.SetActive(true);
             _breakEffect.transform.position = transform.position;
             yield return _waitBreak;
