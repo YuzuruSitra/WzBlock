@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using InGame.InGameSystem;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace InGame.Obj.Block
 {
@@ -110,7 +109,7 @@ namespace InGame.Obj.Block
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag("BlockBomb")) HitBall();
+            if (!gameObject.activeSelf && other.gameObject.CompareTag("BlockBomb")) HitBall();
         }
 
         private void ReturnBlock()
