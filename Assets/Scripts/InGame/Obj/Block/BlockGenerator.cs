@@ -79,7 +79,7 @@ namespace InGame.Obj.Block
             for (var i = 0; i < _blockPool.BlockSlot.Count; i++)
             {
                 var rnd = Random.Range(0, 100);
-                if (rnd < _boredomInsFactor[_currentBoredomLevel]) continue;
+                if (rnd > _boredomInsFactor[_currentBoredomLevel]) continue;
                 var kind = ChooseBlockKind();
                 var block =  _blockPool.GetBlock(kind);
                 block.transform.position = _blockPool.BlockSlot[i].Position;

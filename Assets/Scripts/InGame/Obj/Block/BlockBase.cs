@@ -82,6 +82,7 @@ namespace InGame.Obj.Block
 
         public void ReceiveBreak()
         {
+            if (!_mesh.enabled) return;
             HitBall();
         }
 
@@ -106,12 +107,7 @@ namespace InGame.Obj.Block
         {
             if (collision.gameObject.CompareTag("Ball")) HitBall();
         }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (!gameObject.activeSelf && other.gameObject.CompareTag("BlockBomb")) HitBall();
-        }
-
+        
         private void ReturnBlock()
         {
             if (_coroutine != null)
@@ -123,7 +119,7 @@ namespace InGame.Obj.Block
             OnReturnToPool?.Invoke(this);
         }
 
-        protected virtual void SetActiveState(bool isActive)
+        private void SetActiveState(bool isActive)
         {
             _isActive = isActive;
             _col.enabled = isActive;
