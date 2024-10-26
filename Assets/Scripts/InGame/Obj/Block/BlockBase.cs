@@ -27,7 +27,7 @@ namespace InGame.Obj.Block
         private bool _isActive;
         protected SoundHandler SoundHandler;
         [SerializeField] protected AudioClip _hitSound;
-
+        
         protected virtual void Start()
         {
             _scoreHandler = ScoreHandler.Instance;

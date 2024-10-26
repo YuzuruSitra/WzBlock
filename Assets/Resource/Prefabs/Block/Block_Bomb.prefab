@@ -24587,8 +24587,8 @@ MonoBehaviour:
   _rb: {fileID: -3729423613760998875}
   _speed: 0.5
   _hitSound: {fileID: 8300000, guid: 9af710e1433ca93488a2264a669c188e, type: 3}
-  _bombCol: {fileID: 2252771236819428932}
   _shakePower: 0.85
+  _bombRay: 0.95
 --- !u!54 &-3729423613760998875
 Rigidbody:
   m_ObjectHideFlags: 0

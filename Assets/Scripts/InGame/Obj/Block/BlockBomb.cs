@@ -6,10 +6,20 @@ namespace InGame.Obj.Block
 {
     public class BlockBomb : BlockBase
     {
-        [Header("Bomb Col")] [SerializeField] private SphereCollider _bombCol;
         [Header("Shake Cam Power")] [SerializeField] private float _shakePower;
         private WaitForSeconds _bombDuration;
         private ShakeByDOTween _shakeByDoTween;
+        [SerializeField] private float _bombRay;
+        private readonly Vector3[] _directions = {
+            Vector3.right,                 // x軸正方向
+            Vector3.left,                  // x軸負方向
+            Vector3.up,               // z軸正方向
+            Vector3.down,                  // z軸負方向
+            (Vector3.right + Vector3.up).normalized,   // 右奥方向（x+z）
+            (Vector3.right + Vector3.down).normalized,      // 右手前方向（x-z）
+            (Vector3.left + Vector3.up).normalized,    // 左奥方向（-x+z）
+            (Vector3.left + Vector3.down).normalized        // 左手前方向（-x-z）
+        };
         
         protected override void Start()
         {
@@ -25,20 +35,25 @@ namespace InGame.Obj.Block
             StartCoroutine(DoBomb());
         }
 
-        protected override void SetActiveState(bool isActive)
-        {
-            base.SetActiveState(isActive);
-            if (isActive) _bombCol.enabled = false;
-        }
-
         private IEnumerator DoBomb()
         {
             yield return _bombDuration;
-            _bombCol.enabled = true;
+            
             _shakeByDoTween.StartShake(_shakePower);
-            yield return null;
-            _bombCol.enabled = false;
+            
+            foreach (var direction in _directions)
+            {
+                // Rayを飛ばす
+                if (!Physics.Raycast(transform.position, direction, out var hit, _bombRay)) continue;
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Block"))
+                    HandleHitObject(hit.collider.gameObject);
+            }
         }
-
+        
+        private void HandleHitObject(GameObject hitObject)
+        {
+            var block = hitObject.GetComponent<BlockBase>();
+            block.ReceiveBreak();
+        }
     }
 }
