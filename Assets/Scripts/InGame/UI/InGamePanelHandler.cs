@@ -72,6 +72,7 @@ namespace InGame.UI
 
         private void AddScoreAnim(int newValue)
         {
+            _addScoreText.enabled = true;
             _addScoreText.text = "+" + newValue;
             _addScoreAnim.Rebind();
             _addScoreAnim.Play("AddScoreAnim");
@@ -95,9 +96,8 @@ namespace InGame.UI
             {
                 StopCoroutine(_changeScoreCoroutine);
                 _changeScoreCoroutine = null;
-                _addScoreAnim.Rebind();
-                _addScoreAnim.Update(0);
             }
+            _addScoreText.enabled = false;
             _currentSetScore = 0;
             _scoreText.text = "Score : 0";
         }
