@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using InGame.InGameSystem;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace InGame.Obj.Block
         protected override void HitBall()
         {
             base.HitBall();
+            SoundHandler.PlaySe(_hitSound);
             StartCoroutine(DoBomb());
         }
 

@@ -29,10 +29,13 @@ namespace InGame.Obj.Enemy
         private float _abilityTime;
         private WaitForSeconds _waitAbility;
         private GameStateHandler _gameStateHandler;
-
+        private SoundHandler _soundHandler;
+        [SerializeField] protected AudioClip _hitSound;
+        
         private void Start()
         {
             _gameStateHandler = GameStateHandler.Instance;
+            _soundHandler = GameObject.FindWithTag("SoundHandler").GetComponent<SoundHandler>();
             _hitEffect = Instantiate(_hitEffectPrefab, transform, true);
             _ps = _hitEffect.GetComponent<ParticleSystem>();
             _wait = new WaitForSeconds(_ps.main.duration);
@@ -56,6 +59,7 @@ namespace InGame.Obj.Enemy
 
         private IEnumerator BreakBulletAnim()
         {
+            _soundHandler.PlaySe(_hitSound); 
             OnReturnToPool?.Invoke(this);
             _hitEffect.transform.position = transform.position;
             _ps.Play();
@@ -85,7 +89,7 @@ namespace InGame.Obj.Enemy
                 OnReturnToPool?.Invoke(this);
         }
 
-        private void OnCollisionEnter (Collision collision)
+        private void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.CompareTag("Frame")
                 || collision.gameObject.layer == LayerMask.NameToLayer("Block")

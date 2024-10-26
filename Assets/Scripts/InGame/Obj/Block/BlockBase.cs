@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using InGame.InGameSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace InGame.Obj.Block
 {
@@ -25,6 +26,8 @@ namespace InGame.Obj.Block
         private Coroutine _coroutine;
         private ComboCounter _comboCounter;
         private bool _isActive;
+        protected SoundHandler SoundHandler;
+        [SerializeField] protected AudioClip _hitSound;
 
         protected virtual void Start()
         {
@@ -35,6 +38,7 @@ namespace InGame.Obj.Block
             _returnWait = new WaitForSeconds(_ps.main.duration);
             _yLimit = GameObject.FindWithTag("CubeLim").transform.position.y + transform.localScale.y / 2.0f;
             _gameStateHandler.ChangeGameState += ChangeState;
+            SoundHandler = GameObject.FindWithTag("SoundHandler").GetComponent<SoundHandler>();
         }
 
         private void Update()

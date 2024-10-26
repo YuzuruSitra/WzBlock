@@ -26,6 +26,9 @@ namespace InGame.Obj.Ball
         private bool _isFirstPush;
         private ComboCounter _comboCounter;
         [SerializeField] private BallSmasher _ballSmasher;
+        private SoundHandler _soundHandler;
+        [SerializeField] protected AudioClip _hitSound;
+        
         private void Start()
         {
             _rigidBody = GetComponent<Rigidbody>();
@@ -34,6 +37,7 @@ namespace InGame.Obj.Ball
             _gameStateHandler.ChangeGameState += ChangeStateBall;
             _ballSmasher.SmashEvent += DoSmash;
             _comboCounter = ComboCounter.Instance;
+            _soundHandler = GameObject.FindWithTag("SoundHandler").GetComponent<SoundHandler>();
         }
 
         public void FixedUpdate()
@@ -111,6 +115,7 @@ namespace InGame.Obj.Ball
             }
             _currentDirection = reflectDirection;
             _rigidBody.velocity = _currentDirection * _currentSpeed;
+            _soundHandler.PlaySe(_hitSound);
         }
         
         private void ReduceForce(GameObject hitObj)

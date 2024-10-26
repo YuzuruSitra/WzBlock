@@ -62,6 +62,7 @@ MonoBehaviour:
   _col: {fileID: 6736952774740926462}
   _abilityType: 1
   _abilityTime: 1.25
+  _hitSound: {fileID: 8300000, guid: 68d3182037a7afc498c958a1831271f3, type: 3}
 --- !u!65 &6736952774740926462
 BoxCollider:
   m_ObjectHideFlags: 0

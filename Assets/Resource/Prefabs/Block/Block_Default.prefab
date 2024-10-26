@@ -118,6 +118,7 @@ MonoBehaviour:
   _mesh: {fileID: 4561537781649656749}
   _rb: {fileID: -3729423613760998875}
   _speed: 0.5
+  _hitSound: {fileID: 8300000, guid: e5b068d3f38cb8a4697fd0d29a080c76, type: 3}
 --- !u!54 &-3729423613760998875
 Rigidbody:
   m_ObjectHideFlags: 0
