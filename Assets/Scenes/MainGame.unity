@@ -3174,7 +3174,7 @@ MonoBehaviour:
   _emphasizedPink: {r: 1, g: 0.64705884, b: 0.90588236, a: 1}
   _emphasizedBlue: {r: 0.5686275, g: 1, b: 0.92156863, a: 1}
   _rankSlider: {fileID: 1527923896}
-  _animationDuration: 5
+  _animationSpeed: 1000
   _expText: {fileID: 6088166}
   _rankText: {fileID: 158179244}
   _getExpText: {fileID: 1833372913}
@@ -3957,7 +3957,6 @@ GameObject:
   - component: {fileID: 2987380601472798236}
   - component: {fileID: 2987380601472798234}
   - component: {fileID: 2987380601472798237}
-  - component: {fileID: 2987380601472798240}
   - component: {fileID: 2987380601472798235}
   m_Layer: 5
   m_Name: AddScore_Text (TMP)
@@ -3966,19 +3965,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2987380601472798240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2987380601472798239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f559c357339ea24b97e3de0f26d259e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _tmpText: {fileID: 2987380601472798237}
 --- !u!1 &2987380602031874780
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,4 @@
 using System;
-using InGame.Obj.Ball;
-using UnityEngine;
 
 namespace InGame.InGameSystem
 {
@@ -13,7 +11,6 @@ namespace InGame.InGameSystem
 
         public event Action<int> AddScoreEvent;
         public event Action<int> ChangeScore;
-        private readonly BallMover _ballMover;
         public int MaxScore { get; private set; }
 
         public int TodayMaxScore { get; private set; }
@@ -29,7 +26,6 @@ namespace InGame.InGameSystem
             LoadScores();
             _playerInfoHandler = PlayerInfoHandler.Instance;
             GameStateHandler.Instance.ChangeGameState += ScoreStateFunction;
-            _ballMover = GameObject.FindWithTag("Ball").GetComponent<BallMover>();
             _comboCounter = ComboCounter.Instance;
         }
 
