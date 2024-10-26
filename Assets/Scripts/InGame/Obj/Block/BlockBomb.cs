@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using InGame.InGameSystem;
 using UnityEngine;
 
@@ -37,23 +38,29 @@ namespace InGame.Obj.Block
 
         private IEnumerator DoBomb()
         {
-            yield return _bombDuration;
-            
-            _shakeByDoTween.StartShake(_shakePower);
+            var hitObjects = new List<GameObject>();
             
             foreach (var direction in _directions)
             {
-                // Rayを飛ばす
-                if (!Physics.Raycast(transform.position, direction, out var hit, _bombRay)) continue;
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Block"))
-                    HandleHitObject(hit.collider.gameObject);
+                if (Physics.Raycast(transform.position, direction, out var hit, _bombRay) && 
+                    hit.collider.gameObject.layer == LayerMask.NameToLayer("Block"))
+                {
+                    hitObjects.Add(hit.collider.gameObject);
+                }
             }
+            
+            yield return _bombDuration;
+            
+            // カメラの揺れを開始
+            _shakeByDoTween.StartShake(_shakePower);
+            
+            foreach (var hitObject in hitObjects) HandleHitObject(hitObject);
         }
-        
-        private void HandleHitObject(GameObject hitObject)
+
+        private static void HandleHitObject(GameObject hitObject)
         {
             var block = hitObject.GetComponent<BlockBase>();
-            block.ReceiveBreak();
+            if (block != null) block.ReceiveBreak();
         }
     }
 }
