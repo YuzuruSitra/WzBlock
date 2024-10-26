@@ -609,7 +609,8 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8232688222963710550, guid: a1eac228a24e54e4a9b68cded3a055c1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a1eac228a24e54e4a9b68cded3a055c1, type: 3}
 --- !u!1 &8668628219860071088 stripped
 GameObject:

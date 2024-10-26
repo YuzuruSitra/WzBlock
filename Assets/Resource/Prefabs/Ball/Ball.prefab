@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _launchSpeed: 4
   _minSpeed: 3
-  _maxSpeed: 7
+  _maxSpeed: 6.5
   _shakeSpeedLimit: 5.5
   _addSpeed: 0.75
   _reduceSpeed: 0.5
